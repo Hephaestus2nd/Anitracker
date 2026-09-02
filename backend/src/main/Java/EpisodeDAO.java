@@ -1,4 +1,4 @@
-package Java;
+package com.example.anime;
 
 import java.util.List;
 import java.util.Optional;

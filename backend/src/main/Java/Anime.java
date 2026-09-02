@@ -1,25 +1,28 @@
-package Java;
+package com.example.anime;
 
-/**
- * Represents an anime entry with details such as title, episodes, score, and watch status.
- * This class stores information about an anime including its MAL ID, episodes watched,
- * and other metadata from the Internet Movie Database.
- */
 public class Anime {
-    private int malId;
+    private int id;
+    private Integer malId;
     private String title;
-    private int totalEpisodes;
-    private double score;
-    private int episodesWatched;
+    private Integer totalEpisodes;
+    private Integer episodesWatched;
     private String watchStatus;
     private String coverImageUrl;
     private String synopsis;
 
-    public int getMalId() {
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Integer getMalId() {
         return malId;
     }
 
-    public void setMalId(int malId) {
+    public void setMalId(Integer malId) {
         this.malId = malId;
     }
 
@@ -31,27 +34,19 @@ public class Anime {
         this.title = title;
     }
 
-    public int getTotalEpisodes() {
+    public Integer getTotalEpisodes() {
         return totalEpisodes;
     }
 
-    public void setTotalEpisodes(int totalEpisodes) {
+    public void setTotalEpisodes(Integer totalEpisodes) {
         this.totalEpisodes = totalEpisodes;
     }
 
-    public double getScore() {
-        return score;
-    }
-
-    public void setScore(double score) {
-        this.score = score;
-    }
-
-    public int getEpisodesWatched() {
+    public Integer getEpisodesWatched() {
         return episodesWatched;
     }
 
-    public void setEpisodesWatched(int episodesWatched) {
+    public void setEpisodesWatched(Integer episodesWatched) {
         this.episodesWatched = episodesWatched;
     }
 
