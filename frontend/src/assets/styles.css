@@ -1,3 +1,21 @@
+:root {
+    /* Vaporwave palette */
+    --color-primary: #300350;
+    --color-secondary: #94167F;
+    --color-secondary-light: #E93479;
+    --color-accent: #F9AC53;
+    --color-opposite: #153CB4;
+
+    --bg: #eeeeee; /* Dirty white color */
+    --dark-font-color: #222222;
+    --light-font-color: #FFFFFF;
+    --muted-light-font-color: #BFD6D6;
+    --darkish-gray: #717171;
+
+    --default-border-radius: 8px;
+    --default-margin-bottom: 16px;
+}
+
 * {
     font-family: "Raleway", Arial, sans-serif;
 }
@@ -5,7 +23,7 @@
 body {
     margin: 0;
     background: var(--bg);
-    color: var(--font-color);
+    color: var(--dark-font-color);
     font-size: 16px;
     line-height: 1.5;
 }
