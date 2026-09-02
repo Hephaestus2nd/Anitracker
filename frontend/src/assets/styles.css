@@ -10,6 +10,11 @@
     --default-border-radius: 8px;
     --default-margin-value: 16px;
     --max-width: 1080px;
+
+    --hover-shadow:
+        0 0 4px var(--color-secondary-light),
+        0 0 10px var(--color-secondary),
+        0 0 20px var(--color-secondary);
 }
 
 * {
@@ -51,10 +56,32 @@ a {
     transition: text-shadow 0.3s ease;
 
     &:hover {
-        text-shadow: 
-        0 0 4px var(--color-secondary-light),
-        0 0 10px var(--color-secondary),
-        0 0 20px var(--color-secondary);
+        text-shadow: var(--hover-shadow);
+    }
+}
+
+button {
+    height: 2.25rem;
+    padding: 0 15px;
+    border-radius: var(--default-border-radius);
+    border: 1px solid var(--color-secondary-light);
+    background: none;
+    cursor: pointer;
+    color: var(--light-font-color);
+    transition: background 0.3s;
+    font-size: inherit;
+    font-weight: regular;
+    transition: box-shadow 0.2s;
+
+    &.emphasis {
+        background: var(--color-primary);
+        border-color: rgb(0, 0, 0, 0); /* Hack to maintain button size */
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    &:hover {
+        box-shadow: var(--hover-shadow)
     }
 }
 

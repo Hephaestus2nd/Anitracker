@@ -9,7 +9,7 @@
     <section class="main-list">
         <header>
             <h2>Anime in your list...</h2>
-            <button>Add</button>
+            <button class="emphasis">Add</button>
         </header>
         <div class="card-grid-container"></div>
     </section>
