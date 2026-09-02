@@ -57,3 +57,10 @@ a {
         0 0 20px var(--color-secondary);
     }
 }
+
+.logo-text {
+    font-family: 'Space Grotesk', 'Raleway', sans-serif;
+    font-weight: 900;
+    text-transform: uppercase;
+    transform: scaleY(1.1);
+}

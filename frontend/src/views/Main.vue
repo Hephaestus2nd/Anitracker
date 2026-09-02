@@ -2,7 +2,7 @@
 
 <template>
     <header>
-        <h1>Welcome to Anitracker!</h1>
+        <h1>Welcome to <span class="logo-text">Anitracker</span>!</h1>
         <p>Keep your plan to watch list, currently watching list, and completed lists all in one place!</p>
     </header>
 </template>

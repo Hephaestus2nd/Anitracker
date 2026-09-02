@@ -32,11 +32,7 @@ div.baybayin {
     margin-bottom: -0.3rem;
 }
 
-div.logo-text {
-    font-family: 'Space Grotesk', 'Raleway', sans-serif;
+.logo-text {
     font-size: 1.5rem;
-    font-weight: 900;
-    text-transform: uppercase;
-    transform: scaleY(1.1);
 }
 </style>
