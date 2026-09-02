@@ -13,7 +13,8 @@
     --darkish-gray: #717171;
 
     --default-border-radius: 8px;
-    --default-margin-bottom: 16px;
+    --default-margin-value: 16px;
+    --max-width: 1080px;
 }
 
 * {
@@ -29,15 +30,17 @@ body {
 }
 
 main {
-    max-width: 1080px;
+    max-width: var(--max-width);
     margin: 0 auto;
+    /* Full Width (100%) - (Margin_L and Margin_R) */
+    width: min(100% - (2 * var(--default-margin-value)), var(--max-width));
 }
 
 h1, h2, h3, h4, h5, h6 {
     margin: 0;
-    margin-bottom: var(--default-margin-bottom)
+    margin-bottom: var(--default-margin-value)
 }
 
 header, section, footer, p {
-    margin-bottom: var(--default-margin-bottom)
+    margin-bottom: var(--default-margin-value)
 }
