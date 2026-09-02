@@ -1,4 +1,3 @@
-package com.example.anime;
 
 import java.util.List;
 

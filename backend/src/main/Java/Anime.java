@@ -1,4 +1,5 @@
-package com.example.anime;
+
+
 
 public class Anime {
     private int id;

@@ -1,4 +1,3 @@
-package com.example.anime;
 
 public class Episode {
     private int id;

@@ -6,9 +6,8 @@ group = 'com.cosc349'
 version = '1.0.0'
 
 java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(25)
-    }
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 repositories {
@@ -18,21 +17,15 @@ repositories {
 sourceSets {
     main {
         java {
-            srcDirs = ['backend/src/main/Java']
+            srcDirs = ['backend/src/main/java']
         }
     }
-}
-
-java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
 }
 
 dependencies {
     implementation 'org.jdbi:jdbi3-core:3.45.1'
     implementation 'org.jdbi:jdbi3-sqlobject:3.45.1'
     implementation 'org.postgresql:postgresql:42.7.4'
-    implementation 'io.jooby:jooby:3.1.0'
     implementation 'io.jooby:jooby-netty:3.1.0'
 }
 
