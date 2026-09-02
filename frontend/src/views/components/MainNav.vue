@@ -12,6 +12,6 @@ header {
     z-index: 100;
     padding: 1rem;
     border-radius: 0 0 var(--default-border-radius) var(--default-border-radius); 
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); /* Bottom border shadow */
+    box-shadow: 0 4px 6px var(--color-secondary); /* Bottom border shadow */
 }
 </style>

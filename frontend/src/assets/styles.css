@@ -1,16 +1,11 @@
 :root {
-    /* Vaporwave palette */
-    --color-primary: #11063D;
-    --color-primary-alt: #1C0B59;
-    --color-secondary: #3D3564;
-    --color-secondary-light: #7C3AED;
-    --color-accent: #F9AC53;
-    --color-opposite: #153CB4;
-
-    --bg: #08091A;
+    /* Palette: https://icolorpalette.com/p/557008 */
+    --color-primary: #6F13BF;
+    --color-secondary: #410179;
+    --color-secondary-light: #833FBF;
+    --bg: #270B3C;
     --light-font-color: #F5F3FF; /* Soft white */
-    --muted-light-font-color: #BFD6D6;
-    --darkish-gray: #717171;
+    --muted-light-font-color: #A669DB;
 
     --default-border-radius: 8px;
     --default-margin-value: 16px;
