@@ -1,11 +1,18 @@
-<script setup></script>
+<script setup>
+import Logo from '@/assets/Logo.vue';
+
+</script>
 
 <template>
-    <header>My Header</header>
+    <header>
+        <Logo />
+    </header>
 </template>
 
 <style scoped>
 header {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
     position: sticky;
     top: 0;
     background: var(--color-primary);
