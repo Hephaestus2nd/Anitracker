@@ -32,6 +32,7 @@ body {
 main {
     max-width: var(--max-width);
     margin: 0 auto;
+    
     /* Full Width (100%) - (Margin_L and Margin_R) */
     width: min(100% - (2 * var(--default-margin-value)), var(--max-width));
 }
