@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple Movie Tracker</title>
+    <style>
+      body { font-family: Arial, sans-serif; margin: 2rem; background: #f7f7f7; }
+      .card { background: white; border-radius: 8px; padding: 1rem; box-shadow: 0 1px 5px rgba(0,0,0,0.1); }
+      table { width: 100%; border-collapse: collapse; }
+      th, td { border-bottom: 1px solid #ddd; padding: 0.6rem; text-align: left; }
+      .controls { display: flex; gap: 1rem; margin-bottom: 1rem; }
+      a { color: #0b57d0; text-decoration: none; }
+      a:hover { text-decoration: underline; }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+    <script src="https://unpkg.com/vue-router@4/dist/vue-router.global.prod.js"></script>
+    <script>
+      const MovieList = {
+        data() {
+          return { movies: [], sort: 'title', genre: '', loading: true, error: '' };
+        },
+        mounted() {
+          this.loadMovies();
+        },
+        methods: {
+          async loadMovies() {
+            this.loading = true;
+            this.error = '';
+            const params = new URLSearchParams({ sort: this.sort });
+            if (this.genre.trim()) params.set('genre', this.genre.trim());
+
+            try {
+              const response = await fetch('/api/movies?' + params.toString());
+              if (!response.ok) throw new Error('Could not load movies');
+              this.movies = await response.json();
+            } catch (err) {
+              this.error = err.message;
+            } finally {
+              this.loading = false;
+            }
+          }
+        },
+        template: `
+          <div class="card">
+            <h1>Simple Movie Tracker</h1>
+            <div class="controls">
+              <label>
+                Sort by
+                <select v-model="sort" @change="loadMovies">
+                  <option value="title">Title</option>
+                  <option value="year">Year</option>
+                  <option value="rating">Rating</option>
+                </select>
+              </label>
+              <label>
+                Genre
+                <input v-model="genre" @keyup.enter="loadMovies" placeholder="e.g. Sci-Fi" />
+              </label>
+              <button @click="loadMovies">Apply</button>
+            </div>
+
+            <p v-if="loading">Loading…</p>
+            <p v-if="error">{{ error }}</p>
+
+            <table v-if="!loading && !error">
+              <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Genre</th>
+                  <th>Year</th>
+                  <th>Rating</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="movie in movies" :key="movie.id">
+                  <td><router-link :to="'/movies/' + movie.id">{{ movie.title }}</router-link></td>
+                  <td>{{ movie.genre }}</td>
+                  <td>{{ movie.releaseYear }}</td>
+                  <td>{{ movie.rating }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        `
+      };
+
+      const MovieDetails = {
+        data() {
+          return { movie: null, loading: true, error: '' };
+        },
+        mounted() {
+          this.loadMovie();
+        },
+        methods: {
+          async loadMovie() {
+            this.loading = true;
+            this.error = '';
+            try {
+              const response = await fetch('/api/movies/' + this.$route.params.id);
+              if (!response.ok) throw new Error('Movie not found');
+              this.movie = await response.json();
+            } catch (err) {
+              this.error = err.message;
+            } finally {
+              this.loading = false;
+            }
+          }
+        },
+        template: `
+          <div class="card">
+            <p><router-link to="/">← Back to list</router-link></p>
+            <p v-if="loading">Loading…</p>
+            <p v-if="error">{{ error }}</p>
+            <div v-if="movie">
+              <h1>{{ movie.title }}</h1>
+              <p><strong>Genre:</strong> {{ movie.genre }}</p>
+              <p><strong>Release year:</strong> {{ movie.releaseYear }}</p>
+              <p><strong>Rating:</strong> {{ movie.rating }}</p>
+              <p><strong>Director:</strong> {{ movie.director }}</p>
+              <p><strong>Synopsis:</strong> {{ movie.synopsis }}</p>
+            </div>
+          </div>
+        `
+      };
+
+      const router = VueRouter.createRouter({
+        history: VueRouter.createWebHashHistory(),
+        routes: [
+          { path: '/', component: MovieList },
+          { path: '/movies/:id', component: MovieDetails }
+        ]
+      });
+
+      const app = Vue.createApp({});
+      app.use(router);
+      app.mount('#app');
+    </script>
+  </body>
+</html>
