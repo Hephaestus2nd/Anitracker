@@ -51,7 +51,7 @@ header.main-header {
 
     > * {
         margin: 0;
-        line-height: 1.2;
+        line-height: 1.2; /* So that the text heights are even */
     }
 }
 </style>
