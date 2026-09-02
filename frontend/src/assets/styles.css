@@ -91,3 +91,15 @@ button {
     text-transform: uppercase;
     transform: scaleY(1.1);
 }
+
+.icon-span-container {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.icon {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0; /* For buttons */
+}

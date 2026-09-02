@@ -1,4 +1,7 @@
-<script setup></script>
+<script setup>
+import AddIcon from '@/assets/AddIcon.vue';
+
+</script>
 
 <template>
     <header class="main-header">
@@ -9,7 +12,7 @@
     <section class="main-list">
         <header>
             <h2>Anime in your list...</h2>
-            <button class="emphasis">Add</button>
+            <button class="emphasis icon-span-container"><AddIcon />Add</button>
         </header>
         <div class="card-grid-container"></div>
     </section>
