@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'application'
 }
 
 group = 'com.cosc349'
@@ -8,6 +9,10 @@ version = '1.0.0'
 java {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
+}
+
+application {
+    mainClass = 'AnimeTrackerApp'
 }
 
 repositories {
@@ -31,4 +36,11 @@ dependencies {
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
+}
+
+jar {
+    archiveBaseName = 'movie-tracker'
+    manifest {
+        attributes 'Main-Class': 'AnimeTrackerApp'
+    }
 }
