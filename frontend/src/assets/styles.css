@@ -1,15 +1,14 @@
 :root {
     /* Vaporwave palette */
-    --color-primary: #300350;
-    --color-secondary: #94167F;
-    --color-secondary-light: #E93479;
+    --color-primary: #11063D;
+    --color-primary-alt: #1C0B59;
+    --color-secondary: #3D3564;
+    --color-secondary-light: #7C3AED;
     --color-accent: #F9AC53;
     --color-opposite: #153CB4;
 
-    --bg: #eeeeee;
-    /* Dirty white color */
-    --dark-font-color: #222222;
-    --light-font-color: #FFFFFF;
+    --bg: #08091A;
+    --light-font-color: #F5F3FF; /* Soft white */
     --muted-light-font-color: #BFD6D6;
     --darkish-gray: #717171;
 
