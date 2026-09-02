@@ -39,6 +39,7 @@ div.card {
         > div.anime-title {
             padding: 8px;
             font-weight: bold;
+            text-align: center;
         }
     }
 }
