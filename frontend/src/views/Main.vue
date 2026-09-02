@@ -19,7 +19,7 @@ header {
     justify-content: center;
     align-items: center;
     width: 85vw;
-    height: 25vh;
+    height: clamp(176px, 25vh, 240px);
     padding: 0 20px;
     border-radius: var(--default-border-radius);
     background: linear-gradient(to right, var(--color-secondary), var(--color-secondary-light));
