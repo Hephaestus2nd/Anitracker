@@ -5,7 +5,7 @@
     --color-secondary-light: #833FBF;
     --bg: #270B3C;
     --light-font-color: #F5F3FF; /* Soft white */
-    --muted-light-font-color: #A669DB;
+    --muted-light-font-color: #AD77DC;
 
     --default-border-radius: 8px;
     --default-margin-value: 16px;
@@ -39,4 +39,17 @@ h1, h2, h3, h4, h5, h6 {
 
 header, section, footer, p {
     margin-bottom: var(--default-margin-value)
+}
+
+a { 
+    color: var(--muted-light-font-color); 
+    text-decoration: none;
+    transition: text-shadow 0.3s ease;
+
+    &:hover {
+        text-shadow: 
+        0 0 4px var(--color-secondary-light),
+        0 0 10px var(--color-secondary),
+        0 0 20px var(--color-secondary);
+    }
 }
