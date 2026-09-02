@@ -19,11 +19,6 @@ import AddIcon from '@/assets/AddIcon.vue';
 </template>
 
 <style scoped>
-* {
-    justify-self: center;
-    align-self: center;
-}
-
 section.main-list {
     width: 100%;
 
@@ -34,26 +29,29 @@ section.main-list {
         width: 100%;
 
         > h2 {
-            justify-self: start;
             margin: 0;
         }
 
         > button {
-            align-self: center;
             justify-self: end;
         }
     }
 }
 
 header.main-header {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    display: grid;
+    grid-template-rows: repeat(2, auto);
+    text-align: center;
+    justify-items: center;
     align-items: center;
-    width: inherit;
-    height: clamp(176px, 25vh, 240px);
-    padding: 0 20px;
+    gap: 0.75rem;
+    padding: 40px;
     border-radius: var(--default-border-radius);
     background: linear-gradient(to right, var(--color-secondary), var(--color-secondary-light));
+
+    > * {
+        margin: 0;
+        line-height: 1.2;
+    }
 }
 </style>
