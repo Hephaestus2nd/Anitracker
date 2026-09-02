@@ -103,3 +103,21 @@ button {
     height: 16px;
     flex-shrink: 0; /* For buttons */
 }
+
+.card-grid-container {
+    display: grid;
+    /* 
+    One-line trick for responsive grid (no massive media queries):
+    - min = min(100%, 128px) means the minimum recommended width is 128px but shrinks if the actual width is even lower
+    - minmax(min, 1fr) means always use min; if there are more available space, stretch to 1fr
+    - auto-fill means fill the row with as many columns as possible since we don't know the no. of cols. beforehand
+    */
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 128px), 1fr));
+    gap: var(--default-margin-value);
+}
+
+.card {
+    background: var(--color-secondary-light);
+    border-radius: var(--default-border-radius);
+    padding: 16px 24px;
+}
