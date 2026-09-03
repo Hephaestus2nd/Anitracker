@@ -12,19 +12,18 @@ java {
 }
 
 application {
-    mainClass = 'AnimeTrackerApp'
-}
-
-repositories {
-    mavenCentral()
+    mainClass = 'app.AnimeTrackerApp'
 }
 
 sourceSets {
     main {
         java {
-            srcDirs = ['backend/src/main/java']
+            srcDirs = ['backend/src/main']
         }
     }
+}
+repositories {
+    mavenCentral()
 }
 
 dependencies {
@@ -41,6 +40,6 @@ tasks.withType(JavaCompile).configureEach {
 jar {
     archiveBaseName = 'movie-tracker'
     manifest {
-        attributes 'Main-Class': 'AnimeTrackerApp'
+        attributes 'Main-Class': 'app.AnimeTrackerApp'
     }
 }

@@ -1,23 +1,17 @@
-
-
+package app;
 
 public class Anime {
-    private int id;
+    
     private Integer malId;
     private String title;
     private Integer totalEpisodes;
     private Integer episodesWatched;
     private String watchStatus;
     private String coverImageUrl;
+    private String backgroundImageUrl;
     private String synopsis;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+   
 
     public Integer getMalId() {
         return malId;
@@ -65,6 +59,14 @@ public class Anime {
 
     public void setCoverImageUrl(String coverImageUrl) {
         this.coverImageUrl = coverImageUrl;
+    }
+
+    public String getBackgroundImageUrl() {
+        return backgroundImageUrl;
+    }
+
+    public void setBackgroundImageUrl(String backgroundImageUrl) {
+        this.backgroundImageUrl = backgroundImageUrl;
     }
 
     public String getSynopsis() {
