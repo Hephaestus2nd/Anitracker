@@ -24,11 +24,11 @@ server {
     index index.html;
 
     location / {
-        try_files $uri $uri/ =404;
+      try_files $uri $uri/ /index.html;
     }
 
     location /api/ {
-        proxy_pass http://192.168.56.11:8080;
+        proxy_pass http://192.168.56.11:8080/;
         proxy_http_version 1.1;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;

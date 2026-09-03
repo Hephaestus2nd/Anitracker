@@ -10,7 +10,7 @@ import org.jdbi.v3.sqlobject.SqlObjectPlugin;
 
 public class AnimeTrackerApp extends Jooby {
     public AnimeTrackerApp() {
-        String dbUrl = System.getenv().getOrDefault("DB_URL", "jdbc:postgresql://192.168.56.10:5432/Anitracker");
+        String dbUrl = System.getenv().getOrDefault("DB_URL", "jdbc:postgresql://192.168.56.10:5432/anitracker");
         String dbUser = System.getenv().getOrDefault("DB_USER", "app_user");
         String dbPassword = System.getenv().getOrDefault("DB_PASSWORD", "AppPass123");
 
@@ -18,11 +18,23 @@ public class AnimeTrackerApp extends Jooby {
         jdbi.installPlugin(new SqlObjectPlugin());
         AnimeJdbiDAO animeDao = jdbi.onDemand(AnimeJdbiDAO.class);
 
-        get("/health", ctx -> Map.of(
-            "status", "ok",
-            "database", "connected",
-            "service", "anime-tracker"
-        ));
+        get("/health", ctx -> {
+            try {
+                jdbi.withHandle(handle -> handle.createQuery("SELECT 1").mapTo(Integer.class).one());
+                return Map.of(
+                    "status", "ok",
+                    "database", "connected",
+                    "service", "anime-tracker"
+                );
+            } catch (RuntimeException exception) {
+                ctx.setResponseCode(StatusCode.SERVICE_UNAVAILABLE);
+                return Map.of(
+                    "status", "error",
+                    "database", "unavailable",
+                    "service", "anime-tracker"
+                );
+            }
+        });
 
         get("/anime", ctx -> animeDao.getAllAnime());
 
