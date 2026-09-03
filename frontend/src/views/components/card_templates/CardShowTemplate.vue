@@ -10,7 +10,7 @@ const props = defineProps({
 <template>
     <div class="card">
         <RouterLink :to="`/anime/${animeData.malId}`">
-            <img :src="animeData.coverImageUrl" :alt="animeData.title" />
+            <img class="cover-pic" :src="animeData.coverImageUrl" :alt="animeData.title" />
             <div class="anime-title">{{ animeData.title }}</div>
         </RouterLink>
     </div>
@@ -30,11 +30,6 @@ div.card {
             padding: 8px;
             font-weight: bold;
             text-align: center;
-        }
-
-        > img {
-            aspect-ratio: 2 / 3;
-            width: 100%;
         }
     }
 }
