@@ -10,7 +10,7 @@ import org.jdbi.v3.sqlobject.SqlObjectPlugin;
 
 public class AnimeTrackerApp extends Jooby {
     public AnimeTrackerApp() {
-        String dbUrl = System.getenv().getOrDefault("DB_URL", "jdbc:postgresql://192.168.56.10:5432/movietracker");
+        String dbUrl = System.getenv().getOrDefault("DB_URL", "jdbc:postgresql://192.168.56.10:5432/Anitracker");
         String dbUser = System.getenv().getOrDefault("DB_USER", "app_user");
         String dbPassword = System.getenv().getOrDefault("DB_PASSWORD", "AppPass123");
 

@@ -3,18 +3,24 @@ set -euxo pipefail
 
 export DEBIAN_FRONTEND=noninteractive
 apt-get update
-apt-get install -y nginx
+apt-get install -y nginx curl ca-certificates
+curl -fsSL https://deb.nodesource.com/setup_22.x | bash -
+apt-get install -y nodejs
 
-mkdir -p /var/www/movie-tracker
-cp -r /vagrant/frontend/. /var/www/movie-tracker/
+mkdir -p /var/www/anitracker
+cp -r /vagrant/frontend/. /tmp/anitracker-frontend/
+cd /tmp/anitracker-frontend
+npm ci
+npm run build
+cp -r dist/. /var/www/anitracker/
 
-cat <<'EOF' >/etc/nginx/sites-available/movie-tracker
+cat <<'EOF' >/etc/nginx/sites-available/anitracker
 server {
     listen 80 default_server;
     listen [::]:80 default_server;
     server_name _;
 
-    root /var/www/movie-tracker;
+    root /var/www/anitracker;
     index index.html;
 
     location / {
@@ -32,6 +38,6 @@ server {
 EOF
 
 rm -f /etc/nginx/sites-enabled/default
-ln -sf /etc/nginx/sites-available/movie-tracker /etc/nginx/sites-enabled/movie-tracker
+ln -sf /etc/nginx/sites-available/anitracker /etc/nginx/sites-enabled/anitracker
 nginx -t
 systemctl enable --now nginx
