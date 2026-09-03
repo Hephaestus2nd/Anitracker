@@ -4,7 +4,15 @@ INSERT INTO my_anime (mal_id, title, total_episodes, episodes_watched, watch_sta
 (40748, 'Jujutsu Kaisen 2nd Season', 23, 23, 'Completed', 'https://cdn.myanimelist.net/images/anime/1412/127999.jpg', NULL, 'The hidden past of Gojo and Geto comes to light, followed by the harrowing Shibuya Incident.'),
 (11061, 'Hunter x Hunter (2011)', 148, 40, 'Watching', 'https://cdn.myanimelist.net/images/anime/1337/99013.jpg', NULL, 'Gon Freecss aspires to become a Hunter in order to find his missing father.'),
 (52193, 'Akiba Maid War', 12, 0, 'Plan to Watch', 'https://cdn.myanimelist.net/images/anime/1448/126252.jpg', NULL, 'In 1999 Akihabara, a new maid joins a struggling maid cafe and discovers that the maid world is far more violent than it appears.'),
-(59260, 'Uma Musume: Cinderella Gray', 13, 0, 'Plan to Watch', 'https://cdn.myanimelist.net/images/anime/1175/147255.jpg', NULL, 'A local Uma Musume from Kasamatsu races toward the national stage and strives to become the fastest legend in Japan.');
+(59260, 'Uma Musume: Cinderella Gray', 13, 0, 'Plan to Watch', 'https://cdn.myanimelist.net/images/anime/1175/147255.jpg', NULL, 'A local Uma Musume from Kasamatsu races toward the national stage and strives to become the fastest legend in Japan.')
+ON CONFLICT (mal_id) DO UPDATE SET
+	title = EXCLUDED.title,
+	total_episodes = EXCLUDED.total_episodes,
+	episodes_watched = EXCLUDED.episodes_watched,
+	watch_status = EXCLUDED.watch_status,
+	cover_image_url = EXCLUDED.cover_image_url,
+	background_image_url = EXCLUDED.background_image_url,
+	synopsis = EXCLUDED.synopsis;
 
 
 

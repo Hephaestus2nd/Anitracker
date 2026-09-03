@@ -46,7 +46,7 @@ This provisions the three machines and runs the API and frontend services automa
 
 Vagrant runs one script on each VM during `vagrant up`:
 
-- `provision/db_provision.sh` installs PostgreSQL, creates the `Anitracker` database and `app_user`, allows connections from the private network, and loads `schema.sql` and `seed_data.sql`.
+- `provision/db_provision.sh` installs PostgreSQL, creates the `anitracker` database and `app_user`, allows connections from the private network, and loads `schema.sql` and `seed_data.sql`.
 - `provision/api_provision.sh` installs Java and Gradle, copies the backend to `/opt/anitracker`, builds the distribution, and starts `anitracker-api.service`.
 - `provision/web_provision.sh` installs Nginx and Node.js, builds the Vue frontend with `npm ci` and `npm run build`, and serves the generated `dist` files from `/var/www/anitracker`.
 
@@ -56,7 +56,7 @@ To run provisioning again after changing a script:
 vagrant provision
 ```
 
-The database script is intended for a fresh database. Re-running it after the schema and seed data already exist may fail because the SQL files create objects and insert records without duplicate guards. Use `vagrant destroy -f` followed by `vagrant up` for a clean rebuild.
+The database script can be run repeatedly: the schema creation is guarded and the seed data uses conflict handling for existing anime records.
 
 ## Verification
 
@@ -64,7 +64,7 @@ After deployment, verify the VMs and request flow:
 
 ```bash
 vagrant status
-vagrant ssh db -- 'psql -h localhost -U app_user -d Anitracker -c "SELECT mal_id, title, watch_status FROM my_anime;"'
+vagrant ssh db -- 'psql -h localhost -U app_user -d anitracker -c "SELECT mal_id, title, watch_status FROM my_anime;"'
 vagrant ssh api -- 'curl -s http://localhost:8080/health'
 vagrant ssh web -- 'curl -s http://localhost/api/anime | head'
 curl -I http://localhost:8080
