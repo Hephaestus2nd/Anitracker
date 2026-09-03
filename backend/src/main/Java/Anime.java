@@ -1,8 +1,5 @@
-
-
-
 public class Anime {
-    private int id;
+    
     private Integer malId;
     private String title;
     private Integer totalEpisodes;
@@ -11,13 +8,7 @@ public class Anime {
     private String coverImageUrl;
     private String synopsis;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+   
 
     public Integer getMalId() {
         return malId;

@@ -1,7 +1,6 @@
-
 public class Episode {
     private int id;
-    private int animeId;
+    private int malId;
     private int episodeNumber;
     private String notes;
     private String createdAt;
@@ -14,12 +13,12 @@ public class Episode {
         this.id = id;
     }
 
-    public int getAnimeId() {
-        return animeId;
+    public int getMalId() {
+        return malId;
     }
 
-    public void setAnimeId(int animeId) {
-        this.animeId = animeId;
+    public void setMalId(int malId) {
+        this.malId = malId;
     }
 
     public int getEpisodeNumber() {

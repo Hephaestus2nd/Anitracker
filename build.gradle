@@ -22,7 +22,7 @@ repositories {
 sourceSets {
     main {
         java {
-            srcDirs = ['backend/src/main/java']
+            srcDirs = ['backend/src/main/Java']
         }
     }
 }

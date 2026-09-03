@@ -15,17 +15,17 @@ public class AnimeTrackerApp extends Jooby {
         jdbi.installPlugin(new SqlObjectPlugin());
         AnimeJdbiDAO animeDao = jdbi.onDemand(AnimeJdbiDAO.class);
 
-        get("/health", () -> Map.of(
+        get("/health", ctx -> Map.of(
             "status", "ok",
             "database", "connected",
             "service", "anime-tracker"
         ));
 
-        get("/anime", () -> animeDao.getAllAnime());
+        get("/anime", ctx -> animeDao.getAllAnime());
 
-        get("/anime/{id}", ctx -> {
-            int id = ctx.path("id").intValue();
-            Anime anime = animeDao.getAnimeById(id);
+        get("/anime/{malId}", ctx -> {
+            int malId = ctx.path("malId").intValue();
+            Anime anime = animeDao.getAnimeByMalId(malId);
             if (anime == null) {
                 ctx.setResponseCode(StatusCode.NOT_FOUND);
                 return Map.of("error", "Anime not found");
@@ -35,8 +35,8 @@ public class AnimeTrackerApp extends Jooby {
 
         post("/anime", ctx -> {
             Anime anime = ctx.body(Anime.class);
-            int generatedId = animeDao.insertAnime(anime);
-            return animeDao.getAnimeById(generatedId);
+            animeDao.insertAnime(anime);
+            return animeDao.getAnimeByMalId(anime.getMalId());
         });
     }
 

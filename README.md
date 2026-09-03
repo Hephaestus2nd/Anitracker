@@ -48,7 +48,7 @@ After deployment, verify the VMs and request flow:
 
 ```bash
 vagrant status
-vagrant ssh db -- 'psql -h localhost -U app_user -d movietracker -c "SELECT id, title, watch_status FROM my_anime;"'
+vagrant ssh db -- 'psql -h localhost -U app_user -d movietracker -c "SELECT mal_id, title, watch_status FROM my_anime;"'
 vagrant ssh api -- 'curl -s http://localhost:8080/health'
 vagrant ssh web -- 'curl -s http://localhost/api/anime | head'
 ```
