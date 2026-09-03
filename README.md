@@ -1,4 +1,4 @@
-# Internet Movie Database
+# Anitracker
 
 This repository implements a three-VM application for tracking anime watchlists. The database VM stores the persistent catalogue, the API VM serves the application logic, and the web VM presents a simple interface for end users.
 
@@ -42,18 +42,43 @@ vagrant up
 
 This provisions the three machines and runs the API and frontend services automatically.
 
+## Provisioning scripts
+
+Vagrant runs one script on each VM during `vagrant up`:
+
+- `provision/db_provision.sh` installs PostgreSQL, creates the `Anitracker` database and `app_user`, allows connections from the private network, and loads `schema.sql` and `seed_data.sql`.
+- `provision/api_provision.sh` installs Java and Gradle, copies the backend to `/opt/anitracker`, builds the distribution, and starts `anitracker-api.service`.
+- `provision/web_provision.sh` installs Nginx and Node.js, builds the Vue frontend with `npm ci` and `npm run build`, and serves the generated `dist` files from `/var/www/anitracker`.
+
+To run provisioning again after changing a script:
+
+```bash
+vagrant provision
+```
+
+The database script is intended for a fresh database. Re-running it after the schema and seed data already exist may fail because the SQL files create objects and insert records without duplicate guards. Use `vagrant destroy -f` followed by `vagrant up` for a clean rebuild.
+
 ## Verification
 
 After deployment, verify the VMs and request flow:
 
 ```bash
 vagrant status
-vagrant ssh db -- 'psql -h localhost -U app_user -d movietracker -c "SELECT mal_id, title, watch_status FROM my_anime;"'
+vagrant ssh db -- 'psql -h localhost -U app_user -d Anitracker -c "SELECT mal_id, title, watch_status FROM my_anime;"'
 vagrant ssh api -- 'curl -s http://localhost:8080/health'
 vagrant ssh web -- 'curl -s http://localhost/api/anime | head'
+curl -I http://localhost:8080
 ```
 
 The database should show seeded anime entries, the API should return a health payload, and the web VM should return anime data through the proxied `/api` route.
+
+Useful service checks from the relevant VM:
+
+```bash
+vagrant ssh api -- 'systemctl status anitracker-api.service --no-pager'
+vagrant ssh api -- 'journalctl -u anitracker-api.service -n 50 --no-pager'
+vagrant ssh web -- 'nginx -t'
+```
 
 ## Removal
 
@@ -74,7 +99,7 @@ Example rebuild command:
 
 ```bash
 vagrant reload api
-vagrant ssh api -- 'cd /opt/movie-tracker && gradle build && systemctl restart movie-tracker-api.service'
+vagrant ssh api -- 'cd /opt/anitracker && gradle build && systemctl restart anitracker-api.service'
 ```
 
 ## Repository notes

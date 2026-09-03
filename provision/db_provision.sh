@@ -31,11 +31,11 @@ sudo -u postgres psql -d Anitracker -f /vagrant/seed_data.sql
 
 systemctl restart postgresql
 
-cat <<'EOF' >/etc/profile.d/movie-db-env.sh
+cat <<'EOF' >/etc/profile.d/anitracker-db-env.sh
 export DB_HOST=192.168.56.10
 export DB_NAME=Anitracker
 export DB_USER=app_user
 export DB_PASSWORD=AppPass123
 EOF
 
-chmod 0644 /etc/profile.d/movie-db-env.sh
+chmod 0644 /etc/profile.d/anitracker-db-env.sh

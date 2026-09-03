@@ -12,6 +12,7 @@ java {
 }
 
 application {
+ applicationName = 'anitracker'
     mainClass = 'app.AnimeTrackerApp'
 }
 
