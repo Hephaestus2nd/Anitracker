@@ -115,7 +115,18 @@ div {
     }
 
     &.status-section {
+        display: grid;
+        grid-template-columns: 1fr 2fr 1fr;
+        align-items: center;
+        gap: var(--default-margin-value);
 
+        > p {
+            text-align: right;
+        }
+
+        > div.status-badge {
+            justify-self: start;
+        }
     }
 }
 </style>
