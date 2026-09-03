@@ -1,16 +1,24 @@
 <script setup>
+import { computed } from 'vue'
+
 const props = defineProps({
-    progressInPercent: {
-        type: Number,
+    animeData: {
+        type: Object,
         required: true
     }
+})
+
+const progressPercentage = computed(() => {
+    if (!props.animeData.totalEpisodes || props.animeData.totalEpisodes === 0) return 0
+    return Math.ceil((props.animeData.episodesWatched / props.animeData.totalEpisodes) * 100)
 })
 </script>
 
 <template>
     <div class="progress-bar-container">
-        <div class="progress-bg">{{ progressInPercent + '%'}}</div>
+        <div class="progress-bg"></div>
         <div class="progress-bar"></div>
+        <div class="progress-text">{{ progressPercentage + '%'}} ({{ animeData.episodesWatched }} out of {{ animeData.totalEpisodes }})</div>
     </div>
 </template>
 
@@ -29,12 +37,15 @@ div.progress-bar-container {
 
     > div.progress-bar {
         background: var(--color-secondary-light);
-        width: v-bind('progressInPercent + "%"');
+        width: v-bind('progressPercentage + "%"');
     }
 
     > div.progress-bg {
         width: 100%;
         background: var(--color-secondary);
+    }
+
+    > div.progress-text {
         text-align: center;
         line-height: 1.4;
         font-size: 0.75rem;
@@ -42,6 +53,4 @@ div.progress-bar-container {
         user-select: none;
     }
 }
-
-
 </style>

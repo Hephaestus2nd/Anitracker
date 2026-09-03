@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch, computed } from 'vue'
+import { ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import MiniProgressBar from './components/MiniProgressBar.vue'
 
@@ -56,10 +56,7 @@ watch(() => currRoute.params.id, (newId) => {
     fetchAnimeData(newId)
 })
 
-const progressPercentage = computed(() => {
-    if (!animeData.value.totalEpisodes || animeData.value.totalEpisodes === 0) return 0
-    return Math.ceil((animeData.value.episodesWatched / animeData.value.totalEpisodes) * 100)
-})
+
 
 
 
@@ -104,9 +101,8 @@ const progressPercentage = computed(() => {
             <header>
                 <h1>{{ animeData.title }}</h1>
                 <div class="status-section">
-                    <MiniProgressBar :progress-in-percent="progressPercentage" />
+                    <MiniProgressBar :anime-data="animeData" />
                     <div class="status-badge">{{ animeData.watchStatus }}</div>
-                    <p>Watched {{ animeData.episodesWatched }} out of {{ animeData.totalEpisodes }}</p>
                 </div>
             </header>
 
@@ -154,7 +150,7 @@ div {
 
     &.status-section {
         display: grid;
-        grid-template-columns: 1fr 2fr 1fr;
+        grid-template-columns: 1fr auto;
         align-items: center;
         gap: var(--default-margin-value);
 
