@@ -20,8 +20,8 @@ After=network.target
 
 [Service]
 WorkingDirectory=/opt/anitracker
-ExecStart=/opt/anitracker/build/install/Anitracker/bin/Anitracker
-Environment=DB_URL=jdbc:postgresql://192.168.56.10:5432/Anitracker
+ExecStart=/opt/anitracker/build/install/anitracker/bin/anitracker
+Environment=DB_URL=jdbc:postgresql://192.168.56.10:5432/anitracker
 Environment=DB_USER=app_user
 Environment=DB_PASSWORD=AppPass123
 Restart=always
