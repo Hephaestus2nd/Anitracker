@@ -4,7 +4,7 @@ import { RouterLink } from 'vue-router';
 
 <template>
     <RouterLink to="/">
-        <div class="baybayin">ᜀᜈᜒᜆ᜕ᜍᜃ</div>
+        <div class="baybayin">ᜀᜈᜒᜆ᜕ᜍᜃ</div> <!-- A-ni-t-ra-ka -->
         <div class="logo-text">Anitracker</div>
     </RouterLink>
 </template>
