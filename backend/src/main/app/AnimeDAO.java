@@ -1,12 +1,11 @@
-package main.java;
-
+package app;
 import java.util.List;
 
 public interface AnimeDAO {
 
     List<Anime> getAllAnime();
 
-    Anime getAnimeById(int id);
+    Anime getAnimeByMalId(int malId);
 
     Anime getAnimeByTitle(String title);
 
@@ -14,5 +13,5 @@ public interface AnimeDAO {
 
     void updateAnime(Anime anime);
 
-    void deleteAnime(int id);
+    void deleteAnime(int malId);
 }

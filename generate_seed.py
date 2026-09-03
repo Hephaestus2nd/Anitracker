@@ -7,7 +7,7 @@ anime_ids = [52991, 40748, 11061, 9253] # Frieren, JJK, HxH, Steins;Gate
 
 sql_statements = []
 sql_statements.append("-- Auto-generated seed data from Jikan API\n")
-sql_statements.append("INSERT INTO my_anime (mal_id, title, total_episodes, cover_image_url, synopsis) VALUES")
+sql_statements.append("INSERT INTO my_anime (mal_id, title, total_episodes, cover_image_url, background_image_url, synopsis) VALUES")
 
 values_list = []
 
@@ -24,10 +24,13 @@ for mal_id in anime_ids:
         title = data['title'].replace("'", "''") # Escape single quotes for SQL
         episodes = data['episodes'] or 0
         image_url = data['images']['jpg']['large_image_url']
-        synopsis = data['synopsis'].replace("'", "''")
+        trailer_images = data.get('trailer', {}).get('images', {})
+        background_image_url = trailer_images.get('maximum_image_url')
+        background_sql = f"'{background_image_url}'" if background_image_url else "NULL"
+        synopsis = (data['synopsis'] or '').replace("'", "''")
         
         # Format as a SQL tuple
-        values_list.append(f"({mal_id}, '{title}', {episodes}, '{image_url}', '{synopsis}')")
+        values_list.append(f"({mal_id}, '{title}', {episodes}, '{image_url}', {background_sql}, '{synopsis}')")
         print(f"Downloaded: {title}")
         
     # Jikan allows 3 requests per second; sleeping ensures we don't hit rate limits
