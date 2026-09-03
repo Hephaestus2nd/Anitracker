@@ -1,6 +1,7 @@
 <script setup>
 import { ref, watch, computed } from 'vue'
 import { useRoute } from 'vue-router'
+import MiniProgressBar from './components/MiniProgressBar.vue'
 
 const currRoute = useRoute()
 const animeData = ref(null)
@@ -57,7 +58,7 @@ watch(() => currRoute.params.id, (newId) => {
 
 const progressPercentage = computed(() => {
     if (!animeData.value.totalEpisodes || animeData.value.totalEpisodes === 0) return 0
-    return (animeData.value.episodesWatched / animeData.value.totalEpisodes) * 100
+    return Math.ceil((animeData.value.episodesWatched / animeData.value.totalEpisodes) * 100)
 })
 
 
@@ -103,7 +104,7 @@ const progressPercentage = computed(() => {
             <header>
                 <h1>{{ animeData.title }}</h1>
                 <div class="status-section">
-                    <div class="progress-bar">{{ progressPercentage + '%'}}</div>
+                    <MiniProgressBar :progress-in-percent="progressPercentage" />
                     <div class="status-badge">{{ animeData.watchStatus }}</div>
                     <p>Watched {{ animeData.episodesWatched }} out of {{ animeData.totalEpisodes }}</p>
                 </div>
@@ -164,19 +165,6 @@ div {
         > div.status-badge {
             justify-self: start;
         }
-    }
-
-    &.progress-bar {
-        width: 100%;
-        height: 1rem;
-        border-radius: var(--default-border-radius);
-        background: var(--color-secondary-light);
-        text-align: center;
-        line-height: 1.4;
-        font-size: 0.75rem;
-        font-weight: bold;
-        width: max(v-bind('progressPercentage + "%"'), 14%);
-        user-select: none;
     }
 }
 </style>
