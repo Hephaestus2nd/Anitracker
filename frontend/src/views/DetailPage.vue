@@ -96,6 +96,8 @@ watch(() => currRoute.params.id, (newId) => {
 
         <div class="cover-section">
             <img class="cover-pic" :src="animeData.coverImageUrl" :alt="animeData.title">
+            <button class="emphasis">Update</button>
+            <button>Delete</button>
         </div>
 
         <section class="user-data">
@@ -137,6 +139,9 @@ div {
         margin-left: var(--margin-side);
         margin-right: var(--margin-side);
         margin-top: calc(-4 * var(--margin-side));
+        display: grid;
+        grid-template-rows: repeat(3, auto);
+        gap: 0.5rem;
     }
 
     > img {
