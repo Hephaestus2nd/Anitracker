@@ -1,7 +1,7 @@
 <script setup>
 const props = defineProps({
     animeData: {
-        type: Object,
+        type: Object, // Must match the same format as the schema
         required: true
     }
 })
@@ -9,10 +9,9 @@ const props = defineProps({
 
 <template>
     <div class="card">
-        <RouterLink to="/anime/akiba-maid-war">
-            <img src="https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx151379-JxxgTgSViXZL.png"
-                alt="Akiba Maid War" />
-            <div class="anime-title">Akiba Maid War</div>
+        <RouterLink :to="`/anime/${animeData.malId}`">
+            <img :src="animeData.coverImageUrl" :alt="animeData.title" />
+            <div class="anime-title">{{ animeData.title }}</div>
         </RouterLink>
     </div>
 </template>
