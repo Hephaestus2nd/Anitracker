@@ -2,6 +2,7 @@
 import { ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import MiniProgressBar from './components/MiniProgressBar.vue'
+import StatusBadge from './components/StatusBadge.vue'
 
 const currRoute = useRoute()
 const animeData = ref(null)
@@ -102,7 +103,7 @@ watch(() => currRoute.params.id, (newId) => {
                 <h1>{{ animeData.title }}</h1>
                 <div class="status-section">
                     <MiniProgressBar :anime-data="animeData" />
-                    <div class="status-badge">{{ animeData.watchStatus }}</div>
+                    <StatusBadge :anime-data="animeData" />
                 </div>
             </header>
 
@@ -156,15 +157,6 @@ div {
 
         > p {
             text-align: right;
-        }
-
-        > div.status-badge {
-            font-size: var(--small-font-size);
-            font-weight: bold;
-            text-transform: uppercase;
-            border: 1px solid var(--color-secondary-light);
-            border-radius: var(--default-border-radius);
-            padding: 2px 6px;
         }
     }
 }
