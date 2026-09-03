@@ -38,7 +38,7 @@ tasks.withType(JavaCompile).configureEach {
 }
 
 jar {
-    archiveBaseName = 'movie-tracker'
+    archiveBaseName = 'Anitracker'
     manifest {
         attributes 'Main-Class': 'app.AnimeTrackerApp'
     }
