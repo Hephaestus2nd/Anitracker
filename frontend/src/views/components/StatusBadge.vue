@@ -25,6 +25,7 @@ div.status-badge {
     border: 1px solid var(--color-secondary-light);
     border-radius: var(--default-border-radius);
     padding: 2px 6px;
+    user-select: none;
 
     &.completed {
         background: var(--color-secondary-light);
