@@ -1,0 +1,46 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group = 'com.cosc349'
+version = '1.0.0'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+application {
+    mainClass = 'AnimeTrackerApp'
+}
+
+repositories {
+    mavenCentral()
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['backend/src/main/java']
+        }
+    }
+}
+
+dependencies {
+    implementation 'org.jdbi:jdbi3-core:3.45.1'
+    implementation 'org.jdbi:jdbi3-sqlobject:3.45.1'
+    implementation 'org.postgresql:postgresql:42.7.4'
+    implementation 'io.jooby:jooby-netty:3.1.0'
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+jar {
+    archiveBaseName = 'movie-tracker'
+    manifest {
+        attributes 'Main-Class': 'AnimeTrackerApp'
+    }
+}

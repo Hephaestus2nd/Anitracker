@@ -1,2 +1,100 @@
-# Internet_Movie_Database
-Its literallly Imdb
+# Internet Movie Database
+
+This repository implements a three-VM application for tracking anime watchlists. The database VM stores the persistent catalogue, the API VM serves the application logic, and the web VM presents a simple interface for end users.
+
+## Architecture
+
+- Database VM: PostgreSQL instance on `192.168.56.10`.
+  - Stores the `my_anime` table and seeded demo records.
+  - Handles durable application state.
+- API VM: Java + Jooby service on `192.168.56.11:8080`.
+  - Reads and writes the persisted list via JDBC.
+  - Exposes `/health`, `/anime`, and `/anime/{id}` endpoints.
+- Web VM: Nginx + Vue frontend on `192.168.56.12` and host port `8080`.
+  - Renders a lightweight UI from the API results.
+  - Proxies `/api` requests to the Java service.
+
+## Tools used
+
+- Vagrant: provisions and wires the three VMs from one configuration file.
+- VirtualBox: the local hypervisor used by Vagrant to create the guest machines.
+- PostgreSQL: persistent relational storage for important application data.
+- Java 17 + Jooby: backend API and business logic.
+- Vue + Vite: browser UI for a user-friendly interface.
+- Nginx: static file serving and reverse proxy.
+
+## Supported host environment
+
+- Host OS: Ubuntu, Debian, or macOS with VirtualBox and Vagrant installed.
+- Required versions:
+  - Vagrant 2.4+
+  - VirtualBox 7.x+
+  - Node.js 22+ for local frontend rebuilds
+  - Java 17+
+
+## One-command deployment
+
+From the repository root:
+
+```bash
+vagrant up
+```
+
+This provisions the three machines and runs the API and frontend services automatically.
+
+## Verification
+
+After deployment, verify the VMs and request flow:
+
+```bash
+vagrant status
+vagrant ssh db -- 'psql -h localhost -U app_user -d movietracker -c "SELECT id, title, watch_status FROM my_anime;"'
+vagrant ssh api -- 'curl -s http://localhost:8080/health'
+vagrant ssh web -- 'curl -s http://localhost/api/anime | head'
+```
+
+The database should show seeded anime entries, the API should return a health payload, and the web VM should return anime data through the proxied `/api` route.
+
+## Removal
+
+```bash
+vagrant destroy -f
+```
+
+## Representative developer change
+
+A realistic change is adding a new field like `score` to the catalog and displaying it in the web UI.
+
+1. Update the PostgreSQL schema and seed file.
+2. Extend the `Anime` bean and JDBI mapper.
+3. Rebuild the service on the API VM with `gradle build` and restart the service.
+4. Refresh the frontend and reload the browser to confirm the new field appears.
+
+Example rebuild command:
+
+```bash
+vagrant reload api
+vagrant ssh api -- 'cd /opt/movie-tracker && gradle build && systemctl restart movie-tracker-api.service'
+```
+
+## Repository notes
+
+- `Vagrantfile` defines the three-machine topology.
+- `provision/*.sh` installs the packages and configures each VM.
+- `schema.sql` and `seed_data.sql` provide the seeded demonstration data.
+- `backend` holds the API logic and database access layer.
+- `frontend` contains the user-facing Vue application.
+
+## AI and attribution statement
+
+This project was built with standard Git and local project files. No external AI-generated code was used as the primary implementation; the repository work was created and verified by the project team. Any reused ideas are limited to the project’s own original implementation and standard library examples.
+
+## Design justification
+
+The storage responsibility is isolated to PostgreSQL so the database remains authoritative and durable. The API VM handles business logic and network-facing requests, while the web VM focuses on presentation and user interaction. Keeping these tasks separate makes the system easier to scale, debug, and redeploy than a single-server monolith.
+
+The tradeoff is extra complexity: three VMs require more provisioning, more network configuration, and more attention to service startup order. In exchange, the architecture is clearer, more resilient, and closer to a real production deployment pattern.
+
+## Evidence and redevelopment notes
+
+A successful rebuild should produce a working backend API and at least one backed request returning seeded data. A clean deployment is reproducible via `vagrant up`, and a full teardown is handled through `vagrant destroy -f`.

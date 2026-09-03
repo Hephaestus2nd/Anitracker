@@ -119,3 +119,8 @@ web_modules/
 # Production build output (Vite default)
 dist/
 dist-ssr/
+
+
+# NetBeans build output
+build/
+nbproject/private/

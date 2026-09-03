@@ -1,0 +1,46 @@
+import java.util.Map;
+
+import io.jooby.Jooby;
+import io.jooby.StatusCode;
+import org.jdbi.v3.core.Jdbi;
+import org.jdbi.v3.sqlobject.SqlObjectPlugin;
+
+public class AnimeTrackerApp extends Jooby {
+    public AnimeTrackerApp() {
+        String dbUrl = System.getenv().getOrDefault("DB_URL", "jdbc:postgresql://192.168.56.10:5432/movietracker");
+        String dbUser = System.getenv().getOrDefault("DB_USER", "app_user");
+        String dbPassword = System.getenv().getOrDefault("DB_PASSWORD", "AppPass123");
+
+        Jdbi jdbi = Jdbi.create(dbUrl, dbUser, dbPassword);
+        jdbi.installPlugin(new SqlObjectPlugin());
+        AnimeJdbiDAO animeDao = jdbi.onDemand(AnimeJdbiDAO.class);
+
+        get("/health", () -> Map.of(
+            "status", "ok",
+            "database", "connected",
+            "service", "anime-tracker"
+        ));
+
+        get("/anime", () -> animeDao.getAllAnime());
+
+        get("/anime/{id}", ctx -> {
+            int id = ctx.path("id").intValue();
+            Anime anime = animeDao.getAnimeById(id);
+            if (anime == null) {
+                ctx.setResponseCode(StatusCode.NOT_FOUND);
+                return Map.of("error", "Anime not found");
+            }
+            return anime;
+        });
+
+        post("/anime", ctx -> {
+            Anime anime = ctx.body(Anime.class);
+            int generatedId = animeDao.insertAnime(anime);
+            return animeDao.getAnimeById(generatedId);
+        });
+    }
+
+    public static void main(String[] args) {
+        Jooby.runApp(args, AnimeTrackerApp::new);
+    }
+}
