@@ -139,9 +139,14 @@ div {
         margin-left: var(--margin-side);
         margin-right: var(--margin-side);
         margin-top: calc(-4 * var(--margin-side));
-        display: grid;
-        grid-template-rows: repeat(3, auto);
-        gap: 0.5rem;
+        display: inline-flex;
+        flex-direction: column;
+        gap: var(--default-margin-value);
+        min-width: 128px;
+        
+        > * {
+            flex-shrink: 0;
+        }
     }
 
     > img {
