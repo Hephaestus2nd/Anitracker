@@ -40,9 +40,8 @@ for attempt in $(seq 1 30); do
   fi
   sleep 1
 done
-
-sudo -u postgres psql -d "$DB_NAME" -f /vagrant/schema.sql
-sudo -u postgres psql -d "$DB_NAME" -f /vagrant/seed_data.sql
+sudo -u postgres psql -v ON_ERROR_STOP=1 -d "$DB_NAME" -f /vagrant/schema.sql
+sudo -u postgres psql -v ON_ERROR_STOP=1 -d "$DB_NAME" -f /vagrant/seed_data.sql
 
 cat <<'EOF' >/etc/profile.d/anitracker-db-env.sh
 export DB_HOST=192.168.56.10
