@@ -18,11 +18,23 @@ public class AnimeTrackerApp extends Jooby {
         jdbi.installPlugin(new SqlObjectPlugin());
         AnimeJdbiDAO animeDao = jdbi.onDemand(AnimeJdbiDAO.class);
 
-        get("/health", ctx -> Map.of(
-            "status", "ok",
-            "database", "connected",
-            "service", "anime-tracker"
-        ));
+        get("/health", ctx -> {
+            try {
+                jdbi.withHandle(handle -> handle.createQuery("SELECT 1").mapTo(Integer.class).one());
+                return Map.of(
+                    "status", "ok",
+                    "database", "connected",
+                    "service", "anime-tracker"
+                );
+            } catch (RuntimeException exception) {
+                ctx.setResponseCode(StatusCode.SERVICE_UNAVAILABLE);
+                return Map.of(
+                    "status", "error",
+                    "database", "unavailable",
+                    "service", "anime-tracker"
+                );
+            }
+        });
 
         get("/anime", ctx -> animeDao.getAllAnime());
 
