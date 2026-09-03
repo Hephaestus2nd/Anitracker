@@ -1,5 +1,6 @@
 <script setup>
 import AddIcon from '@/assets/AddIcon.vue';
+import CardShowTemplate from './components/card_templates/CardShowTemplate.vue';
 
 </script>
 
@@ -16,35 +17,12 @@ import AddIcon from '@/assets/AddIcon.vue';
         </header>
 
         <div class="card-grid-container">
-            <div class="card">
-                <RouterLink to="/api/akiba-maid-war">
-                    <img src="https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx151379-JxxgTgSViXZL.png" alt="Akiba Maid War" />
-                    <div class="anime-title">Akiba Maid War</div>
-                </RouterLink>
-            </div>
+            <CardShowTemplate />
         </div>
     </section>
 </template>
 
 <style scoped>
-div.card {
-    padding: 0;
-
-    > a {
-        display: inline-grid;
-        grid-template-rows: auto 1fr;
-        justify-items: center;
-        color: var(--color-text);
-
-        > div.anime-title {
-            padding: 8px;
-            font-weight: bold;
-            text-align: center;
-        }
-    }
-}
-
-
 section.main-list {
     width: 100%;
 
