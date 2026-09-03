@@ -85,6 +85,16 @@ button {
     }
 }
 
+img.cover-pic {
+    aspect-ratio: 2 / 3; /* Based from Anilist */
+    width: 100%;
+}
+
+img.banner {
+    aspect-ratio: 19 / 4; /* Based from Anilist */
+    width: 100%;
+}
+
 .logo-text {
     font-family: 'Space Grotesk', 'Raleway', sans-serif;
     font-weight: 900;
