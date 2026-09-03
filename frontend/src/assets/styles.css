@@ -1,0 +1,128 @@
+:root {
+    /* Palette: https://icolorpalette.com/p/557008 */
+    --color-primary: #6F13BF;
+    --color-secondary: #410179;
+    --color-secondary-light: #833FBF;
+    --bg: #270B3C;
+    --light-font-color: #F5F3FF; /* Soft white */
+    --muted-light-font-color: #AD77DC;
+
+    --default-border-radius: 8px;
+    --default-margin-value: 16px;
+    --max-width: 1080px;
+
+    --hover-shadow:
+        0 0 4px var(--color-secondary-light),
+        0 0 10px var(--color-secondary),
+        0 0 20px var(--color-secondary);
+}
+
+* {
+    font-family: "Raleway", Arial, sans-serif;
+}
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--light-font-color);
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+main {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    
+    /* Full Width (100%) - (Margin_L and Margin_R) */
+    width: min(100% - (2 * var(--default-margin-value)), var(--max-width));
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    margin-bottom: var(--default-margin-value)
+}
+
+h1 {
+    font-size: 3.5rem;
+}
+
+header, section, footer, p {
+    margin-bottom: var(--default-margin-value)
+}
+
+a { 
+    color: var(--muted-light-font-color); 
+    text-decoration: none;
+    transition: text-shadow 0.3s ease;
+
+    &:hover {
+        text-shadow: var(--hover-shadow);
+    }
+}
+
+button {
+    height: 2.25rem;
+    padding: 0 15px;
+    border-radius: var(--default-border-radius);
+    border: 1px solid var(--color-secondary-light);
+    background: none;
+    cursor: pointer;
+    color: var(--light-font-color);
+    transition: background 0.3s;
+    font-size: inherit;
+    font-weight: regular;
+    transition: box-shadow 0.2s;
+
+    &.emphasis {
+        background: var(--color-primary);
+        border-color: rgb(0, 0, 0, 0); /* Hack to maintain button size */
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    &:hover {
+        box-shadow: var(--hover-shadow)
+    }
+}
+
+.logo-text {
+    font-family: 'Space Grotesk', 'Raleway', sans-serif;
+    font-weight: 900;
+    text-transform: uppercase;
+    transform: scaleY(1.1);
+}
+
+.icon-span-container {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.icon {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0; /* For buttons */
+}
+
+.card-grid-container {
+    display: grid;
+    /* 
+    One-line trick for responsive grid (no massive media queries):
+    - min = min(100%, 128px) means the minimum recommended width is 128px but shrinks if the actual width is even lower
+    - minmax(min, 1fr) means always use min; if there are more available space, stretch to 1fr
+    - auto-fill means fill the row with as many columns as possible since we don't know the no. of cols. beforehand
+    */
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 128px), 1fr));
+    gap: var(--default-margin-value);
+}
+
+.card {
+    background: var(--color-secondary);
+    border-radius: var(--default-border-radius);
+    padding: 16px 24px;
+
+    a > img {
+        aspect-ratio: 2 / 3;
+        width: 100%;
+    }
+}
