@@ -120,9 +120,4 @@ button {
     background: var(--color-secondary);
     border-radius: var(--default-border-radius);
     padding: 16px 24px;
-
-    a > img {
-        aspect-ratio: 2 / 3;
-        width: 100%;
-    }
 }
