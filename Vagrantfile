@@ -2,6 +2,7 @@
 # vi: set ft=ruby :
 
 Vagrant.configure("2") do |config|
+    config.vm.boot_timeout = 600
   config.vm.box = "ubuntu/jammy64"
   config.vm.synced_folder ".", "/vagrant", disabled: false
   config.vm.provider "virtualbox" do |vb|

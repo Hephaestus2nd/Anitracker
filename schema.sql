@@ -1,5 +1,24 @@
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1
+        FROM pg_type
+        WHERE typname = 'watch_status'
+    ) THEN
+        CREATE TYPE watch_status AS ENUM (
+            'Watching',
+            'Completed',
+            'On Hold',
+            'Dropped',
+            'Plan to Watch'
+        );
+    END IF;
+END
+$$;
 
-CREATE TYPE if not exists watch_status AS ENUM (
+
+
+CREATE TYPE watch_status AS ENUM (
     'Watching',
     'Completed',
     'On Hold',
