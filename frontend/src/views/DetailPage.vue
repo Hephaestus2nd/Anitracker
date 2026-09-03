@@ -98,7 +98,7 @@ watch(() => currRoute.params.id, (newId) => {
             <header>
                 <h1>{{ animeData.title }}</h1>
                 <div class="status-section">
-                    <div class="progress-bar"></div>
+                    <div class="progress-bar" style="width: 50%"></div>
                     <div class="status-badge">{{ animeData.watchStatus }}</div>
                     <p>Watched {{ animeData.episodesWatched }} out of {{ animeData.totalEpisodes }}</p>
                 </div>
@@ -159,6 +159,13 @@ div {
         > div.status-badge {
             justify-self: start;
         }
+    }
+
+    &.progress-bar {
+        width: 100%;
+        height: 1rem;
+        border-radius: var(--default-border-radius);
+        background: var(--color-secondary-light);
     }
 }
 </style>
