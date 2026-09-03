@@ -95,12 +95,28 @@ watch(() => currRoute.params.id, (newId) => {
         </div>
 
         <section class="user-data">
+            <header>
+                <h1>{{ animeData.title }}</h1>
+                <div class="status-section">
+                    <div class="progress-bar"></div>
+                    <div class="status-badge">{{ animeData.watchStatus }}</div>
+                    <p>Watched {{ animeData.episodesWatched }} out of {{ animeData.totalEpisodes }}</p>
+                </div>
+            </header>
 
+            <section>
+                <h2>Synopsis</h2>
+                <p>{{ animeData.synopsis }}</p>
+            </section>
         </section>
     </section>
 </template>
 
 <style scoped>
+h1 {
+    font-size: 3rem;
+}
+
 section.data-container {
     display: grid;
     grid-template-columns: 1fr 3fr;
@@ -128,6 +144,21 @@ div {
         position: relative; /* Need for the z-index to work */
         opacity: 0.5;
         z-index: -1; /* So as to not overlap */
+    }
+
+    &.status-section {
+        display: grid;
+        grid-template-columns: 1fr 2fr 1fr;
+        align-items: center;
+        gap: var(--default-margin-value);
+
+        > p {
+            text-align: right;
+        }
+
+        > div.status-badge {
+            justify-self: start;
+        }
     }
 }
 </style>
