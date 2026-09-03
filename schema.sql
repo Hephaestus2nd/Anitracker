@@ -12,7 +12,6 @@ CREATE TABLE if not exists my_anime (
     mal_id INT PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
     total_episodes INT,
-    score DECIMAL(4, 3) DEFAULT NULL,
     episodes_watched INT DEFAULT 0,
     watch_status watch_status DEFAULT 'Plan to Watch',
     cover_image_url VARCHAR(500),
