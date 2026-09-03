@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, watch, computed } from 'vue'
 import { useRoute } from 'vue-router'
 
 const currRoute = useRoute()
@@ -55,6 +55,11 @@ watch(() => currRoute.params.id, (newId) => {
     fetchAnimeData(newId)
 })
 
+const progressPercentage = computed(() => {
+    if (!animeData.value.totalEpisodes || animeData.value.totalEpisodes === 0) return 0
+    return (animeData.value.episodesWatched / animeData.value.totalEpisodes) * 100
+})
+
 
 
 // */
@@ -98,7 +103,7 @@ watch(() => currRoute.params.id, (newId) => {
             <header>
                 <h1>{{ animeData.title }}</h1>
                 <div class="status-section">
-                    <div class="progress-bar" style="width: 50%">50%</div>
+                    <div class="progress-bar">{{ progressPercentage + '%'}}</div>
                     <div class="status-badge">{{ animeData.watchStatus }}</div>
                     <p>Watched {{ animeData.episodesWatched }} out of {{ animeData.totalEpisodes }}</p>
                 </div>
@@ -167,9 +172,11 @@ div {
         border-radius: var(--default-border-radius);
         background: var(--color-secondary-light);
         text-align: center;
-        line-height: 1.2;
+        line-height: 1.4;
         font-size: 0.75rem;
         font-weight: bold;
+        width: max(v-bind('progressPercentage + "%"'), 14%);
+        user-select: none;
     }
 }
 </style>
