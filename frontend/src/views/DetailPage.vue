@@ -1,14 +1,15 @@
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, watch, computed } from 'vue'
 import { useRoute } from 'vue-router'
+import MiniProgressBar from './components/MiniProgressBar.vue'
 
 const currRoute = useRoute()
 const animeData = ref(null)
 
-const loading = ref(true)
+const loading = ref(false)
 const error = ref('')
 
-/* 
+
 
 const test = [
     {
@@ -55,30 +56,35 @@ watch(() => currRoute.params.id, (newId) => {
     fetchAnimeData(newId)
 })
 
+const progressPercentage = computed(() => {
+    if (!animeData.value.totalEpisodes || animeData.value.totalEpisodes === 0) return 0
+    return Math.ceil((animeData.value.episodesWatched / animeData.value.totalEpisodes) * 100)
+})
 
 
-*/
 
-async function fetchAnimeData(malId) {
-    loading.value = true
-    error.value = ''
-    try {
-        const response = await fetch(`/api/anime/${malId}`)
-        if (!response.ok) {
-            throw new Error('Anime not found')
-        }
-        animeData.value = await response.json()
-    } catch (fetchError) {
-        animeData.value = null
-        error.value = fetchError.message
-    } finally {
-        loading.value = false
-    }
-}
+// */
 
-watch(() => currRoute.params.id, (newId) => {
-    fetchAnimeData(newId)
-}, { immediate: true })
+// async function fetchAnimeData(malId) {
+//     loading.value = true
+//     error.value = ''
+//     try {
+//         const response = await fetch(`/api/anime/${malId}`)
+//         if (!response.ok) {
+//             throw new Error('Anime not found')
+//         }
+//         animeData.value = await response.json()
+//     } catch (fetchError) {
+//         animeData.value = null
+//         error.value = fetchError.message
+//     } finally {
+//         loading.value = false
+//     }
+// }
+
+// watch(() => currRoute.params.id, (newId) => {
+//     fetchAnimeData(newId)
+// }, { immediate: true })
 
 </script>
 
@@ -98,7 +104,7 @@ watch(() => currRoute.params.id, (newId) => {
             <header>
                 <h1>{{ animeData.title }}</h1>
                 <div class="status-section">
-                    <div class="progress-bar" style="width: 50%"></div>
+                    <MiniProgressBar :progress-in-percent="progressPercentage" />
                     <div class="status-badge">{{ animeData.watchStatus }}</div>
                     <p>Watched {{ animeData.episodesWatched }} out of {{ animeData.totalEpisodes }}</p>
                 </div>
@@ -159,13 +165,6 @@ div {
         > div.status-badge {
             justify-self: start;
         }
-    }
-
-    &.progress-bar {
-        width: 100%;
-        height: 1rem;
-        border-radius: var(--default-border-radius);
-        background: var(--color-secondary-light);
     }
 }
 </style>

@@ -41,7 +41,7 @@ vagrant up
 ```
 
 This provisions the three machines and runs the API and frontend services automatically.
-
+It might take a long time to start up. the API vm might take more than 10 minutes to the point that it may time out.
 ## Provisioning scripts
 
 Vagrant runs one script on each VM during `vagrant up`:
