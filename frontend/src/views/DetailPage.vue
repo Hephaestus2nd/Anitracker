@@ -162,6 +162,9 @@ div {
             font-size: var(--small-font-size);
             font-weight: bold;
             text-transform: uppercase;
+            border: 1px solid var(--color-secondary-light);
+            border-radius: var(--default-border-radius);
+            padding: 2px 6px;
         }
     }
 }
