@@ -164,10 +164,6 @@ div {
         grid-template-columns: 1fr auto;
         align-items: center;
         gap: var(--default-margin-value);
-
-        > p {
-            text-align: right;
-        }
     }
 }
 </style>
