@@ -5,10 +5,10 @@ import { useRoute } from 'vue-router'
 const currRoute = useRoute()
 const animeData = ref(null)
 
-const loading = ref(true)
+const loading = ref(false)
 const error = ref('')
 
-/* 
+
 
 const test = [
     {
@@ -57,28 +57,28 @@ watch(() => currRoute.params.id, (newId) => {
 
 
 
-*/
+// */
 
-async function fetchAnimeData(malId) {
-    loading.value = true
-    error.value = ''
-    try {
-        const response = await fetch(`/api/anime/${malId}`)
-        if (!response.ok) {
-            throw new Error('Anime not found')
-        }
-        animeData.value = await response.json()
-    } catch (fetchError) {
-        animeData.value = null
-        error.value = fetchError.message
-    } finally {
-        loading.value = false
-    }
-}
+// async function fetchAnimeData(malId) {
+//     loading.value = true
+//     error.value = ''
+//     try {
+//         const response = await fetch(`/api/anime/${malId}`)
+//         if (!response.ok) {
+//             throw new Error('Anime not found')
+//         }
+//         animeData.value = await response.json()
+//     } catch (fetchError) {
+//         animeData.value = null
+//         error.value = fetchError.message
+//     } finally {
+//         loading.value = false
+//     }
+// }
 
-watch(() => currRoute.params.id, (newId) => {
-    fetchAnimeData(newId)
-}, { immediate: true })
+// watch(() => currRoute.params.id, (newId) => {
+//     fetchAnimeData(newId)
+// }, { immediate: true })
 
 </script>
 
@@ -98,7 +98,7 @@ watch(() => currRoute.params.id, (newId) => {
             <header>
                 <h1>{{ animeData.title }}</h1>
                 <div class="status-section">
-                    <div class="progress-bar" style="width: 50%"></div>
+                    <div class="progress-bar" style="width: 50%">50%</div>
                     <div class="status-badge">{{ animeData.watchStatus }}</div>
                     <p>Watched {{ animeData.episodesWatched }} out of {{ animeData.totalEpisodes }}</p>
                 </div>
@@ -166,6 +166,10 @@ div {
         height: 1rem;
         border-radius: var(--default-border-radius);
         background: var(--color-secondary-light);
+        text-align: center;
+        line-height: 1.2;
+        font-size: 0.75rem;
+        font-weight: bold;
     }
 }
 </style>
