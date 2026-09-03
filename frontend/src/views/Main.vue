@@ -1,7 +1,6 @@
 <script setup>
 import AddIcon from '@/assets/AddIcon.vue';
-import CardShowTemplate from './components/card_templates/CardShowTemplate.vue';
-// https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx151379-JxxgTgSViXZL.png Akiba Maid War
+import CardShowGrid from './components/card_templates/CardShowGrid.vue';
 
 const test = [
     {
@@ -49,9 +48,7 @@ const test = [
             <button class="emphasis icon-span-container"><AddIcon />Add</button>
         </header>
 
-        <div class="card-grid-container">
-            <CardShowTemplate />
-        </div>
+     <CardShowGrid :anime-data-array="test"/>
     </section>
 </template>
 

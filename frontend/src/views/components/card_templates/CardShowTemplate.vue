@@ -1,7 +1,7 @@
 <script setup>
 const props = defineProps({
     animeData: {
-        type: Object,
+        type: Object, // Must match the same format as the schema
         required: true
     }
 })
