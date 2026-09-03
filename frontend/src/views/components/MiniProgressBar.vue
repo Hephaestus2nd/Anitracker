@@ -22,6 +22,7 @@ div.progress-bar {
     font-size: 0.75rem;
     font-weight: bold;
     width: max(v-bind('progressInPercent + "%"'), 14%);
+    padding: 0 3px;
     user-select: none;
 }
 </style>
