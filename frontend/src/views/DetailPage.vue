@@ -7,7 +7,6 @@ const animeData = ref(null)
 
 const test = [
     {
-        "id": 0,
         "malId": 1,
         "title": "Akiba Maid War",
         "totalEpisodes": 12,
@@ -18,7 +17,6 @@ const test = [
         "synopsis": "Nagomi's first day seems completely normal—until she has to run an \"errand\" at a rival maid cafe along with her fellow recruit, the mature Ranko Mannen. There, things quickly go south, and Nagomi soon gets her first taste of Akihabara's violent maid wars. As she watches Ranko calmly battle her way through a horde of gun- and knife-wielding maids, Nagomi realizes that maid cafes are drastically unlike what she had envisioned."
     },
     {
-        "id": 1,
         "malId": 2,
         "title": "Frieren: Beyond Journey's End",
         "totalEpisodes": 12,
@@ -29,7 +27,6 @@ const test = [
         "synopsis": "As the years pass, Frieren gradually realizes how her days in the hero's party truly impacted her. Witnessing the deaths of two of her former companions, Frieren begins to regret having taken their presence for granted; she vows to better understand humans and create real personal connections. Although the story of that once memorable journey has long ended, a new tale is about to begin."
     },
     {
-        "id": 2,
         "malId": 3,
         "title": "Uma Musume: Cinderella Gray",
         "totalEpisodes": 13,
@@ -42,7 +39,7 @@ const test = [
 ]
 
 function fetchAnimeData(malId) {
-    animeData.value = test.find(anime => anime.id === Number(malId))
+    animeData.value = test.find(anime => anime.malId === Number(malId))
 }
 
 fetchAnimeData(currRoute.params.id)
@@ -58,11 +55,11 @@ watch(() => currRoute.params.id, (newId) => {
 <template>
     <section class="data-container">
         <div class="side">
-            <img :src="animeData.coverImageUrl" :alt="animeData.title">
+            <img class="cover-pic" :src="animeData.coverImageUrl" :alt="animeData.title">
         </div>
         <section class="main-data">
             <div class="banner">
-
+                <img class="banner" :src="animeData.backgroundImageUrl" :alt="animeData.title">
             </div>
 
             <section class="user-data">
@@ -75,6 +72,7 @@ watch(() => currRoute.params.id, (newId) => {
 <style scoped>
 section.data-container {
     display: grid;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: 1fr 3fr;
+    gap: var(--default-margin-value);
 }
 </style>
