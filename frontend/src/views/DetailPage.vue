@@ -159,7 +159,9 @@ div {
         }
 
         > div.status-badge {
-            justify-self: start;
+            font-size: var(--small-font-size);
+            font-weight: bold;
+            text-transform: uppercase;
         }
     }
 }

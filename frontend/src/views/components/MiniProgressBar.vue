@@ -48,7 +48,7 @@ div.progress-bar-container {
     > div.progress-text {
         text-align: center;
         line-height: 1.4;
-        font-size: 0.75rem;
+        font-size: var(--small-font-size);
         font-weight: bold;
         user-select: none;
     }

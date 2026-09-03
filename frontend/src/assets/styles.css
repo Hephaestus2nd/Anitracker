@@ -11,6 +11,8 @@
     --default-margin-value: 16px;
     --max-width: 1080px;
 
+    --small-font-size: 0.75rem;
+
     --hover-shadow:
         0 0 4px var(--color-secondary-light),
         0 0 10px var(--color-secondary),
@@ -87,7 +89,7 @@ button {
 
 img.cover-pic {
     aspect-ratio: 2 / 3; /* Based from Anilist */
-    width: 100%;
+    width: max(100%, 128px)
 }
 
 img.banner {
