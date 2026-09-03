@@ -16,6 +16,7 @@ CREATE TABLE my_anime (
     episodes_watched INT DEFAULT 0,
     watch_status watch_status DEFAULT 'Plan to Watch',
     cover_image_url VARCHAR(500),
+    background_image_url VARCHAR(500),
     synopsis TEXT
 );
 ---we don't need this table for now, but we can add it later if we want to add notes for each episode

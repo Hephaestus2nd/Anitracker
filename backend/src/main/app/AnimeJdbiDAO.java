@@ -1,3 +1,4 @@
+package app;
 import java.util.List;
 
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
@@ -18,8 +19,8 @@ public interface AnimeJdbiDAO {
     @SqlQuery("SELECT * FROM my_anime WHERE title = :title")
     Anime getAnimeByTitle(@Bind("title") String title);
 
-    @SqlUpdate("INSERT INTO my_anime (mal_id, title, total_episodes, episodes_watched, watch_status, cover_image_url, synopsis) " +
-            "VALUES (:malId, :title, :totalEpisodes, :episodesWatched, :watchStatus, :coverImageUrl, :synopsis)")
+        @SqlUpdate("INSERT INTO my_anime (mal_id, title, total_episodes, episodes_watched, watch_status, cover_image_url, background_image_url, synopsis) " +
+            "VALUES (:malId, :title, :totalEpisodes, :episodesWatched, :watchStatus, :coverImageUrl, :backgroundImageUrl, :synopsis)")
         void insertAnime(@BindBean Anime anime);
 
     @SqlUpdate("UPDATE my_anime SET " +
@@ -29,6 +30,7 @@ public interface AnimeJdbiDAO {
             "episodes_watched = :episodesWatched, " +
             "watch_status = :watchStatus, " +
             "cover_image_url = :coverImageUrl, " +
+            "background_image_url = :backgroundImageUrl, " +
             "synopsis = :synopsis " +
             "WHERE mal_id = :malId")
     void updateAnime(@BindBean Anime anime);

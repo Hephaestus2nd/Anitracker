@@ -1,3 +1,6 @@
+package app;
+
+
 import java.util.List;
 
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;

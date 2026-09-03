@@ -1,3 +1,6 @@
+package app;
+
+
 import java.util.Map;
 
 import io.jooby.Jooby;

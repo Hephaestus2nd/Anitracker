@@ -1,3 +1,4 @@
+package app;
 public class Episode {
     private int id;
     private int malId;
