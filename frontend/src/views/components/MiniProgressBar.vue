@@ -8,21 +8,40 @@ const props = defineProps({
 </script>
 
 <template>
-    <div class="progress-bar">{{ progressInPercent + '%'}}</div>
+    <div class="progress-bar-container">
+        <div class="progress-bg">{{ progressInPercent + '%'}}</div>
+        <div class="progress-bar"></div>
+    </div>
 </template>
 
 <style scoped>
-div.progress-bar {
+div.progress-bar-container {
     width: 100%;
-    height: 1rem;
-    border-radius: var(--default-border-radius);
-    background: var(--color-secondary-light);
-    text-align: center;
-    line-height: 1.4;
-    font-size: 0.75rem;
-    font-weight: bold;
-    width: max(v-bind('progressInPercent + "%"'), 14%);
-    padding: 0 3px;
-    user-select: none;
+    display: grid;
+
+    > * {
+        width: 100%;
+        grid-area: 1 / 1; /* Overlay trick -- force all descendants on row 1, col 1 */
+        height: 1rem;
+        border-radius: var(--default-border-radius);
+        padding: 0 3px;
+    }
+
+    > div.progress-bar {
+        background: var(--color-secondary-light);
+        width: v-bind('progressInPercent + "%"');
+    }
+
+    > div.progress-bg {
+        width: 100%;
+        background: var(--color-secondary);
+        text-align: center;
+        line-height: 1.4;
+        font-size: 0.75rem;
+        font-weight: bold;
+        user-select: none;
+    }
 }
+
+
 </style>
