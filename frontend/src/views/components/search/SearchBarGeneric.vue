@@ -6,6 +6,9 @@ const isSearchDisabled = defineModel({ required: true });
 const emit = defineEmits(['search'])
 
 const handleSearch = () => {
+    // If the query is empty or is disabled
+    if (!searchQuery.value.trim() || isSearchDisabled.value) return;
+
     emit('search', searchQuery.value)
     isSearchDisabled.value = true
 }
@@ -14,7 +17,7 @@ const handleSearch = () => {
 
 <template>
     <div class="search-bar">
-        <input type="search" id="search" placeholder="🔍︎ Search anime..." v-model="searchQuery" />
+        <input type="search" id="search" placeholder="🔍︎ Search anime..." v-model="searchQuery" @keyup.enter="handleSearch" />
         <button type="button" class="emphasis" :disabled="isSearchDisabled" @click="handleSearch">{{ isSearchDisabled ? '...' : 'Search' }}</button>
     </div>
 </template>
