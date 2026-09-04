@@ -3,6 +3,15 @@ import { watch } from 'vue'
 
 const animeData = defineModel({ required: true });
 
+// Enum
+const watchStatus = Object.freeze({
+    PLAN_TO_WATCH: "Plan to Watch",
+    WATCHING: "Watching",
+    ON_HOLD: "On-Hold",
+    COMPLETED: "Completed",
+    DROPPED: "Dropped"
+})
+
 watch(() => animeData.value.watchStatus, (newStatus) => {
     switch (newStatus) {
         case 'Completed':
@@ -16,7 +25,7 @@ watch(() => animeData.value.watchStatus, (newStatus) => {
 
 watch(() => animeData.value.episodesWatched, (updatedWatchedEp) => {
     // Need v-model.number="animeData.episodesWatched" instead of :value so that it reacts accordingly 
-    
+
     if (updatedWatchedEp === animeData.value.totalEpisodes) {
         animeData.value.watchStatus = 'Completed'
     }
