@@ -81,7 +81,7 @@ public class AnimeTrackerApp extends Jooby {
         if (anime.getTitle() == null || anime.getTitle().isBlank()) {
             return "title is required";
         }
-        if (anime.getWatchStatus() == null || !isValidWatchStatus(anime.getWatchStatus())) {
+        if (anime.getWatchStatus() == null) {
             return "watchStatus is invalid";
         }
         if (anime.getTotalEpisodes() != null && anime.getTotalEpisodes() < 0) {
@@ -91,14 +91,6 @@ public class AnimeTrackerApp extends Jooby {
             return "episodesWatched cannot be negative";
         }
         return null;
-    }
-
-    private static boolean isValidWatchStatus(String status) {
-        return status.equals("Watching")
-                || status.equals("Completed")
-                || status.equals("On Hold")
-                || status.equals("Dropped")
-                || status.equals("Plan to Watch");
     }
 
     private static void normalizeEpisodeCounts(Anime anime) {
