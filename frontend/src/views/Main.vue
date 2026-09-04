@@ -3,8 +3,19 @@ import { onMounted, ref } from 'vue';
 import AddIcon from '@/assets/AddIcon.vue';
 import CardShowGrid from './components/card_templates/CardShowGrid.vue';
 import ModalGeneric from './components/ModalGeneric.vue';
+import EpisodesAndStatusFormSection from './components/EpisodesAndStatusFormSection.vue';
 
-const animeData = ref([]);
+const animeList = ref([])
+const newAnimeData = ref({
+    "malId": null,
+    "title": null,
+    "totalEpisodes": null,
+    "episodesWatched": null,
+    "watchStatus": null,
+    "coverImageUrl": null,
+    "backgroundImageUrl": null,
+    "synopsis": null
+})
 
 const loading = ref(false);
 const error = ref('');
@@ -17,7 +28,7 @@ async function fetchAnimeData() {
         if (!response.ok) {
             throw new Error('Unable to load anime');
         }
-        animeData.value = await response.json();
+        animeList.value = await response.json();
     } catch (fetchError) {
         error.value = fetchError.message;
     } finally {
@@ -26,7 +37,7 @@ async function fetchAnimeData() {
 }
 
 function addAnime() {
-    console.log("Test:", JSON.parse(JSON.stringify(animeData.value)))
+    console.log("Test:", JSON.parse(JSON.stringify(newAnimeData.value)))
 
     showAddModal.value = false
 
@@ -34,7 +45,7 @@ function addAnime() {
     // await fetchAnimeList()
 }
 
-animeData.value = [
+animeList.value = [
     {
         "malId": 1,
         "title": "Akiba Maid War",
@@ -83,14 +94,19 @@ onMounted(fetchAnimeData);
 
             <ModalGeneric v-model="showAddModal">
                 <form @submit.prevent="addAnime">
-                    <div class="right-align-buttons"></div>
+                    <EpisodesAndStatusFormSection v-model="newAnimeData" />
+
+                    <div class="right-align-buttons">
+                        <button @click="showUpdateModal = false">Go Back</button>
+                        <button class="emphasis icon-span-container" type="submit"><AddIcon />Add</button>
+                    </div>
                 </form>
             </ModalGeneric>
         </header>
 
     <!-- <p v-if="loading">Loading anime...</p>
     <p v-else-if="error">{{ error }}</p> -->
-    <CardShowGrid :anime-data-array="animeData"/>
+    <CardShowGrid :anime-data-array="animeList"/>
     </section>
 </template>
 
