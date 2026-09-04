@@ -1,4 +1,4 @@
-export const watchStatus = Object.freeze({
+export const watchStatusLabels = Object.freeze({
     PLAN_TO_WATCH: "Plan to Watch",
     WATCHING: "Watching",
     ON_HOLD: "On-Hold",
