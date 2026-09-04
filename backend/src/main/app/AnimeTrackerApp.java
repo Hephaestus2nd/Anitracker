@@ -81,7 +81,7 @@ public class AnimeTrackerApp extends Jooby {
         if (anime.getTitle() == null || anime.getTitle().isBlank()) {
             return "title is required";
         }
-        if (anime.getWatchStatus() == null || !isValidWatchStatus(anime.getWatchStatus())) {
+        if (anime.getWatchStatus() == null) {
             return "watchStatus is invalid";
         }
         if (anime.getTotalEpisodes() != null && anime.getTotalEpisodes() < 0) {
@@ -92,6 +92,7 @@ public class AnimeTrackerApp extends Jooby {
         }
         return null;
     }
+<<<<<<< HEAD
 //This works for now . If we want to make it better we can use an enum for watchStatus and validate against that.
 //we do already have enums but it'll be a lot of overhead.
     private static boolean isValidWatchStatus(String status) {
@@ -101,6 +102,8 @@ public class AnimeTrackerApp extends Jooby {
                 || status.equals("Dropped")
                 || status.equals("Plan to Watch");
     }
+=======
+>>>>>>> agents/anime-submission-anilist-integration
 
     private static void normalizeEpisodeCounts(Anime anime) {
         int episodesWatched = anime.getEpisodesWatched() == null ? 0 : anime.getEpisodesWatched();

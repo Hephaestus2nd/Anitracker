@@ -20,7 +20,7 @@ public interface AnimeJdbiDAO {
     Anime getAnimeByTitle(@Bind("title") String title);
 
         @SqlUpdate("INSERT INTO my_anime (mal_id, title, total_episodes, episodes_watched, watch_status, cover_image_url, background_image_url, synopsis) " +
-            "VALUES (:malId, :title, :totalEpisodes, :episodesWatched, :watchStatus, :coverImageUrl, :backgroundImageUrl, :synopsis)")
+            "VALUES (:malId, :title, :totalEpisodes, :episodesWatched, CAST(:watchStatus AS watch_status), :coverImageUrl, :backgroundImageUrl, :synopsis)")
         void insertAnime(@BindBean Anime anime);
 
     @SqlUpdate("UPDATE my_anime SET " +
@@ -28,7 +28,7 @@ public interface AnimeJdbiDAO {
             "title = :title, " +
             "total_episodes = :totalEpisodes, " +
             "episodes_watched = :episodesWatched, " +
-            "watch_status = :watchStatus, " +
+            "watch_status = CAST(:watchStatus AS watch_status), " +
             "cover_image_url = :coverImageUrl, " +
             "background_image_url = :backgroundImageUrl, " +
             "synopsis = :synopsis " +
