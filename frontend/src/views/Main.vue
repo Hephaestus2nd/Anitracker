@@ -171,7 +171,7 @@ onMounted(fetchAnimeData);
 
                     <div class="right-align-buttons">
                         <button @click="showUpdateModal = false">Go Back</button>
-                        <button class="emphasis icon-span-container" type="submit"><AddIcon />Add</button>
+                        <button class="emphasis icon-span-container" type="submit" :disabled="isSearchDisabled || !selectedNewAnimeToAdd || !searchResults || !searchResults.data?.Page?.media"><AddIcon />Add</button>
                     </div>
                 </form>
             </ModalGeneric>
