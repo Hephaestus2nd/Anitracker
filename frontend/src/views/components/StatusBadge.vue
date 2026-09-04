@@ -11,10 +11,14 @@ const props = defineProps({
 const isCompleted = computed(() => {
     return props.animeData.watchStatus === 'Completed'
 })
+
+const isDropped = computed(() => {
+    return props.animeData.watchStatus === 'Dropped'
+})
 </script>
 
 <template>
-    <div class="status-badge" :class="{ 'completed': isCompleted }">{{ animeData.watchStatus }}</div>
+    <div class="status-badge" :class="{ 'completed': isCompleted, 'dropped': isDropped }">{{ animeData.watchStatus }}</div>
 </template>
 
 <style scoped>
@@ -29,6 +33,11 @@ div.status-badge {
 
     &.completed {
         background: var(--color-secondary-light);
+    }
+
+    &.dropped {
+        background: var(--color-secondary);
+        border-color: var(--color-secondary);
     }
 }
 
