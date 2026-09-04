@@ -172,3 +172,9 @@ img.banner {
     border-radius: var(--default-border-radius);
     padding: 16px 24px;
 }
+
+.right-align-buttons {
+    display: flex;
+    justify-content: end;
+    gap: var(--default-button-gap-horiz)
+}

@@ -121,7 +121,7 @@ watch(() => currRoute.params.id, (newId) => {
                 <form @submit.prevent="updateHandler">
                     <EpisodesAndStatusFormSection v-model="animeData" />
 
-                    <div class="two-buttons">
+                    <div class="right-align-buttons">
                         <button @click="showUpdateModal = false">Go Back</button>
                         <button class="emphasis" type="submit">Update</button>
                     </div>
@@ -133,7 +133,7 @@ watch(() => currRoute.params.id, (newId) => {
             <ModalGeneric v-model="showDeleteModal">
                 <p>Are you sure to delete this entry?</p>
 
-                <div class="two-buttons">
+                <div class="right-align-buttons">
                     <button class="emphasis" @click="showDeleteModal = false">Go Back</button>
                     <button @click="deleteHandler">Delete</button>
                 </div>
@@ -208,12 +208,6 @@ div {
         > p {
             text-align: right;
         }
-    }
-
-    &.two-buttons {
-        display: flex;
-        justify-content: end;
-        gap: var(--default-button-gap-horiz)
     }
 }
 

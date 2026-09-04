@@ -4,8 +4,11 @@ import AddIcon from '@/assets/AddIcon.vue';
 import CardShowGrid from './components/card_templates/CardShowGrid.vue';
 
 const animeData = ref([]);
+
 const loading = ref(false);
 const error = ref('');
+
+const showAddModal = ref(false)
 
 async function fetchAnimeData() {
     try {
@@ -69,9 +72,9 @@ onMounted(fetchAnimeData);
             <button class="emphasis icon-span-container"><AddIcon />Add</button>
         </header>
 
-    <p v-if="loading">Loading anime...</p>
-    <p v-else-if="error">{{ error }}</p>
-    <CardShowGrid v-else :anime-data-array="animeData"/>
+    <!-- <p v-if="loading">Loading anime...</p>
+    <p v-else-if="error">{{ error }}</p> -->
+    <CardShowGrid :anime-data-array="animeData"/>
     </section>
 </template>
 
