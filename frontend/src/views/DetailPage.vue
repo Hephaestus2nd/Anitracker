@@ -108,8 +108,9 @@ watch(() => currRoute.params.id, (newId) => {
             <!-- Delete Modal -->
             <button @click="showDeleteModal = true">Delete</button>
             <ModalGeneric v-model="showDeleteModal">
-                <p>Test 1</p>
-                <p>Test 2</p>
+                <p>Are you sure to delete this entry?</p>
+                <button class="emphasis" @click="showUpdateModal">Go Back</button>
+                <button @click="showUpdateModal">Delete</button>
             </ModalGeneric>
         </div>
 

@@ -20,18 +20,26 @@ const close = () => { isModalOpen.value = false; }
 
 <style scoped>
 /* Based on https://www.youtube.com/watch?v=n8py4b2VWj4 */
-div.modal-bg {
-    position: fixed;
-    top: 0; 
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 999; /* Make sure that it is on top of the navbar */
+div {
+    &.modal-bg {
+        position: fixed;
+        top: 0; 
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999; /* Make sure that it is on top of the navbar */
 
-    /* Centering */
-    display: flex;
-    justify-content: center;
-    align-items: center;
+        /* Centering */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &.modal-content {
+        background: var(--bg);
+        border-radius: var(--default-border-radius);
+        padding: var(--default-margin-value);
+    }
 }
 </style>
