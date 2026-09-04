@@ -1,15 +1,20 @@
 <script setup>
 import { ref, watch } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import MiniProgressBar from './components/MiniProgressBar.vue'
 import StatusBadge from './components/StatusBadge.vue'
+import ModalGeneric from './components/ModalGeneric.vue'
 
 const currRoute = useRoute()
+const router = useRouter()
 const animeData = ref(null)
 
 const loading = ref(false)
 const error = ref('')
 
+// Modals
+const showDeleteModal = ref(false)
+const showUpdateModal = ref(false)
 
 
 const test = [
@@ -47,6 +52,12 @@ const test = [
 
 function fetchAnimeData(malId) {
     animeData.value = test.find(anime => anime.malId === Number(malId))
+}
+
+function deleteHandler() {
+    console.log("Deleted")
+
+    router.push('/')
 }
 
 fetchAnimeData(currRoute.params.id)
@@ -96,8 +107,42 @@ watch(() => currRoute.params.id, (newId) => {
 
         <div class="cover-section">
             <img class="cover-pic" :src="animeData.coverImageUrl" :alt="animeData.title">
-            <button class="emphasis">Update</button>
-            <button>Delete</button>
+            
+            <!-- Update Modal -->
+            <button class="emphasis" @click="showUpdateModal = true">Update</button>
+            <ModalGeneric v-model="showUpdateModal">
+                <form @submit.prevent="">
+                    <label for="watchStatus">Status</label>
+                    <select name="watchStatus" id="watchStatus" v-model="animeData.watchStatus">
+                        <option value="Plan to Watch">Plan to Watch</option>
+                        <option value="Watching">Watching</option>
+                        <option value="On-Hold">On Hold</option>
+                        <option value="Dropped">Dropped</option>
+                        <option value="Completed">Completed</option>
+                    </select>
+
+                    <label for="episodesWatched">Episodes Watched</label>
+                    <input 
+                        type="number" 
+                        name="episodesWatched" 
+                        id="episodesWatched" 
+                        min="0" 
+                        :value="animeData.episodesWatched"
+                        :max="animeData.totalEpisodes"
+                        :disabled="animeData.watchStatus === 'Completed' || animeData.watchStatus === 'Plan to Watch'">
+                </form>
+            </ModalGeneric>
+
+            <!-- Delete Modal -->
+            <button @click="showDeleteModal = true">Delete</button>
+            <ModalGeneric v-model="showDeleteModal">
+                <p>Are you sure to delete this entry?</p>
+
+                <div class="delete-buttons">
+                    <button class="emphasis" @click="showDeleteModal = false">Go Back</button>
+                    <button @click="deleteHandler">Delete</button>
+                </div>
+            </ModalGeneric>
         </div>
 
         <section class="user-data">
@@ -169,5 +214,13 @@ div {
             text-align: right;
         }
     }
+
+    &.delete-buttons {
+        display: flex;
+        justify-content: end;
+        gap: var(--default-button-gap-horiz)
+    }
 }
+
+
 </style>
