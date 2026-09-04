@@ -1,6 +1,7 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, inject } from 'vue'
 
+const watchStatusLabels = inject('watchStatusLabels')
 const props = defineProps({
     animeData: {
         type: Object,
@@ -9,11 +10,11 @@ const props = defineProps({
 })
 
 const isCompleted = computed(() => {
-    return props.animeData.watchStatus === 'Completed'
+    return props.animeData.watchStatus === watchStatusLabels.COMPLETED
 })
 
 const isDropped = computed(() => {
-    return props.animeData.watchStatus === 'Dropped'
+    return props.animeData.watchStatus === watchStatusLabels.DROPPED
 })
 </script>
 

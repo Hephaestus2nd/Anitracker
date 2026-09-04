@@ -26,20 +26,33 @@ watch(() => animeData.value.episodesWatched, (updatedWatchedEp) => {
 </script>
 
 <template>
-    <label for="watchStatus">Status</label>
-    <select name="watchStatus" id="watchStatus" v-model="animeData.watchStatus">
-        <option :value="watchStatusLabels.PLAN_TO_WATCH">{{ watchStatusLabels.PLAN_TO_WATCH }}</option>
-        <option :value="watchStatusLabels.WATCHING">{{ watchStatusLabels.WATCHING }}</option>
-        <option :value="watchStatusLabels.ON_HOLD">{{ watchStatusLabels.ON_HOLD }}</option>
-        <option :value="watchStatusLabels.DROPPED">{{ watchStatusLabels.DROPPED }}</option>
-        <option :value="watchStatusLabels.COMPLETED">{{ watchStatusLabels.COMPLETED }}</option>
-    </select>
+    <fieldset class="epsStats">
+        <label for="watchStatus">Status</label>
+        <select name="watchStatus" id="watchStatus" v-model="animeData.watchStatus">
+            <option :value="watchStatusLabels.PLAN_TO_WATCH">{{ watchStatusLabels.PLAN_TO_WATCH }}</option>
+            <option :value="watchStatusLabels.WATCHING">{{ watchStatusLabels.WATCHING }}</option>
+            <option :value="watchStatusLabels.ON_HOLD">{{ watchStatusLabels.ON_HOLD }}</option>
+            <option :value="watchStatusLabels.DROPPED">{{ watchStatusLabels.DROPPED }}</option>
+            <option :value="watchStatusLabels.COMPLETED">{{ watchStatusLabels.COMPLETED }}</option>
+        </select>
 
-    <label for="episodesWatched">Episodes Watched</label>
-    <input type="number" name="episodesWatched" id="episodesWatched" min="0" 
-        v-model.number="animeData.episodesWatched"
-        :max="animeData.totalEpisodes"
-        :disabled="animeData.watchStatus === watchStatusLabels.COMPLETED || animeData.watchStatus === watchStatusLabels.PLAN_TO_WATCH">
+        <label for="episodesWatched">Episodes Watched</label>
+        <input type="number" name="episodesWatched" id="episodesWatched" min="0"
+            v-model.number="animeData.episodesWatched" :max="animeData.totalEpisodes"
+            :disabled="animeData.watchStatus === watchStatusLabels.COMPLETED || animeData.watchStatus === watchStatusLabels.PLAN_TO_WATCH">
+    </fieldset>
 </template>
 
-<style scoped></style>
+<style scoped>
+fieldset.epsStats {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--default-margin-value);
+    align-items: center;
+    
+    > label {
+        font-weight: bold;
+        font-size: var(--small-font-size);
+    }
+}
+</style>
