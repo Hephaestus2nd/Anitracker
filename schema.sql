@@ -18,13 +18,6 @@ $$;
 
 
 
-CREATE TYPE watch_status AS ENUM (
-    'Watching',
-    'Completed',
-    'On Hold',
-    'Dropped',
-    'Plan to Watch'
-);
 
 CREATE TABLE if not exists my_anime (
     
