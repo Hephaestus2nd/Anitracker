@@ -40,6 +40,7 @@ div {
         background: var(--bg);
         border-radius: var(--default-border-radius);
         padding: var(--default-margin-value);
+        box-shadow: var(--drop-shadow);
     }
 }
 

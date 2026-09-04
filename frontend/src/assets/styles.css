@@ -18,6 +18,7 @@
         0 0 4px var(--color-secondary-light),
         0 0 10px var(--color-secondary),
         0 0 20px var(--color-secondary);
+    --drop-shadow: 1px 1px 8px var(--color-secondary);
 }
 
 * {
@@ -128,7 +129,8 @@ label {
 
 img.cover-pic {
     aspect-ratio: 2 / 3; /* Based from Anilist */
-    width: max(100%, 128px)
+    width: max(100%, 128px);
+    box-shadow: var(--drop-shadow);
 }
 
 img.banner {
