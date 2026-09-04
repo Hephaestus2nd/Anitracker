@@ -1,6 +1,7 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, inject } from 'vue'
 
+const watchStatusLabels = inject('watchStatusLabels')
 const props = defineProps({
     animeData: {
         type: Object,
@@ -9,12 +10,16 @@ const props = defineProps({
 })
 
 const isCompleted = computed(() => {
-    return props.animeData.watchStatus === 'Completed'
+    return props.animeData.watchStatus === watchStatusLabels.COMPLETED
+})
+
+const isDropped = computed(() => {
+    return props.animeData.watchStatus === watchStatusLabels.DROPPED
 })
 </script>
 
 <template>
-    <div class="status-badge" :class="{ 'completed': isCompleted }">{{ animeData.watchStatus }}</div>
+    <div class="status-badge" :class="{ 'completed': isCompleted, 'dropped': isDropped }">{{ animeData.watchStatus }}</div>
 </template>
 
 <style scoped>
@@ -29,6 +34,11 @@ div.status-badge {
 
     &.completed {
         background: var(--color-secondary-light);
+    }
+
+    &.dropped {
+        background: var(--color-secondary);
+        border-color: var(--color-secondary);
     }
 }
 

@@ -42,6 +42,45 @@ vagrant up
 
 This provisions the three machines and runs the API and frontend services automatically.
 It might take a long time to start up. the API vm might take more than 10 minutes to the point that it may time out.
+
+
+## Vagrant troubleshooting
+
+1. Check VM state:
+
+    vagrant status
+
+2. Check VirtualBox:
+
+    VBoxManage list vms
+    VBoxManage list runningvms
+
+3. If VBoxManage isn't in PATH on Windows, use:
+
+    "/c/Program Files/Oracle/VirtualBox/VBoxManage.exe" list vms
+
+4. If VirtualBox reports "<inaccessible>", investigate/remove
+   the stale VM registration before debugging the application. By unregistering it
+
+5. If Vagrant reaches the provisioning stage but the app doesn't work,
+   check the relevant VM:
+
+    vagrant ssh db
+    vagrant ssh api
+    vagrant ssh web
+
+6. Test the services individually:
+
+    API:
+    curl http://localhost:8080/health
+
+    DB:
+    pg_isready -h 192.168.56.10 -p 5432 -d anitracker
+
+    Web:
+    curl http://localhost
+
+   
 ## Provisioning scripts
 
 Vagrant runs one script on each VM during `vagrant up`:
@@ -71,6 +110,16 @@ curl -I http://localhost:8080
 ```
 
 The database should show seeded anime entries, the API should return a health payload, and the web VM should return anime data through the proxied `/api` route.
+
+### Adding anime
+
+`POST /anime` accepts an `Anime` JSON object containing `malId`, `title`,
+`watchStatus`, episode counts, and the Jikan metadata fields used by the
+catalogue. The API validates the identifiers and watch status, defaults
+missing progress to zero, caps progress at the known total episode count, and
+queries AniList by MAL ID. The AniList `bannerImage` is merged into
+`backgroundImageUrl` before the record is saved. AniList failures return
+`502 Bad Gateway`; invalid submissions return `400 Bad Request`.
 
 Useful service checks from the relevant VM:
 

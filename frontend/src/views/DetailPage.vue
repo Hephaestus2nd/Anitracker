@@ -1,15 +1,21 @@
 <script setup>
 import { ref, watch } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import MiniProgressBar from './components/MiniProgressBar.vue'
 import StatusBadge from './components/StatusBadge.vue'
+import ModalGeneric from './components/ModalGeneric.vue'
+import EpisodesAndStatusFormSection from './components/EpisodesAndStatusFormSection.vue'
 
 const currRoute = useRoute()
+const router = useRouter()
 const animeData = ref(null)
 
 const loading = ref(false)
 const error = ref('')
 
+// Modals
+const showDeleteModal = ref(false)
+const showUpdateModal = ref(false)
 
 
 const test = [
@@ -47,6 +53,18 @@ const test = [
 
 function fetchAnimeData(malId) {
     animeData.value = test.find(anime => anime.malId === Number(malId))
+}
+
+function deleteHandler() {
+    console.log("Deleted")
+
+    router.push('/')
+}
+
+function updateHandler() {
+    console.log("Test:", JSON.parse(JSON.stringify(animeData.value)))
+
+    showUpdateModal.value = false;
 }
 
 fetchAnimeData(currRoute.params.id)
@@ -96,8 +114,30 @@ watch(() => currRoute.params.id, (newId) => {
 
         <div class="cover-section">
             <img class="cover-pic" :src="animeData.coverImageUrl" :alt="animeData.title">
-            <button class="emphasis">Update</button>
-            <button>Delete</button>
+            
+            <!-- Update Modal -->
+            <button class="emphasis" @click="showUpdateModal = true">Update</button>
+            <ModalGeneric v-model="showUpdateModal">
+                <form @submit.prevent="updateHandler">
+                    <EpisodesAndStatusFormSection v-model="animeData" />
+
+                    <div class="right-align-buttons">
+                        <button @click="showUpdateModal = false">Go Back</button>
+                        <button class="emphasis" type="submit">Update</button>
+                    </div>
+                </form>
+            </ModalGeneric>
+
+            <!-- Delete Modal -->
+            <button @click="showDeleteModal = true">Delete</button>
+            <ModalGeneric v-model="showDeleteModal">
+                <p>Are you sure to delete this entry?</p>
+
+                <div class="right-align-buttons">
+                    <button class="emphasis" @click="showDeleteModal = false">Go Back</button>
+                    <button @click="deleteHandler">Delete</button>
+                </div>
+            </ModalGeneric>
         </div>
 
         <section class="user-data">
@@ -166,4 +206,6 @@ div {
         gap: var(--default-margin-value);
     }
 }
+
+
 </style>

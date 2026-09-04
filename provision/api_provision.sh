@@ -3,18 +3,31 @@ set -euo pipefail
 
 export DEBIAN_FRONTEND=noninteractive
 apt-get update
-apt-get install -y openjdk-17-jdk gradle curl postgresql-client
+apt-get install -y openjdk-17-jdk curl postgresql-client
 
 DB_HOST="192.168.56.10"
 DB_NAME="anitracker"
 
+
 mkdir -p /opt/anitracker
+
+rm -rf /opt/anitracker/backend
 cp -r /vagrant/backend /opt/anitracker/backend
-cp -r /vagrant/build.gradle /opt/anitracker/build.gradle
-cp -r /vagrant/settings.gradle /opt/anitracker/settings.gradle
+
+
+cp /vagrant/build.gradle /opt/anitracker/build.gradle
+cp /vagrant/settings.gradle /opt/anitracker/settings.gradle
+
+
+cp /vagrant/gradlew /opt/anitracker/gradlew
+
+rm -rf /opt/anitracker/gradle
+cp -r /vagrant/gradle /opt/anitracker/gradle
 
 cd /opt/anitracker
-gradle installDist
+chmod +x gradlew
+
+./gradlew clean installDist
 
 cat <<'EOF' >/etc/systemd/system/anitracker-api.service
 [Unit]
@@ -41,12 +54,16 @@ systemctl enable anitracker-api.service
 systemctl restart anitracker-api.service
 
 for attempt in $(seq 1 30); do
-	if curl -fsS http://127.0.0.1:8080/health >/dev/null; then
-		break
-	fi
-	if [ "$attempt" -eq 30 ]; then
-		echo "Anitracker API did not become ready" >&2
-		exit 1
-	fi
-	sleep 1
+    if curl -fsS http://127.0.0.1:8080/health >/dev/null 2>&1; then
+        break
+    fi
+
+    if [ "$attempt" -eq 30 ]; then
+        echo "Anitracker API did not become ready" >&2
+        systemctl status anitracker-api.service --no-pager >&2 || true
+        journalctl -u anitracker-api.service --no-pager -n 50 >&2 || true
+        exit 1
+    fi
+
+    sleep 2
 done
