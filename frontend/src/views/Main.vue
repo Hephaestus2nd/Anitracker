@@ -7,9 +7,7 @@ import EpisodesAndStatusFormSection from './components/EpisodesAndStatusFormSect
 import SearchBarGeneric from './components/search/SearchBarGeneric.vue';
 import SearchResult from './components/search/SearchResult.vue';
 
-const watchStatusLabels = inject('watchStatusLabels')
-const animeList = ref([])
-const newAnimeData = ref({
+const defaultNewAnimeData = {
     "malId": null,
     "title": null,
     "totalEpisodes": null,
@@ -18,7 +16,12 @@ const newAnimeData = ref({
     "coverImageUrl": null,
     "backgroundImageUrl": null,
     "synopsis": null
-})
+}
+
+
+const watchStatusLabels = inject('watchStatusLabels')
+const animeList = ref([])
+const newAnimeData = ref({ ...defaultNewAnimeData })
 
 const searchResults = ref(null)
 const selectedNewAnimeToAdd = ref(null)
@@ -131,6 +134,8 @@ animeList.value = [
 ]
 
 watch(() => selectedNewAnimeToAdd.value, (selected) => {
+    if (!showAddModal.value) return; // Skip if it came from closing the modal
+
     // Shortcut way of assigning things instead of spamming newAnimeData.value
     Object.assign(newAnimeData.value, {
         "malId": selected.idMal,
@@ -144,6 +149,17 @@ watch(() => selectedNewAnimeToAdd.value, (selected) => {
     });
 
     console.log(newAnimeData.value)
+})
+
+function resetForm() {
+    isSearchDisabled.value = false;
+    searchResults.value = null;
+    selectedNewAnimeToAdd.value = null;
+    newAnimeData.value = { ...defaultNewAnimeData };
+};
+
+watch(() => showAddModal.value, (isShown) => {
+    if (!isShown) resetForm()
 })
 
 
@@ -170,7 +186,7 @@ onMounted(fetchAnimeData);
                     <EpisodesAndStatusFormSection v-model="newAnimeData" />
 
                     <div class="right-align-buttons">
-                        <button @click="showUpdateModal = false">Go Back</button>
+                        <button @click="showAddModal = false">Go Back</button>
                         <button class="emphasis icon-span-container" type="submit" :disabled="isSearchDisabled || !selectedNewAnimeToAdd || !searchResults || !searchResults.data?.Page?.media"><AddIcon />Add</button>
                     </div>
                 </form>
