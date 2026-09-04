@@ -25,6 +25,15 @@ async function fetchAnimeData() {
     }
 }
 
+function addAnime() {
+    console.log("Test:", JSON.parse(JSON.stringify(animeData.value)))
+
+    showAddModal.value = false
+
+    // please refetch
+    // await fetchAnimeList()
+}
+
 animeData.value = [
     {
         "malId": 1,
@@ -73,7 +82,7 @@ onMounted(fetchAnimeData);
             <button class="emphasis icon-span-container" @click="showAddModal = true"><AddIcon />Add</button>
 
             <ModalGeneric v-model="showAddModal">
-                <form>
+                <form @submit.prevent="addAnime">
                     <div class="right-align-buttons"></div>
                 </form>
             </ModalGeneric>
