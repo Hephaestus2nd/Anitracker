@@ -39,5 +39,8 @@ EOF
 
 rm -f /etc/nginx/sites-enabled/default
 ln -sf /etc/nginx/sites-available/anitracker /etc/nginx/sites-enabled/anitracker
+
+
 nginx -t
-systemctl enable --now nginx
+systemctl enable nginx
+systemctl restart nginx
