@@ -43,6 +43,19 @@ done
 sudo -u postgres psql -v ON_ERROR_STOP=1 -d "$DB_NAME" -f /vagrant/schema.sql
 sudo -u postgres psql -v ON_ERROR_STOP=1 -d "$DB_NAME" -f /vagrant/seed_data.sql
 
+sudo -u postgres psql -v ON_ERROR_STOP=1 -d "$DB_NAME" <<'SQL'
+GRANT USAGE ON SCHEMA public TO app_user;
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO app_user;
+GRANT USAGE, SELECT, UPDATE ON ALL SEQUENCES IN SCHEMA public TO app_user;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public
+    GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO app_user;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public
+    GRANT USAGE, SELECT, UPDATE ON SEQUENCES TO app_user;
+SQL
+
+
+
+
 cat <<'EOF' >/etc/profile.d/anitracker-db-env.sh
 export DB_HOST=192.168.56.10
 export DB_NAME=anitracker

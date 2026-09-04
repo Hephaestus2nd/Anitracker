@@ -2,7 +2,7 @@ package app;
 
 
 import java.util.Map;
-
+import io.jooby.jackson.JacksonModule;
 import io.jooby.Jooby;
 import io.jooby.StatusCode;
 import org.jdbi.v3.core.Jdbi;
@@ -10,10 +10,14 @@ import org.jdbi.v3.sqlobject.SqlObjectPlugin;
 
 public class AnimeTrackerApp extends Jooby {
     public AnimeTrackerApp() {
+install(new JacksonModule());
+
         String dbUrl = System.getenv().getOrDefault("DB_URL", "jdbc:postgresql://192.168.56.10:5432/anitracker");
         String dbUser = System.getenv().getOrDefault("DB_USER", "app_user");
         String dbPassword = System.getenv().getOrDefault("DB_PASSWORD", "AppPass123");
 
+
+        
         Jdbi jdbi = Jdbi.create(dbUrl, dbUser, dbPassword);
         jdbi.installPlugin(new SqlObjectPlugin());
         AnimeJdbiDAO animeDao = jdbi.onDemand(AnimeJdbiDAO.class);
