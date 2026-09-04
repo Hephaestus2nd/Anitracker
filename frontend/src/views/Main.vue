@@ -4,6 +4,7 @@ import AddIcon from '@/assets/AddIcon.vue';
 import CardShowGrid from './components/card_templates/CardShowGrid.vue';
 import ModalGeneric from './components/ModalGeneric.vue';
 import EpisodesAndStatusFormSection from './components/EpisodesAndStatusFormSection.vue';
+import SearchBarGeneric from './components/SearchBarGeneric.vue';
 
 const animeList = ref([])
 const newAnimeData = ref({
@@ -43,6 +44,11 @@ function addAnime() {
 
     // please refetch
     // await fetchAnimeList()
+}
+
+function searchAnime(query) {
+    console.log("Searching for:", query)
+    // Implement search functionality here
 }
 
 animeList.value = [
@@ -94,6 +100,8 @@ onMounted(fetchAnimeData);
 
             <ModalGeneric v-model="showAddModal">
                 <form @submit.prevent="addAnime">
+                    <SearchBarGeneric @search="searchAnime" />
+
                     <EpisodesAndStatusFormSection v-model="newAnimeData" />
 
                     <div class="right-align-buttons">

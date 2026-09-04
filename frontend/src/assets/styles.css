@@ -115,6 +115,10 @@ input, select {
         cursor: not-allowed;
     }
 
+    &::placeholder {
+        color: var(--muted-light-font-color);
+    }
+
     &:focus {
         box-shadow: var(--hover-shadow);
         border: var(--muted-light-font-color);
