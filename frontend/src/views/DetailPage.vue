@@ -197,7 +197,7 @@ div {
     &.delete-buttons {
         display: flex;
         justify-content: end;
-        gap: 6px
+        gap: var(--default-button-gap-horiz)
     }
 }
 

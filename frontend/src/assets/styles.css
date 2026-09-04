@@ -9,6 +9,7 @@
 
     --default-border-radius: 8px;
     --default-margin-value: 16px;
+    --default-button-gap-horiz: 6px;
     --max-width: 1080px;
 
     --small-font-size: 0.75rem;

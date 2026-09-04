@@ -8,7 +8,7 @@ const close = () => { isModalOpen.value = false; }
 
 <template>
     <Teleport to="#modal">
-        <Transition>
+        <Transition name="modal">
             <div v-if="isModalOpen" class="modal-bg" @click.self="close">
                 <div class="modal-content">
                     <slot />
@@ -41,5 +41,13 @@ div {
         border-radius: var(--default-border-radius);
         padding: var(--default-margin-value);
     }
+}
+
+.modal-enter-active, .modal-leave-active {
+    transition: all 0.25s ease;
+}
+
+.modal-enter-from, .modal-leave-to {
+    opacity: 0;
 }
 </style>
