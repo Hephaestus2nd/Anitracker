@@ -20,10 +20,10 @@ const dataArray = computed(() => {
 <template>
     <select name="search-result-box" size="5" v-model="selectedAnime">
         <option v-if="dataArray.length === 0" disabled value="">
-            <div>No results found</div>
+            No results found
         </option>
 
-        <option v-else v-for="anime in dataArray" :key="anime.idMal" :value="anime.title.english">
+        <option v-else v-for="anime in dataArray" :key="anime.idMal" :value="anime">
             {{ anime.title.english || anime.title.romaji }} ({{ anime.episodes }} eps.)
         </option>
     </select>
