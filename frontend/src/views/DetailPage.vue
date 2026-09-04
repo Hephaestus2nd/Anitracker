@@ -3,6 +3,7 @@ import { ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import MiniProgressBar from './components/MiniProgressBar.vue'
 import StatusBadge from './components/StatusBadge.vue'
+import ModalGeneric from './components/ModalGeneric.vue'
 
 const currRoute = useRoute()
 const animeData = ref(null)
@@ -10,6 +11,9 @@ const animeData = ref(null)
 const loading = ref(false)
 const error = ref('')
 
+// Modals
+const showDeleteModal = ref(false)
+const showUpdateModal = ref(false)
 
 
 const test = [
@@ -96,8 +100,17 @@ watch(() => currRoute.params.id, (newId) => {
 
         <div class="cover-section">
             <img class="cover-pic" :src="animeData.coverImageUrl" :alt="animeData.title">
-            <button class="emphasis">Update</button>
-            <button>Delete</button>
+            
+            <!-- Update Modal -->
+            <button class="emphasis" @click="showUpdateModal">Update</button>
+
+
+            <!-- Delete Modal -->
+            <button @click="showDeleteModal = true">Delete</button>
+            <ModalGeneric v-model="showDeleteModal">
+                <p>Test 1</p>
+                <p>Test 2</p>
+            </ModalGeneric>
         </div>
 
         <section class="user-data">
