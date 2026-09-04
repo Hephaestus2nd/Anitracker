@@ -91,6 +91,17 @@ button {
     &:focus {
         outline: none;
     }
+
+    &:disabled {
+        background: var(--color-secondary);
+        color: var(--light-font-color);
+        cursor: not-allowed;
+
+        /* Need to eliminate hover and focus effects even when disabled */
+        &:hover, &:focus {
+            box-shadow: none;
+        }
+    }
 }
 
 fieldset {

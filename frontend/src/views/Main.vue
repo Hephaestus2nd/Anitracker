@@ -19,6 +19,7 @@ const newAnimeData = ref({
 })
 
 const loading = ref(false);
+const isSearchDisabled = ref(true);
 const error = ref('');
 
 const showAddModal = ref(false)
@@ -100,7 +101,7 @@ onMounted(fetchAnimeData);
 
             <ModalGeneric v-model="showAddModal">
                 <form @submit.prevent="addAnime">
-                    <SearchBarGeneric @search="searchAnime" />
+                    <SearchBarGeneric v-model="isSearchDisabled" @search="searchAnime" />
 
                     <EpisodesAndStatusFormSection v-model="newAnimeData" />
 
