@@ -5,6 +5,7 @@ import CardShowGrid from './components/card_templates/CardShowGrid.vue';
 import ModalGeneric from './components/ModalGeneric.vue';
 import EpisodesAndStatusFormSection from './components/EpisodesAndStatusFormSection.vue';
 import SearchBarGeneric from './components/search/SearchBarGeneric.vue';
+import SearchResult from './components/search/SearchResult.vue';
 
 const animeList = ref([])
 const newAnimeData = ref({
@@ -17,6 +18,9 @@ const newAnimeData = ref({
     "backgroundImageUrl": null,
     "synopsis": null
 })
+
+const searchResults = ref(null)
+const selectedNewAnimeToAdd = ref(null)
 
 const loading = ref(false);
 const isSearchDisabled = ref(false);
@@ -90,7 +94,7 @@ animeList.value = [
     }
 ]
 
-const testResponse = ref({
+searchResults.value = {
     "data": {
         "Page": {
             "media": [
@@ -121,7 +125,7 @@ const testResponse = ref({
             ]
         }
     }
-})
+}
 
 onMounted(fetchAnimeData);
 </script>
@@ -140,6 +144,8 @@ onMounted(fetchAnimeData);
             <ModalGeneric v-model="showAddModal">
                 <form @submit.prevent="addAnime">
                     <SearchBarGeneric v-model="isSearchDisabled" @search="searchAnime" />
+
+                    <SearchResult v-model="selectedNewAnimeToAdd" :result-data="searchResults"/>
 
                     <EpisodesAndStatusFormSection v-model="newAnimeData" />
 
