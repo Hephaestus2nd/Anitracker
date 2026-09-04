@@ -3,7 +3,7 @@ package app;
 public enum WatchStatus {
     WATCHING("Watching"),
     COMPLETED("Completed"),
-    ON_HOLD("On Hold"),
+    ON_HOLD("On-Hold"),
     DROPPED("Dropped"),
     PLAN_TO_WATCH("Plan to Watch");
 

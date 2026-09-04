@@ -8,7 +8,7 @@ BEGIN
         CREATE TYPE watch_status AS ENUM (
             'Watching',
             'Completed',
-            'On Hold',
+            'On-Hold',
             'Dropped',
             'Plan to Watch'
         );
