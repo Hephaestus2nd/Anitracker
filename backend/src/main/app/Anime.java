@@ -6,7 +6,7 @@ public class Anime {
     private String title;
     private Integer totalEpisodes;
     private Integer episodesWatched;
-    private String watchStatus;
+    private WatchStatus watchStatus;
     private String coverImageUrl;
     private String backgroundImageUrl;
     private String synopsis;
@@ -46,11 +46,11 @@ public class Anime {
     }
 
     public String getWatchStatus() {
-        return watchStatus;
+        return watchStatus == null ? null : watchStatus.getDatabaseValue();
     }
 
     public void setWatchStatus(String watchStatus) {
-        this.watchStatus = watchStatus;
+        this.watchStatus = watchStatus == null ? null : WatchStatus.fromValue(watchStatus);
     }
 
     public String getCoverImageUrl() {

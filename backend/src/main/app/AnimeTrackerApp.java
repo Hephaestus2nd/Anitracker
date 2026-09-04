@@ -17,6 +17,8 @@ public class AnimeTrackerApp extends Jooby {
         Jdbi jdbi = Jdbi.create(dbUrl, dbUser, dbPassword);
         jdbi.installPlugin(new SqlObjectPlugin());
         AnimeJdbiDAO animeDao = jdbi.onDemand(AnimeJdbiDAO.class);
+        AniListClient aniListClient = new AniListClient(
+                System.getenv().getOrDefault("ANILIST_GRAPHQL_URL", "https://graphql.anilist.co"));
 
         get("/health", ctx -> {
             try {
@@ -50,9 +52,65 @@ public class AnimeTrackerApp extends Jooby {
 
         post("/anime", ctx -> {
             Anime anime = ctx.body(Anime.class);
+            String validationError = validateAnime(anime);
+            if (validationError != null) {
+                ctx.setResponseCode(StatusCode.BAD_REQUEST);
+                return Map.of("error", validationError);
+            }
+
+            normalizeEpisodeCounts(anime);
+            try {
+                anime.setBackgroundImageUrl(aniListClient.getBannerImage(anime.getMalId()));
+            } catch (IllegalStateException exception) {
+                ctx.setResponseCode(StatusCode.BAD_GATEWAY);
+                return Map.of("error", exception.getMessage());
+            }
+
             animeDao.insertAnime(anime);
             return animeDao.getAnimeByMalId(anime.getMalId());
         });
+    }
+
+    private static String validateAnime(Anime anime) {
+        if (anime == null) {
+            return "Request body is required";
+        }
+        if (anime.getMalId() == null || anime.getMalId() <= 0) {
+            return "malId must be a positive integer";
+        }
+        if (anime.getTitle() == null || anime.getTitle().isBlank()) {
+            return "title is required";
+        }
+        if (anime.getWatchStatus() == null) {
+            return "watchStatus is invalid";
+        }
+        if (anime.getTotalEpisodes() != null && anime.getTotalEpisodes() < 0) {
+            return "totalEpisodes cannot be negative";
+        }
+        if (anime.getEpisodesWatched() != null && anime.getEpisodesWatched() < 0) {
+            return "episodesWatched cannot be negative";
+        }
+        return null;
+    }
+
+//This works for now . If we want to make it better we can use an enum for watchStatus and validate against that.
+//we do already have enums but it'll be a lot of overhead.
+    // private static boolean isValidWatchStatus(String status) {
+    //     return status.equals("Watching")
+    //             || status.equals("Completed")
+    //             || status.equals("On-Hold")
+    //             || status.equals("Dropped")
+    //             || status.equals("Plan to Watch");
+    // }
+
+
+    private static void normalizeEpisodeCounts(Anime anime) {
+        int episodesWatched = anime.getEpisodesWatched() == null ? 0 : anime.getEpisodesWatched();
+        Integer totalEpisodes = anime.getTotalEpisodes();
+        if (totalEpisodes != null && totalEpisodes > 0) {
+            episodesWatched = Math.min(episodesWatched, totalEpisodes);
+        }
+        anime.setEpisodesWatched(episodesWatched);
     }
 
     public static void main(String[] args) {
