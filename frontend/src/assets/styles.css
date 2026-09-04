@@ -83,8 +83,12 @@ button {
         cursor: pointer;
     }
 
-    &:hover {
+    &:hover, &:focus {
         box-shadow: var(--hover-shadow)
+    }
+
+    &:focus {
+        outline: none;
     }
 }
 
@@ -93,6 +97,30 @@ fieldset {
     margin: 0;
     padding: 0;
 }
+
+input, select {
+    padding: 0.15rem 0.35rem;
+    border: 0px transparent;
+    border-radius: var(--default-border-radius);
+    background: var(--color-secondary-light);
+    color: var(--light-font-color);
+    transition: border 0.2s, box-shadow 0.2s;
+
+    /* fieldset:disabled & = fieldset:disabled input, fieldset:disabled select */
+    &:disabled, fieldset:disabled & {
+        background: var(--color-secondary);
+        color: var(--light-font-color);
+        cursor: not-allowed;
+    }
+
+    &:focus {
+        box-shadow: var(--hover-shadow);
+        border: var(--muted-light-font-color);
+        outline: none;
+    }
+}
+
+
 
 img.cover-pic {
     aspect-ratio: 2 / 3; /* Based from Anilist */
