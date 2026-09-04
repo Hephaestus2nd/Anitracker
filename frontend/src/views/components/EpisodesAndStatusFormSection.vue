@@ -49,10 +49,6 @@ fieldset.epsStats {
     grid-template-columns: auto 1fr;
     gap: var(--default-margin-value);
     align-items: center;
-    
-    > label {
-        font-weight: bold;
-        font-size: var(--small-font-size);
-    }
+    margin-bottom: var(--default-margin-value);
 }
 </style>

@@ -61,6 +61,10 @@ function deleteHandler() {
     router.push('/')
 }
 
+function updateHandler() {
+
+}
+
 fetchAnimeData(currRoute.params.id)
 
 // Keep it reactive for any link changes
@@ -112,8 +116,13 @@ watch(() => currRoute.params.id, (newId) => {
             <!-- Update Modal -->
             <button class="emphasis" @click="showUpdateModal = true">Update</button>
             <ModalGeneric v-model="showUpdateModal">
-                <form @submit.prevent="">
+                <form @submit.prevent="updateHandler">
                     <EpisodesAndStatusFormSection v-model="animeData" />
+
+                    <div class="two-buttons">
+                        <button @click="showUpdateModal = false">Go Back</button>
+                        <button class="emphasis" type="submit">Update</button>
+                    </div>
                 </form>
             </ModalGeneric>
 
@@ -122,7 +131,7 @@ watch(() => currRoute.params.id, (newId) => {
             <ModalGeneric v-model="showDeleteModal">
                 <p>Are you sure to delete this entry?</p>
 
-                <div class="delete-buttons">
+                <div class="two-buttons">
                     <button class="emphasis" @click="showDeleteModal = false">Go Back</button>
                     <button @click="deleteHandler">Delete</button>
                 </div>
@@ -199,7 +208,7 @@ div {
         }
     }
 
-    &.delete-buttons {
+    &.two-buttons {
         display: flex;
         justify-content: end;
         gap: var(--default-button-gap-horiz)
