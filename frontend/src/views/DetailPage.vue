@@ -62,7 +62,9 @@ function deleteHandler() {
 }
 
 function updateHandler() {
+    console.log("Test:", JSON.parse(JSON.stringify(animeData.value)))
 
+    showUpdateModal.value = false;
 }
 
 fetchAnimeData(currRoute.params.id)
