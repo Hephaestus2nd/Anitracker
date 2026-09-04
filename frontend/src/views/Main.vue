@@ -2,6 +2,7 @@
 import { onMounted, ref } from 'vue';
 import AddIcon from '@/assets/AddIcon.vue';
 import CardShowGrid from './components/card_templates/CardShowGrid.vue';
+import ModalGeneric from './components/ModalGeneric.vue';
 
 const animeData = ref([]);
 
@@ -69,7 +70,13 @@ onMounted(fetchAnimeData);
     <section class="main-list">
         <header>
             <h2>Anime in your list...</h2>
-            <button class="emphasis icon-span-container"><AddIcon />Add</button>
+            <button class="emphasis icon-span-container" @click="showAddModal = true"><AddIcon />Add</button>
+
+            <ModalGeneric v-model="showAddModal">
+                <form>
+                    <div class="right-align-buttons"></div>
+                </form>
+            </ModalGeneric>
         </header>
 
     <!-- <p v-if="loading">Loading anime...</p>
