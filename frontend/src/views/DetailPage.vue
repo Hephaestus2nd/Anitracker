@@ -1,7 +1,8 @@
 <script setup>
-import { ref, watch, computed } from 'vue'
+import { ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import MiniProgressBar from './components/MiniProgressBar.vue'
+import StatusBadge from './components/StatusBadge.vue'
 
 const currRoute = useRoute()
 const animeData = ref(null)
@@ -56,10 +57,7 @@ watch(() => currRoute.params.id, (newId) => {
     fetchAnimeData(newId)
 })
 
-const progressPercentage = computed(() => {
-    if (!animeData.value.totalEpisodes || animeData.value.totalEpisodes === 0) return 0
-    return Math.ceil((animeData.value.episodesWatched / animeData.value.totalEpisodes) * 100)
-})
+
 
 
 
@@ -98,15 +96,16 @@ const progressPercentage = computed(() => {
 
         <div class="cover-section">
             <img class="cover-pic" :src="animeData.coverImageUrl" :alt="animeData.title">
+            <button class="emphasis">Update</button>
+            <button>Delete</button>
         </div>
 
         <section class="user-data">
             <header>
                 <h1>{{ animeData.title }}</h1>
                 <div class="status-section">
-                    <MiniProgressBar :progress-in-percent="progressPercentage" />
-                    <div class="status-badge">{{ animeData.watchStatus }}</div>
-                    <p>Watched {{ animeData.episodesWatched }} out of {{ animeData.totalEpisodes }}</p>
+                    <MiniProgressBar :anime-data="animeData" />
+                    <StatusBadge :anime-data="animeData" />
                 </div>
             </header>
 
@@ -140,6 +139,14 @@ div {
         margin-left: var(--margin-side);
         margin-right: var(--margin-side);
         margin-top: calc(-4 * var(--margin-side));
+        display: inline-flex;
+        flex-direction: column;
+        gap: var(--default-margin-value);
+        min-width: 128px;
+        
+        > * {
+            flex-shrink: 0;
+        }
     }
 
     > img {
@@ -154,16 +161,12 @@ div {
 
     &.status-section {
         display: grid;
-        grid-template-columns: 1fr 2fr 1fr;
+        grid-template-columns: 1fr auto;
         align-items: center;
         gap: var(--default-margin-value);
 
         > p {
             text-align: right;
-        }
-
-        > div.status-badge {
-            justify-self: start;
         }
     }
 }
