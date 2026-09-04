@@ -111,6 +111,16 @@ curl -I http://localhost:8080
 
 The database should show seeded anime entries, the API should return a health payload, and the web VM should return anime data through the proxied `/api` route.
 
+### Adding anime
+
+`POST /anime` accepts an `Anime` JSON object containing `malId`, `title`,
+`watchStatus`, episode counts, and the Jikan metadata fields used by the
+catalogue. The API validates the identifiers and watch status, defaults
+missing progress to zero, caps progress at the known total episode count, and
+queries AniList by MAL ID. The AniList `bannerImage` is merged into
+`backgroundImageUrl` before the record is saved. AniList failures return
+`502 Bad Gateway`; invalid submissions return `400 Bad Request`.
+
 Useful service checks from the relevant VM:
 
 ```bash

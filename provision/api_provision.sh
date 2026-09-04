@@ -3,18 +3,25 @@ set -euo pipefail
 
 export DEBIAN_FRONTEND=noninteractive
 apt-get update
-apt-get install -y openjdk-17-jdk gradle curl postgresql-client
+apt-get install -y openjdk-17-jdk curl postgresql-client
 
 DB_HOST="192.168.56.10"
 DB_NAME="anitracker"
 
+
 mkdir -p /opt/anitracker
+
 cp -r /vagrant/backend /opt/anitracker/backend
-cp -r /vagrant/build.gradle /opt/anitracker/build.gradle
-cp -r /vagrant/settings.gradle /opt/anitracker/settings.gradle
+cp /vagrant/build.gradle /opt/anitracker/build.gradle
+cp /vagrant/settings.gradle /opt/anitracker/settings.gradle
+cp /vagrant/gradlew /opt/anitracker/gradlew
+cp -r /vagrant/gradle /opt/anitracker/gradle
 
 cd /opt/anitracker
-gradle installDist
+chmod +x gradlew
+
+./gradlew installDist
+
 
 cat <<'EOF' >/etc/systemd/system/anitracker-api.service
 [Unit]
