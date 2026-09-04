@@ -44,7 +44,7 @@ This provisions the three machines and runs the API and frontend services automa
 It might take a long time to start up. the API vm might take more than 10 minutes to the point that it may time out.
 
 
-##Vagrant troubleshooting
+## Vagrant troubleshooting
 
 1. Check VM state:
 
