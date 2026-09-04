@@ -1,11 +1,12 @@
 <script setup>
 import { ref, watch } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import MiniProgressBar from './components/MiniProgressBar.vue'
 import StatusBadge from './components/StatusBadge.vue'
 import ModalGeneric from './components/ModalGeneric.vue'
 
 const currRoute = useRoute()
+const router = useRouter()
 const animeData = ref(null)
 
 const loading = ref(false)
@@ -51,6 +52,12 @@ const test = [
 
 function fetchAnimeData(malId) {
     animeData.value = test.find(anime => anime.malId === Number(malId))
+}
+
+function deleteHandler() {
+    console.log("Deleted")
+
+    router.push('/')
 }
 
 fetchAnimeData(currRoute.params.id)
@@ -109,8 +116,11 @@ watch(() => currRoute.params.id, (newId) => {
             <button @click="showDeleteModal = true">Delete</button>
             <ModalGeneric v-model="showDeleteModal">
                 <p>Are you sure to delete this entry?</p>
-                <button class="emphasis" @click="showUpdateModal">Go Back</button>
-                <button @click="showUpdateModal">Delete</button>
+
+                <div class="delete-buttons">
+                    <button class="emphasis" @click="showDeleteModal = false">Go Back</button>
+                    <button @click="deleteHandler">Delete</button>
+                </div>
             </ModalGeneric>
         </div>
 
@@ -183,5 +193,13 @@ div {
             text-align: right;
         }
     }
+
+    &.delete-buttons {
+        display: flex;
+        justify-content: end;
+        gap: 6px
+    }
 }
+
+
 </style>
