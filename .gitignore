@@ -109,6 +109,8 @@ web_modules/
 !.vscode/extensions.json
 !.vscode/settings.json
 .idea
+.gradle/
+.vagrant/
 .DS_Store
 *.suo
 *.ntvs*
