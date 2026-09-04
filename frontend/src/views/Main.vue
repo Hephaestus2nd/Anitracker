@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, watch } from 'vue';
+import { onMounted, ref, watch, inject } from 'vue';
 import AddIcon from '@/assets/AddIcon.vue';
 import CardShowGrid from './components/card_templates/CardShowGrid.vue';
 import ModalGeneric from './components/ModalGeneric.vue';
@@ -7,6 +7,7 @@ import EpisodesAndStatusFormSection from './components/EpisodesAndStatusFormSect
 import SearchBarGeneric from './components/search/SearchBarGeneric.vue';
 import SearchResult from './components/search/SearchResult.vue';
 
+const watchStatusLabels = inject('watchStatusLabels')
 const animeList = ref([])
 const newAnimeData = ref({
     "malId": null,
@@ -128,6 +129,22 @@ animeList.value = [
         "synopsis": "Tokyo is the home of national-level horse girls and the next generation of running prodigies. Jou Kitahara, a rookie trainer with big dreams and modest expectations, does not expect to find talent in the quiet town of Kasamatsu—until he meets an ash-gray-haired girl with a wild, unconventional stride."
     }
 ]
+
+watch(() => selectedNewAnimeToAdd.value, (selected) => {
+    // Shortcut way of assigning things instead of spamming newAnimeData.value
+    Object.assign(newAnimeData.value, {
+        "malId": selected.idMal,
+        "title": selected.title.english || selected.title.romaji,
+        "totalEpisodes": selected.episodes,
+        "episodesWatched": 0,
+        "watchStatus": watchStatusLabels.PLAN_TO_WATCH,
+        "coverImageUrl": selected.coverImage.extraLarge || selected.coverImage.large,
+        "backgroundImageUrl": selected.bannerImage,
+        "synopsis": selected.description
+    });
+
+    console.log(newAnimeData.value)
+})
 
 
 onMounted(fetchAnimeData);
