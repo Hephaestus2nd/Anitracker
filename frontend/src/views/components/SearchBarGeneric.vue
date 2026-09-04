@@ -7,6 +7,7 @@ const emit = defineEmits(['search'])
 
 const handleSearch = () => {
     emit('search', searchQuery.value)
+    isSearchDisabled.value = true
 }
 
 </script>
@@ -14,14 +15,14 @@ const handleSearch = () => {
 <template>
     <div class="search-bar">
         <input type="search" id="search" placeholder="🔍︎ Search anime..." v-model="searchQuery" />
-        <button type="button" class="emphasis" :disabled="isSearchDisabled" @click="handleSearch">Search</button>
+        <button type="button" class="emphasis" :disabled="isSearchDisabled" @click="handleSearch">{{ isSearchDisabled ? '...' : 'Search' }}</button>
     </div>
 </template>
 
 <style scoped>
 div.search-bar {
     display: grid;
-    grid-template-columns: 1fr auto;
+    grid-template-columns: 2fr 0.5fr;
     gap: var(--default-margin-value);
     margin-bottom: var(--default-margin-value);
 }

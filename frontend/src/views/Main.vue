@@ -19,7 +19,7 @@ const newAnimeData = ref({
 })
 
 const loading = ref(false);
-const isSearchDisabled = ref(true);
+const isSearchDisabled = ref(false);
 const error = ref('');
 
 const showAddModal = ref(false)
