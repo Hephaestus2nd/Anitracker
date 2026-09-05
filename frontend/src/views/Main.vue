@@ -152,7 +152,7 @@ animeList.value = [
 ]
 
 watch(() => selectedNewAnimeToAdd.value, (selected) => {
-    if (!showAddModal.value) return; // Skip if it came from closing the modal
+    if (!showAddModal.value || selected === null) return; // Skip if it came from closing the modal (which sets the thing to null)
 
     // Shortcut way of assigning things instead of spamming newAnimeData.value
     Object.assign(newAnimeData.value, {
