@@ -70,7 +70,7 @@ install(new JacksonModule());
                 return Map.of("error", exception.getMessage());
             }
 
-            animeDao.insertAnime(anime);
+            animeDao.addAnime(anime);
             return animeDao.getAnimeByMalId(anime.getMalId());
         });
     }

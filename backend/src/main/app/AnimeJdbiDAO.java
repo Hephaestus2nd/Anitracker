@@ -19,12 +19,13 @@ public interface AnimeJdbiDAO {
     @SqlQuery("SELECT * FROM my_anime WHERE title = :title")
     Anime getAnimeByTitle(@Bind("title") String title);
 
-        @SqlUpdate("INSERT INTO my_anime (mal_id, title, total_episodes, episodes_watched, watch_status, cover_image_url, background_image_url, synopsis) " +
-            "VALUES (:malId, :title, :totalEpisodes, :episodesWatched, CAST(:watchStatus AS watch_status), :coverImageUrl, :backgroundImageUrl, :synopsis)")
-        void insertAnime(@BindBean Anime anime);
+    @SqlUpdate("INSERT INTO my_anime (mal_id, title, total_episodes, episodes_watched, watch_status, " +
+            "cover_image_url, background_image_url, synopsis) " +
+        "VALUES (:malId, :title, :totalEpisodes, :episodesWatched, CAST(:watchStatus AS watch_status), " +
+            ":coverImageUrl, :backgroundImageUrl, :synopsis)")
+    void addAnime(@BindBean Anime anime);
 
     @SqlUpdate("UPDATE my_anime SET " +
-            
             "title = :title, " +
             "total_episodes = :totalEpisodes, " +
             "episodes_watched = :episodesWatched, " +
