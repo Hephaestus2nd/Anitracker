@@ -7,6 +7,7 @@ import EpisodesAndStatusFormSection from './components/EpisodesAndStatusFormSect
 import SearchBarGeneric from './components/search/SearchBarGeneric.vue';
 import SearchResult from './components/search/SearchResult.vue';
 import ErrorMsg from './components/ErrorMsg.vue';
+import LoadingSpinner from '@/assets/LoadingSpinner.vue';
 
 const defaultNewAnimeData = {
     "malId": null,
@@ -191,12 +192,13 @@ onMounted(fetchAnimeData);
                     </div>
                 </form>
             </ModalGeneric>
-
-            
         </header>
 
         <!-- Card List -->
-        <p v-if="loading">Loading anime...</p>
+        <p v-if="loading">
+            <LoadingSpinner />
+            Loading anime...
+        </p>
         <ErrorMsg v-else-if="fetchAnimeListErr" :error-msg="fetchAnimeListErr" />
         
         <CardShowGrid :anime-data-array="animeList"/>
