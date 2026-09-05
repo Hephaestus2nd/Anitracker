@@ -6,19 +6,22 @@ import StatusBadge from './components/StatusBadge.vue'
 import ModalGeneric from './components/ModalGeneric.vue'
 import EpisodesAndStatusFormSection from './components/EpisodesAndStatusFormSection.vue'
 import FullBlockLoadingSpinner from './components/FullBlockLoadingSpinner.vue'
+import ErrorMsg from './components/ErrorMsg.vue'
 
-const currRoute = useRoute()
-const router = useRouter()
-const animeData = ref(null)
-const origAnimeData = ref(null)
+// Routing and Links
+const linkAnimeId = useRoute() // ID extraction from links
+const redirect = useRouter() // Redirect to homepage if entry deleted
 
-const loading = ref(true)
+// Anime data state
+const loading = ref(false)
 const error = ref('')
+const animeData = ref(null)
+const origAnimeData = ref(null) // For backup
 
 // Modals
 const showDeleteModal = ref(false)
 const showUpdateModal = ref(false)
-const isSubmitting = ref(false)
+const isUpdating = ref(false)
 
 
 const test = [
@@ -54,46 +57,11 @@ const test = [
     }
 ]
 
-function fetchAnimeData(malId) {
+// Fetch stuff
+const fetchAnimeData = async (malId) => {
     animeData.value = test.find(anime => anime.malId === Number(malId))
     origAnimeData.value = { ...animeData.value }
 }
-
-function deleteHandler() {
-    console.log("Deleted")
-
-    router.push('/')
-}
-
-function updateHandler() {
-    isSubmitting.value = true
-    console.log("Test:", JSON.parse(JSON.stringify(animeData.value)))
-
-    origAnimeData.value = { ...animeData.value }
-    showUpdateModal.value = false
-}
-
-fetchAnimeData(currRoute.params.id)
-
-// Keep it reactive for any link changes
-// () => var_to_track, Event e => { what to do with Event e }
-watch(() => currRoute.params.id, (newId) => {
-    fetchAnimeData(newId)
-})
-
-const resetChanges = () => {
-    animeData.value = { ...origAnimeData.value }
-};
-
-watch(() => showUpdateModal.value, (isShown) => {
-    if (isShown) return;
-
-    if (isSubmitting.value) isSubmitting.value = false;
-    else resetChanges();
-})
-
-
-// */
 
 // async function fetchAnimeData(malId) {
 //     loading.value = true
@@ -112,20 +80,50 @@ watch(() => showUpdateModal.value, (isShown) => {
 //     }
 // }
 
-// watch(() => currRoute.params.id, (newId) => {
-//     fetchAnimeData(newId)
-// }, { immediate: true })
+const deleteHandler = async () => {
+    console.log("Deleted")
 
+    redirect.push('/')
+}
+
+const updateHandler = async () => {
+    isUpdating.value = true
+    console.log("Test:", JSON.parse(JSON.stringify(animeData.value)))
+
+    origAnimeData.value = { ...animeData.value }
+    showUpdateModal.value = false
+}
+
+// Helper Functions
+const resetChanges = () => {
+    animeData.value = { ...origAnimeData.value }
+};
+
+// Event Listeners
+// Keep it reactive for any link changes and refresh automatically
+// This also doubles as onMounted
+watch(() => linkAnimeId.params.id, (newId) => {
+    fetchAnimeData(newId)
+}, { immediate: true })
+
+watch(() => showUpdateModal.value, (isShown) => {
+    if (isShown) return;
+
+    if (isUpdating.value) isUpdating.value = false;
+    else resetChanges();
+})
 </script>
 
 <template>
     <FullBlockLoadingSpinner v-if="loading" message="Loading entry..." />
-    <p v-else-if="error">{{ error }}</p>
+    <ErrorMsg v-else-if="error" :error-msg="fetchAnimeListErr" />
+    
     <section v-else class="data-container">
         <div class="banner-section">
             <img class="banner" :src="animeData.backgroundImageUrl" :alt="`${animeData.title} Banner`">
         </div>
 
+        <!-- Left side -->
         <div class="cover-section">
             <img class="cover-pic" :src="animeData.coverImageUrl" :alt="animeData.title">
             
@@ -154,7 +152,8 @@ watch(() => showUpdateModal.value, (isShown) => {
             </ModalGeneric>
         </div>
 
-        <section class="user-data">
+        <!-- Right side -->
+        <section>
             <header>
                 <h1>{{ animeData.title }}</h1>
                 <div class="status-section">
@@ -172,10 +171,6 @@ watch(() => showUpdateModal.value, (isShown) => {
 </template>
 
 <style scoped>
-h1 {
-    font-size: 3rem;
-}
-
 section.data-container {
     display: grid;
     grid-template-columns: 1fr 3fr;
@@ -203,23 +198,21 @@ div {
         }
     }
 
-    > img {
-        border-radius: var(--default-border-radius);
-    }
-
-    > img.banner {
-        position: relative; /* Need for the z-index to work */
-        opacity: 0.5;
-        z-index: -1; /* So as to not overlap */
-    }
-
     &.status-section {
         display: grid;
         grid-template-columns: 1fr auto;
         align-items: center;
         gap: var(--default-margin-value);
     }
+
+    > img {
+        border-radius: var(--default-border-radius);
+
+        &.banner {
+            position: relative; /* Need for the z-index to work */
+            opacity: 0.5;
+            z-index: -1; /* So as to not overlap */
+        }
+    }
 }
-
-
 </style>

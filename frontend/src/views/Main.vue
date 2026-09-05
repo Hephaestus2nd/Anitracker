@@ -205,6 +205,10 @@ onMounted(fetchAnimeData);
 </template>
 
 <style scoped>
+h1 {
+    font-size: 3.5rem;
+}
+
 section.main-list {
     width: 100%;
 
