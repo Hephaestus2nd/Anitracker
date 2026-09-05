@@ -17,6 +17,7 @@ const error = ref('')
 // Modals
 const showDeleteModal = ref(false)
 const showUpdateModal = ref(false)
+const isSubmitting = ref(false)
 
 
 const test = [
@@ -64,9 +65,11 @@ function deleteHandler() {
 }
 
 function updateHandler() {
+    isSubmitting.value = true
     console.log("Test:", JSON.parse(JSON.stringify(animeData.value)))
 
-    showUpdateModal.value = false;
+    origAnimeData.value = { ...animeData.value }
+    showUpdateModal.value = false
 }
 
 fetchAnimeData(currRoute.params.id)
@@ -82,7 +85,10 @@ const resetChanges = () => {
 };
 
 watch(() => showUpdateModal.value, (isShown) => {
-    if (!isShown) resetChanges()
+    if (isShown) return;
+
+    if (isSubmitting.value) isSubmitting.value = false;
+    else resetChanges();
 })
 
 
