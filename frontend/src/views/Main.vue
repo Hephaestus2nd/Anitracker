@@ -21,6 +21,7 @@ const defaultNewAnimeData = {
 
 const watchStatusLabels = inject('watchStatusLabels')
 const apiLinks = inject('apiLinks')
+const apiQueries = inject('apiQueries')
 
 const animeList = ref([])
 const newAnimeData = ref({ ...defaultNewAnimeData })
@@ -61,35 +62,38 @@ async function searchAnime(query) {
     isSearchDisabled.value = true
 
     try {
-        let response = await fetch(apiLinks.ANILIST_API)
-    } catch (error) {
-        
+        let response = await fetch(apiLinks.ANILIST_API, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+            },
+            body: JSON.stringify({
+                query: apiQueries.ANILIST_SEARCH_BY_TITLE,
+                variables: {
+                    "search": query
+                }
+            })
+        })
+
+        let result = await response.json() // Put this first so that we can read GraphQL errs.
+
+        if (!response.ok || (result.errors && result.errors.length > 0)) {
+            const errStatus = result.errors?.[0]?.status || response.status
+            const errorMsg = result.errors?.[0]?.message || response.statusText
+
+            throw new Error(`Error ${errStatus}: ${errorMsg}`);
+        }
+
+        searchResults.value = result
+    } catch (fetchError) {
+        error.value = fetchError.message
     } finally {
-
+        isSearchDisabled.value = false
     }
-
-
-
-    console.log("Executed after 1 second");
 }
 
-// query ($search: String!) {
-//   Page {
-//     media(search: $search, type: ANIME) {
-//       idMal
-//       title {
-//         english
-//         romaji
-//       }
-//       episodes
-// 			coverImage {
-// 				extraLarge
-// 			}
-// 			bannerImage
-//       description
-//     }
-//   }
-// }
+
 
 animeList.value = [
     {
