@@ -20,6 +20,8 @@ const defaultNewAnimeData = {
 
 
 const watchStatusLabels = inject('watchStatusLabels')
+const apiLinks = inject('apiLinks')
+
 const animeList = ref([])
 const newAnimeData = ref({ ...defaultNewAnimeData })
 
@@ -34,7 +36,7 @@ const showAddModal = ref(false)
 
 async function fetchAnimeData() {
     try {
-        const response = await fetch('/api/anime');
+        const response = await fetch(apiLinks.API_ANIME);
         if (!response.ok) {
             throw new Error('Unable to load anime');
         }
@@ -55,46 +57,17 @@ function addAnime() {
     // await fetchAnimeList()
 }
 
-function searchAnime(query) {
-    console.log("Searching for:", query)
+async function searchAnime(query) {
     isSearchDisabled.value = true
 
-    setTimeout(function () {
-        searchResults.value = {
-            "data": {
-                "Page": {
-                    "media": [
-                        {
-                            "idMal": 59636,
-                            "title": {
-                                "english": "Umamusume: Cinderella Gray"
-                            },
-                            "episodes": 13,
-                            "coverImage": {
-                                "extraLarge": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx180516-lebpoKLkw6E3.jpg"
-                            },
-                            "bannerImage": "https://s4.anilist.co/file/anilistcdn/media/anime/banner/180516-qxKVBsTW6Czx.jpg",
-                            "description": "Unbeknownst to those around her in the destitute countryside of Kasamatsu, the staggering potential of this ashen-haired \"Beast” will soon rock Japan with her feet and catapult her to the national stage—down the path of a legend. <br><br>\nFollow Oguri Cap and her insatiable appetite as the starting gates open on this Umamusume's hot-blooded Cinderella story! <br><br>\n\n(Source: It's Anime powered by REMOW, edited)"
-                        },
-                        {
-                            "idMal": 61930,
-                            "title": {
-                                "english": "Umamusume: Cinderella Gray 2nd Cour"
-                            },
-                            "episodes": 10,
-                            "coverImage": {
-                                "extraLarge": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx195240-hKcmllV6YHQT.jpg"
-                            },
-                            "bannerImage": "https://s4.anilist.co/file/anilistcdn/media/anime/banner/195240-HcuZvXcdT5aX.jpg",
-                            "description": "The second half of <i>Umamusume: Cinderella Gray</i>. <br><br>\n\nHailing from the humble countryside, Oguri Cap has turned the racing world on its head. Her rampage through the national race scene seemed unstoppable... until it wasn't. Tamamo Cross, the current peak of racing, has bested the Beast and declared Oguri Cap her rival. <br><br>\n\nBut Oguri Cap can't afford to keep her attention on Tamamo Cross alone. One by one, racers from all over the world arrive in Japan, ready to demonstrate their own prowess. Up against the best the world has to offer, our ashen racer will need to reach beyond her limits if she wants to stand a chance… Keep those eyes peeled—a Cinderella story full of twists and turns lies ahead!<br><br>\n\n(Source: It's Anime powered by REMOW)\n"
-                        }
-                    ]
-                }
-            }
-        }
+    try {
+        let response = await fetch(apiLinks.ANILIST_API)
+    } catch (error) {
+        
+    } finally {
 
-        isSearchDisabled.value = false
-    }, 1000);
+    }
+
 
 
     console.log("Executed after 1 second");
