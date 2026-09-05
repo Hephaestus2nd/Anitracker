@@ -5,13 +5,14 @@ import MiniProgressBar from './components/MiniProgressBar.vue'
 import StatusBadge from './components/StatusBadge.vue'
 import ModalGeneric from './components/ModalGeneric.vue'
 import EpisodesAndStatusFormSection from './components/EpisodesAndStatusFormSection.vue'
+import FullBlockLoadingSpinner from './components/FullBlockLoadingSpinner.vue'
 
 const currRoute = useRoute()
 const router = useRouter()
 const animeData = ref(null)
 const origAnimeData = ref(null)
 
-const loading = ref(false)
+const loading = ref(true)
 const error = ref('')
 
 // Modals
@@ -118,7 +119,7 @@ watch(() => showUpdateModal.value, (isShown) => {
 </script>
 
 <template>
-    <p v-if="loading">Loading anime...</p>
+    <FullBlockLoadingSpinner v-if="loading" message="Loading entry..." />
     <p v-else-if="error">{{ error }}</p>
     <section v-else class="data-container">
         <div class="banner-section">

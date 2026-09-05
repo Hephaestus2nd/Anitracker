@@ -20,9 +20,15 @@ const props = defineProps({
 <style scoped>
 div.loading-full-block {
     display: grid;
-    grid-template-rows: 1fr auto;
-    justify-items: center;
-    align-items: center;
     gap: 8px;
+    height: 50vh;
+
+    /* 
+    Center placement w/o rows
+    place-items = justify-items + align-items
+    place-content = justify-content + align-content
+    */
+    place-items: center;
+    place-content: center;
 }
 </style>
