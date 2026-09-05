@@ -1,5 +1,5 @@
 <script setup>
-import WarningIcon from '../assets/icons/WarningIcon.vue'
+import WarningIcon from '@/assets/WarningIcon.vue';
 
 defineProps({
     errorMsg: {
@@ -11,7 +11,7 @@ defineProps({
 
 <template>
     <div class="error-message" role="alert">
-        <WarningIcon class="error-icon" />
+        <WarningIcon class="icon" />
         <p>{{ errorMsg || 'An error occurred.' }}</p>
     </div>
 </template>
@@ -19,22 +19,14 @@ defineProps({
 <style scoped>
 .error-message {
     padding: 0.75em 1em;
-    background-color: #fee2e2;
-    border-left: 4px solid #dc2626;
-    color: #991b1b;
-    border-radius: 4px;
-    font-size: 0.9rem;
+    background-color: var(--color-primary);
+    border-left: 4px solid var(--color-secondary);
+    color: var(--light-font-color);
+    border-radius: var(--default-border-radius);
     text-align: left;
-    display: inline-flex;
+    display: grid;
+    grid-template-columns: auto 1fr;
     align-items: center;
     gap: 0.5rem;
-}
-
-.error-icon {
-    width: 20px;
-    height: 20px;
-    flex-shrink: 0;
-    color: #dc2626;
-    margin: 0;
 }
 </style>
