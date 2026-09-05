@@ -9,7 +9,7 @@ import SearchResult from './components/search/SearchResult.vue';
 import ErrorMsg from './components/ErrorMsg.vue';
 import FullBlockLoadingSpinner from './components/FullBlockLoadingSpinner.vue';
 
-
+// Default template for adding anime
 const defaultNewAnimeData = {
     "malId": null,
     "title": null,
@@ -21,25 +21,26 @@ const defaultNewAnimeData = {
     "synopsis": null
 }
 
-
+// API stuff
 const watchStatusLabels = inject('watchStatusLabels')
 const apiLinks = inject('apiLinks')
 const apiQueries = inject('apiQueries')
 
+// Main content 
+const loading = ref(true);
 const animeList = ref([])
+const fetchAnimeListErr = ref('');
+
+// Add Modal
+const showAddModal = ref(false)
+const isSearchDisabled = ref(false);
+const searchResults = ref(null)
+const searchAnimeNameErr = ref('');
+const selectedNewAnimeToAdd = ref(null)
 const newAnimeData = ref({ ...defaultNewAnimeData })
 
-const searchResults = ref(null)
-const selectedNewAnimeToAdd = ref(null)
-
-const loading = ref(true);
-const isSearchDisabled = ref(false);
-const fetchAnimeListErr = ref('');
-const searchAnimeNameErr = ref('');
-
-const showAddModal = ref(false)
-
-async function fetchAnimeData() {
+// Fetch stuff
+const fetchAnimeData = async () => {
     try {
         const response = await fetch(apiLinks.API_ANIME);
         if (!response.ok) {
@@ -53,16 +54,7 @@ async function fetchAnimeData() {
     }
 }
 
-function addAnime() {
-    console.log("Test:", JSON.parse(JSON.stringify(newAnimeData.value)))
-
-    showAddModal.value = false
-
-    // please refetch
-    // await fetchAnimeList()
-}
-
-async function searchAnime(query) {
+const searchAnime = async (query) => {
     isSearchDisabled.value = true
 
     try {
@@ -97,7 +89,49 @@ async function searchAnime(query) {
     }
 }
 
+const addAnime = async () => {
+    console.log("Test:", JSON.parse(JSON.stringify(newAnimeData.value)))
 
+    showAddModal.value = false
+
+    // please refetch
+    // await fetchAnimeList()
+}
+
+// Utility functions
+const resetForm = () => {
+    isSearchDisabled.value = false;
+    searchResults.value = null;
+    selectedNewAnimeToAdd.value = null;
+    newAnimeData.value = { ...defaultNewAnimeData };
+};
+
+// Event listeners
+watch(() => selectedNewAnimeToAdd.value, (selected) => {
+    // Skip if it came from closing the modal (which sets the thing to null)
+    if (!showAddModal.value || selected === null) return; 
+
+    // Shortcut way of assigning things instead of spamming newAnimeData.value
+    Object.assign(newAnimeData.value, {
+        "malId": selected.idMal,
+        "title": selected.title.english || selected.title.romaji,
+        "totalEpisodes": selected.episodes,
+        "episodesWatched": 0,
+        "watchStatus": watchStatusLabels.PLAN_TO_WATCH,
+        "coverImageUrl": selected.coverImage.extraLarge || selected.coverImage.large,
+        "backgroundImageUrl": selected.bannerImage,
+        "synopsis": selected.description
+    });
+
+    console.log(newAnimeData.value)
+})
+
+watch(() => showAddModal.value, (isShown) => {
+    if (!isShown) resetForm()
+})
+
+// Mount
+onMounted(fetchAnimeData);
 
 // animeList.value = [
 //     {
@@ -131,42 +165,9 @@ async function searchAnime(query) {
 //         "synopsis": "Tokyo is the home of national-level horse girls and the next generation of running prodigies. Jou Kitahara, a rookie trainer with big dreams and modest expectations, does not expect to find talent in the quiet town of Kasamatsu—until he meets an ash-gray-haired girl with a wild, unconventional stride."
 //     }
 // ]
-
-watch(() => selectedNewAnimeToAdd.value, (selected) => {
-    if (!showAddModal.value || selected === null) return; // Skip if it came from closing the modal (which sets the thing to null)
-
-    // Shortcut way of assigning things instead of spamming newAnimeData.value
-    Object.assign(newAnimeData.value, {
-        "malId": selected.idMal,
-        "title": selected.title.english || selected.title.romaji,
-        "totalEpisodes": selected.episodes,
-        "episodesWatched": 0,
-        "watchStatus": watchStatusLabels.PLAN_TO_WATCH,
-        "coverImageUrl": selected.coverImage.extraLarge || selected.coverImage.large,
-        "backgroundImageUrl": selected.bannerImage,
-        "synopsis": selected.description
-    });
-
-    console.log(newAnimeData.value)
-})
-
-function resetForm() {
-    isSearchDisabled.value = false;
-    searchResults.value = null;
-    selectedNewAnimeToAdd.value = null;
-    newAnimeData.value = { ...defaultNewAnimeData };
-};
-
-watch(() => showAddModal.value, (isShown) => {
-    if (!isShown) resetForm()
-})
-
-
-onMounted(fetchAnimeData);
 </script>
 
 <template>
-    
     <header class="main-header">
         <h1>Welcome to <span class="logo-text">Anitracker</span>!</h1>
         <p>Keep your plan to watch list, currently watching list, and completed lists all in one place!</p>
