@@ -9,6 +9,7 @@ import EpisodesAndStatusFormSection from './components/EpisodesAndStatusFormSect
 const currRoute = useRoute()
 const router = useRouter()
 const animeData = ref(null)
+const origAnimeData = ref(null)
 
 const loading = ref(false)
 const error = ref('')
@@ -53,6 +54,7 @@ const test = [
 
 function fetchAnimeData(malId) {
     animeData.value = test.find(anime => anime.malId === Number(malId))
+    origAnimeData.value = { ...animeData.value }
 }
 
 function deleteHandler() {
@@ -75,8 +77,13 @@ watch(() => currRoute.params.id, (newId) => {
     fetchAnimeData(newId)
 })
 
+const resetChanges = () => {
+    animeData.value = { ...origAnimeData.value }
+};
 
-
+watch(() => showUpdateModal.value, (isShown) => {
+    if (!isShown) resetChanges()
+})
 
 
 // */
