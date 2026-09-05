@@ -100,6 +100,24 @@ function searchAnime(query) {
     console.log("Executed after 1 second");
 }
 
+// query ($search: String!) {
+//   Page {
+//     media(search: $search, type: ANIME) {
+//       idMal
+//       title {
+//         english
+//         romaji
+//       }
+//       episodes
+// 			coverImage {
+// 				extraLarge
+// 			}
+// 			bannerImage
+//       description
+//     }
+//   }
+// }
+
 animeList.value = [
     {
         "malId": 1,
