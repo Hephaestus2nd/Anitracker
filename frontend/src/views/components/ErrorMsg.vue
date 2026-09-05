@@ -28,5 +28,6 @@ defineProps({
     grid-template-columns: auto 1fr;
     align-items: center;
     gap: 0.5rem;
+    margin-bottom: var(--default-margin-value);
 }
 </style>

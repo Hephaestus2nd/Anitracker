@@ -30,9 +30,10 @@ const newAnimeData = ref({ ...defaultNewAnimeData })
 const searchResults = ref(null)
 const selectedNewAnimeToAdd = ref(null)
 
-const loading = ref(false);
+const loading = ref(true);
 const isSearchDisabled = ref(false);
-const error = ref('');
+const fetchAnimeListErr = ref('');
+const searchAnimeNameErr = ref('');
 
 const showAddModal = ref(false)
 
@@ -40,11 +41,11 @@ async function fetchAnimeData() {
     try {
         const response = await fetch(apiLinks.API_ANIME);
         if (!response.ok) {
-            throw new Error('Unable to load anime');
+            throw new Error('Unable to load anime.');
         }
         animeList.value = await response.json();
     } catch (fetchError) {
-        error.value = fetchError.message;
+        fetchAnimeListErr.value = fetchError.message;
     } finally {
         loading.value = false;
     }
@@ -88,7 +89,7 @@ async function searchAnime(query) {
 
         searchResults.value = result
     } catch (fetchError) {
-        error.value = fetchError.message
+        searchAnimeNameErr.value = fetchError.message
     } finally {
         isSearchDisabled.value = false
     }
@@ -163,6 +164,7 @@ onMounted(fetchAnimeData);
 </script>
 
 <template>
+    
     <header class="main-header">
         <h1>Welcome to <span class="logo-text">Anitracker</span>!</h1>
         <p>Keep your plan to watch list, currently watching list, and completed lists all in one place!</p>
@@ -171,13 +173,15 @@ onMounted(fetchAnimeData);
     <section class="main-list">
         <header>
             <h2>Anime in your list...</h2>
-            <button class="emphasis icon-span-container" @click="showAddModal = true"><AddIcon />Add</button>
 
+            <!-- Add Modal -->
+            <button class="emphasis icon-span-container" @click="showAddModal = true"><AddIcon />Add</button>
             <ModalGeneric v-model="showAddModal">
                 <form @submit.prevent="addAnime">
                     <SearchBarGeneric v-model="isSearchDisabled" @search="searchAnime" />
 
-                    <SearchResult v-if="searchResults" v-model="selectedNewAnimeToAdd" :result-data="searchResults"/>
+                    <ErrorMsg v-if="searchAnimeNameErr" :error-msg="searchAnimeNameErr" />
+                    <SearchResult v-else-if="searchResults" v-model="selectedNewAnimeToAdd" :result-data="searchResults"/>
 
                     <EpisodesAndStatusFormSection v-model="newAnimeData" />
 
@@ -187,12 +191,15 @@ onMounted(fetchAnimeData);
                     </div>
                 </form>
             </ModalGeneric>
+
+            
         </header>
 
-    <ErrorMsg :error-msg="error" />
-    <!-- <p v-if="loading">Loading anime...</p>
-    <p v-else-if="error">{{ error }}</p> -->
-    <CardShowGrid :anime-data-array="animeList"/>
+        <!-- Card List -->
+        <p v-if="loading">Loading anime...</p>
+        <ErrorMsg v-else-if="fetchAnimeListErr" :error-msg="fetchAnimeListErr" />
+        
+        <CardShowGrid :anime-data-array="animeList"/>
     </section>
 </template>
 
