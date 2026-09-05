@@ -18,7 +18,7 @@ const dataArray = computed(() => {
 </script>
 
 <template>
-    <select name="search-result-box" size="5" v-model="selectedAnime">
+    <select name="search-result-box" size="6" v-model="selectedAnime">
         <option v-if="dataArray.length === 0" disabled value="">
             No results found
         </option>
@@ -33,6 +33,9 @@ const dataArray = computed(() => {
 select {
     margin-bottom: var(--default-margin-value);
     width: 100%;
+    max-width: 360px;
+    overflow-x: auto;
+    overflow-y: auto;
 
     > option:disabled {
         color: var(--light-font-color);
