@@ -25,6 +25,7 @@ const showDeleteModal = ref(false)
 const showUpdateModal = ref(false)
 const isUpdating = ref(false)
 const deleteErr = ref('')
+const updateErr = ref('')
 
 const fetchAnimeData = async () => {
     loading.value = true
@@ -67,10 +68,26 @@ const deleteHandler = async () => {
 
 const updateHandler = async () => {
     isUpdating.value = true
-    console.log("Test:", JSON.parse(JSON.stringify(animeData.value)))
 
-    origAnimeData.value = { ...animeData.value }
-    showUpdateModal.value = false
+    try {
+        let response = await fetch(apiAnimeIdLink.value, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+            },
+            body: JSON.stringify(animeData.value)
+        })
+
+        if (!response.ok) {
+            throw new Error(`Error ${response.status}: ${response.statusText}`);
+        }
+
+        origAnimeData.value = { ...animeData.value }
+        showUpdateModal.value = false
+    } catch (updateError) {
+        updateErr.value = updateError.message
+    } 
 }
 
 // Helper Functions
@@ -89,7 +106,7 @@ watch(() => linkAnimeId.params.id, (newId) => {
 watch(() => showUpdateModal.value, (isShown) => {
     if (isShown) return;
 
-    if (isUpdating.value) isUpdating.value = false;
+    if (isUpdating.value) isUpdating.value = false; // Need because once it is updated, don't reset back to old state
     else resetChanges();
 })
 
@@ -116,6 +133,8 @@ watch(() => showDeleteModal.value, (isShown) => {
             <!-- Update Modal -->
             <button class="emphasis" @click="showUpdateModal = true">Update</button>
             <ModalGeneric v-model="showUpdateModal">
+                <ErrorMsg v-if="updateErr" :error-msg="updateErr" />
+
                 <form @submit.prevent="updateHandler">
                     <EpisodesAndStatusFormSection v-model="animeData" />
 
