@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, watch, inject } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import MiniProgressBar from './components/MiniProgressBar.vue'
 import StatusBadge from './components/StatusBadge.vue'
@@ -9,6 +9,8 @@ import FullBlockLoadingSpinner from './components/FullBlockLoadingSpinner.vue'
 import ErrorMsg from './components/ErrorMsg.vue'
 
 // Routing and Links
+const apiLinks = inject('apiLinks')
+const apiAnimeIdLink = ref('')
 const linkAnimeId = useRoute() // ID extraction from links
 const redirect = useRouter() // Redirect to homepage if entry deleted
 
@@ -22,13 +24,14 @@ const origAnimeData = ref(null) // For backup
 const showDeleteModal = ref(false)
 const showUpdateModal = ref(false)
 const isUpdating = ref(false)
+const deleteErr = ref('')
 
-const fetchAnimeData = async (malId) => {
+const fetchAnimeData = async () => {
     loading.value = true
     fetchAnimeListErr.value = ''
 
     try {
-        const response = await fetch(`/api/anime/${malId}`)
+        const response = await fetch(apiAnimeIdLink.value)
 
         if (!response.ok) {
             throw new Error('Anime not found')
@@ -47,9 +50,19 @@ const fetchAnimeData = async (malId) => {
 }
 
 const deleteHandler = async () => {
-    console.log("Deleted")
+    try {
+        let response = await fetch(apiAnimeIdLink.value, {
+            method: "DELETE",
+        })
 
-    redirect.push('/')
+        if (!response.ok) {
+            throw new Error(`Error ${response.status}: ${response.statusText}`);
+        }
+
+        redirect.push('/')
+    } catch (deleteError) {
+        deleteErr.value = deleteError.message
+    }
 }
 
 const updateHandler = async () => {
@@ -69,7 +82,8 @@ const resetChanges = () => {
 // Keep it reactive for any link changes and refresh automatically
 // This also doubles as onMounted
 watch(() => linkAnimeId.params.id, (newId) => {
-    fetchAnimeData(newId)
+    apiAnimeIdLink.value = `${apiLinks.API_ANIME}/${newId}`
+    fetchAnimeData()
 }, { immediate: true })
 
 watch(() => showUpdateModal.value, (isShown) => {
@@ -77,6 +91,12 @@ watch(() => showUpdateModal.value, (isShown) => {
 
     if (isUpdating.value) isUpdating.value = false;
     else resetChanges();
+})
+
+watch(() => showDeleteModal.value, (isShown) => {
+    if (isShown) return;
+
+    if (deleteErr) deleteErr.value = '';
 })
 </script>
 
@@ -109,11 +129,12 @@ watch(() => showUpdateModal.value, (isShown) => {
             <!-- Delete Modal -->
             <button @click="showDeleteModal = true">Delete</button>
             <ModalGeneric v-model="showDeleteModal">
-                <p>Are you sure to delete this entry?</p>
+                <p v-if="!deleteErr">Are you sure to delete this entry?</p>
+                <ErrorMsg v-else :error-msg="deleteErr" />
 
                 <div class="right-align-buttons">
                     <button class="emphasis" @click="showDeleteModal = false">Go Back</button>
-                    <button @click="deleteHandler">Delete</button>
+                    <button v-if="!deleteErr"  @click="deleteHandler">Delete</button>
                 </div>
             </ModalGeneric>
         </div>
