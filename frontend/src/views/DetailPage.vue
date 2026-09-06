@@ -151,7 +151,7 @@ watch(() => showDeleteModal.value, (isShown) => {
 
             <section>
                 <h2>Synopsis</h2>
-                <p>{{ animeData.synopsis }}</p>
+                <p v-html="animeData.synopsis"></p>
             </section>
         </section>
     </section>
