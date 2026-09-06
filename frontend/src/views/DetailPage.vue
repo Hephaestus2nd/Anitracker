@@ -23,7 +23,7 @@ const showDeleteModal = ref(false)
 const showUpdateModal = ref(false)
 const isUpdating = ref(false)
 
-
+/*
 const test = [
     {
         "malId": 1,
@@ -56,29 +56,33 @@ const test = [
         "synopsis": "Tokyo is the home of national-level horse girls and the next generation of running prodigies. Jou Kitahara, a rookie trainer with big dreams and modest expectations, does not expect to find talent in the quiet town of Kasamatsu—until he meets an ash-gray-haired girl with a wild, unconventional stride."
     }
 ]
+*/
 
 // Fetch stuff
+/*
 const fetchAnimeData = async (malId) => {
     animeData.value = test.find(anime => anime.malId === Number(malId))
     origAnimeData.value = { ...animeData.value }
 }
+*/
 
-// async function fetchAnimeData(malId) {
-//     loading.value = true
-//     error.value = ''
-//     try {
-//         const response = await fetch(`/api/anime/${malId}`)
-//         if (!response.ok) {
-//             throw new Error('Anime not found')
-//         }
-//         animeData.value = await response.json()
-//     } catch (fetchError) {
-//         animeData.value = null
-//         error.value = fetchError.message
-//     } finally {
-//         loading.value = false
-//     }
-// }
+const fetchAnimeData = async (malId) => {
+     loading.value = true
+     error.value = ''
+     try {
+         const response = await fetch(`/api/anime/${malId}`)
+         if (!response.ok) {
+             throw new Error('Anime not found')
+         }
+         animeData.value = await response.json()
+         origAnimeData.value = { ...animeData.value }
+     } catch (fetchError) {
+         animeData.value = null
+         error.value = fetchError.message
+     } finally {
+         loading.value = false
+     }
+}
 
 const deleteHandler = async () => {
     console.log("Deleted")
