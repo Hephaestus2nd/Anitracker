@@ -40,6 +40,23 @@ EOF
 rm -f /etc/nginx/sites-enabled/default
 ln -sf /etc/nginx/sites-available/anitracker /etc/nginx/sites-enabled/anitracker
 
+echo "Waiting for Anitracker API..."
+
+for attempt in $(seq 1 60); do
+    if curl -fsS http://192.168.56.11:8080/health >/dev/null 2>&1; then
+        echo "Anitracker API is ready."
+        break
+    fi
+
+    if [ "$attempt" -eq 60 ]; then
+        echo "Anitracker API did not become reachable" >&2
+        exit 1
+    fi
+
+    sleep 2
+done
+
+
 
 nginx -t
 systemctl enable nginx
