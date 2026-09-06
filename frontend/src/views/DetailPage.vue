@@ -216,6 +216,9 @@ div {
             position: relative; /* Need for the z-index to work */
             opacity: 0.5;
             z-index: -1; /* So as to not overlap */
+            width: 100%;
+            height: auto;
+            display: block;
         }
     }
 }
