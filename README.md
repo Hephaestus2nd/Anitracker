@@ -108,7 +108,7 @@ vagrant ssh api -- 'curl -s http://localhost:8080/health'
 vagrant ssh web -- 'curl -s http://localhost/api/anime | head'
 curl -I http://localhost:8080
 ```
-
+Password is:AppPass123
 The database should show seeded anime entries, the API should return a health payload, and the web VM should return anime data through the proxied `/api` route.
 
 ### Adding anime
