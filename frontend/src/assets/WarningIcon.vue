@@ -1,0 +1,13 @@
+<template>
+    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10" />
+        <line x1="12" y1="8" x2="12" y2="12" stroke-linecap="round" />
+        <line x1="12" y1="16" x2="12" y2="16" stroke-linecap="round" />
+    </svg>
+</template>
+
+<style scoped>
+svg {
+    margin-top: -2px; /* Slight off-center correction */
+}
+</style>

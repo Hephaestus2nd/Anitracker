@@ -18,6 +18,7 @@
         0 0 4px var(--color-secondary-light),
         0 0 10px var(--color-secondary),
         0 0 20px var(--color-secondary);
+    --drop-shadow: 1px 1px 8px var(--color-secondary);
 }
 
 * {
@@ -46,7 +47,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-    font-size: 3.5rem;
+    font-size: 3rem;
 }
 
 header, section, footer, p {
@@ -83,14 +84,68 @@ button {
         cursor: pointer;
     }
 
-    &:hover {
+    &:hover, &:focus {
         box-shadow: var(--hover-shadow)
+    }
+
+    &:focus {
+        outline: none;
+    }
+
+    &:disabled {
+        background: var(--color-secondary);
+        color: var(--light-font-color);
+        cursor: not-allowed;
+
+        /* Need to eliminate hover and focus effects even when disabled */
+        &:hover, &:focus {
+            box-shadow: none;
+        }
     }
 }
 
+fieldset {
+    border: 0px transparent;
+    margin: 0;
+    padding: 0;
+}
+
+input, select {
+    padding: 0.15rem 0.35rem;
+    border: 0px transparent;
+    border-radius: var(--default-border-radius);
+    background: var(--color-secondary-light);
+    color: var(--light-font-color);
+    transition: border 0.2s, box-shadow 0.2s;
+    font-size: 1rem;
+
+    /* fieldset:disabled & = fieldset:disabled input, fieldset:disabled select */
+    &:disabled, fieldset:disabled & {
+        background: var(--color-secondary);
+        color: var(--light-font-color);
+        cursor: not-allowed;
+    }
+
+    &::placeholder {
+        color: var(--muted-light-font-color);
+    }
+
+    &:focus {
+        box-shadow: var(--hover-shadow);
+        border: var(--muted-light-font-color);
+        outline: none;
+    }
+}
+
+label {
+    font-weight: bold;
+}
+
+
 img.cover-pic {
     aspect-ratio: 2 / 3; /* Based from Anilist */
-    width: max(100%, 128px)
+    width: max(100%, 128px);
+    box-shadow: var(--drop-shadow);
 }
 
 img.banner {
@@ -133,4 +188,10 @@ img.banner {
     background: var(--color-secondary);
     border-radius: var(--default-border-radius);
     padding: 16px 24px;
+}
+
+.right-align-buttons {
+    display: flex;
+    justify-content: end;
+    gap: var(--default-button-gap-horiz)
 }

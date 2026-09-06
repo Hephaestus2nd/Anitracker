@@ -4,17 +4,24 @@ import { useRoute, useRouter } from 'vue-router'
 import MiniProgressBar from './components/MiniProgressBar.vue'
 import StatusBadge from './components/StatusBadge.vue'
 import ModalGeneric from './components/ModalGeneric.vue'
+import EpisodesAndStatusFormSection from './components/EpisodesAndStatusFormSection.vue'
+import FullBlockLoadingSpinner from './components/FullBlockLoadingSpinner.vue'
+import ErrorMsg from './components/ErrorMsg.vue'
 
-const currRoute = useRoute()
-const router = useRouter()
-const animeData = ref(null)
+// Routing and Links
+const linkAnimeId = useRoute() // ID extraction from links
+const redirect = useRouter() // Redirect to homepage if entry deleted
 
+// Anime data state
 const loading = ref(false)
 const error = ref('')
+const animeData = ref(null)
+const origAnimeData = ref(null) // For backup
 
 // Modals
 const showDeleteModal = ref(false)
 const showUpdateModal = ref(false)
+const isUpdating = ref(false)
 
 
 const test = [
@@ -50,29 +57,11 @@ const test = [
     }
 ]
 
-function fetchAnimeData(malId) {
+// Fetch stuff
+const fetchAnimeData = async (malId) => {
     animeData.value = test.find(anime => anime.malId === Number(malId))
+    origAnimeData.value = { ...animeData.value }
 }
-
-function deleteHandler() {
-    console.log("Deleted")
-
-    router.push('/')
-}
-
-fetchAnimeData(currRoute.params.id)
-
-// Keep it reactive for any link changes
-// () => var_to_track, Event e => { what to do with Event e }
-watch(() => currRoute.params.id, (newId) => {
-    fetchAnimeData(newId)
-})
-
-
-
-
-
-// */
 
 // async function fetchAnimeData(malId) {
 //     loading.value = true
@@ -91,45 +80,63 @@ watch(() => currRoute.params.id, (newId) => {
 //     }
 // }
 
-// watch(() => currRoute.params.id, (newId) => {
-//     fetchAnimeData(newId)
-// }, { immediate: true })
+const deleteHandler = async () => {
+    console.log("Deleted")
 
+    redirect.push('/')
+}
+
+const updateHandler = async () => {
+    isUpdating.value = true
+    console.log("Test:", JSON.parse(JSON.stringify(animeData.value)))
+
+    origAnimeData.value = { ...animeData.value }
+    showUpdateModal.value = false
+}
+
+// Helper Functions
+const resetChanges = () => {
+    animeData.value = { ...origAnimeData.value }
+};
+
+// Event Listeners
+// Keep it reactive for any link changes and refresh automatically
+// This also doubles as onMounted
+watch(() => linkAnimeId.params.id, (newId) => {
+    fetchAnimeData(newId)
+}, { immediate: true })
+
+watch(() => showUpdateModal.value, (isShown) => {
+    if (isShown) return;
+
+    if (isUpdating.value) isUpdating.value = false;
+    else resetChanges();
+})
 </script>
 
 <template>
-    <p v-if="loading">Loading anime...</p>
-    <p v-else-if="error">{{ error }}</p>
+    <FullBlockLoadingSpinner v-if="loading" message="Loading entry..." />
+    <ErrorMsg v-else-if="error" :error-msg="fetchAnimeListErr" />
+    
     <section v-else class="data-container">
         <div class="banner-section">
             <img class="banner" :src="animeData.backgroundImageUrl" :alt="`${animeData.title} Banner`">
         </div>
 
+        <!-- Left side -->
         <div class="cover-section">
             <img class="cover-pic" :src="animeData.coverImageUrl" :alt="animeData.title">
             
             <!-- Update Modal -->
             <button class="emphasis" @click="showUpdateModal = true">Update</button>
             <ModalGeneric v-model="showUpdateModal">
-                <form @submit.prevent="">
-                    <label for="watchStatus">Status</label>
-                    <select name="watchStatus" id="watchStatus" v-model="animeData.watchStatus">
-                        <option value="Plan to Watch">Plan to Watch</option>
-                        <option value="Watching">Watching</option>
-                        <option value="On-Hold">On Hold</option>
-                        <option value="Dropped">Dropped</option>
-                        <option value="Completed">Completed</option>
-                    </select>
+                <form @submit.prevent="updateHandler">
+                    <EpisodesAndStatusFormSection v-model="animeData" />
 
-                    <label for="episodesWatched">Episodes Watched</label>
-                    <input 
-                        type="number" 
-                        name="episodesWatched" 
-                        id="episodesWatched" 
-                        min="0" 
-                        :value="animeData.episodesWatched"
-                        :max="animeData.totalEpisodes"
-                        :disabled="animeData.watchStatus === 'Completed' || animeData.watchStatus === 'Plan to Watch'">
+                    <div class="right-align-buttons">
+                        <button @click="showUpdateModal = false">Go Back</button>
+                        <button class="emphasis" type="submit">Update</button>
+                    </div>
                 </form>
             </ModalGeneric>
 
@@ -138,14 +145,15 @@ watch(() => currRoute.params.id, (newId) => {
             <ModalGeneric v-model="showDeleteModal">
                 <p>Are you sure to delete this entry?</p>
 
-                <div class="delete-buttons">
+                <div class="right-align-buttons">
                     <button class="emphasis" @click="showDeleteModal = false">Go Back</button>
                     <button @click="deleteHandler">Delete</button>
                 </div>
             </ModalGeneric>
         </div>
 
-        <section class="user-data">
+        <!-- Right side -->
+        <section>
             <header>
                 <h1>{{ animeData.title }}</h1>
                 <div class="status-section">
@@ -163,10 +171,6 @@ watch(() => currRoute.params.id, (newId) => {
 </template>
 
 <style scoped>
-h1 {
-    font-size: 3rem;
-}
-
 section.data-container {
     display: grid;
     grid-template-columns: 1fr 3fr;
@@ -194,33 +198,21 @@ div {
         }
     }
 
-    > img {
-        border-radius: var(--default-border-radius);
-    }
-
-    > img.banner {
-        position: relative; /* Need for the z-index to work */
-        opacity: 0.5;
-        z-index: -1; /* So as to not overlap */
-    }
-
     &.status-section {
         display: grid;
         grid-template-columns: 1fr auto;
         align-items: center;
         gap: var(--default-margin-value);
+    }
 
-        > p {
-            text-align: right;
+    > img {
+        border-radius: var(--default-border-radius);
+
+        &.banner {
+            position: relative; /* Need for the z-index to work */
+            opacity: 0.5;
+            z-index: -1; /* So as to not overlap */
         }
     }
-
-    &.delete-buttons {
-        display: flex;
-        justify-content: end;
-        gap: var(--default-button-gap-horiz)
-    }
 }
-
-
 </style>
