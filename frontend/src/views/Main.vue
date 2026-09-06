@@ -94,9 +94,9 @@ const searchAnime = async (query) => {
 }
 
 const addAnime = async () => {
+    clearModalErrors()
+    
     try {
-        clearModalErrors()
-
         let response = await fetch(apiLinks.API_ANIME, {
             method: "POST",
             headers: {
@@ -146,8 +146,6 @@ watch(() => selectedNewAnimeToAdd.value, (selected) => {
         "backgroundImageUrl": selected.bannerImage,
         "synopsis": selected.description
     });
-
-    console.log(newAnimeData.value)
 })
 
 watch(() => showAddModal.value, (isShown) => {
@@ -175,7 +173,8 @@ onMounted(fetchAnimeData);
             <button class="emphasis icon-span-container" @click="showAddModal = true"><AddIcon />Add</button>
             <ModalGeneric v-model="showAddModal">
                 <form @submit.prevent="addAnime">
-                    <SearchBarGeneric v-model="isSearchDisabled" @search="searchAnime" />
+                    <!-- Need @keydown.enter.prevent to redirect the enter button to the search bar -->
+                    <SearchBarGeneric v-model="isSearchDisabled" @search="searchAnime" @keydown.enter.prevent />
 
                     <ErrorMsg v-if="searchAnimeNameErr || newAnimeDataErr" :error-msg="searchAnimeNameErr || newAnimeDataErr" />
                     <SearchResult v-else-if="searchResults" v-model="selectedNewAnimeToAdd" :result-data="searchResults"/>

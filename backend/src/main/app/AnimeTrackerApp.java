@@ -117,12 +117,12 @@ public class AnimeTrackerApp extends Jooby {
 
             normalizeEpisodeCounts(anime);
 
-            try {
-                anime.setBackgroundImageUrl(aniListClient.getBannerImage(anime.getMalId()));
-            } catch (IllegalStateException exception) {
-                ctx.setResponseCode(StatusCode.BAD_GATEWAY);
-                return errorResponse(exception.getMessage());
-            }
+            // try {
+            //     anime.setBackgroundImageUrl(aniListClient.getBannerImage(anime.getMalId()));
+            // } catch (IllegalStateException exception) {
+            //     ctx.setResponseCode(StatusCode.BAD_GATEWAY);
+            //     return errorResponse(exception.getMessage());
+            // }
 
             animeDao.addAnime(anime);
             return animeDao.getAnimeByMalId(anime.getMalId());
