@@ -24,7 +24,7 @@ const dataArray = computed(() => {
         </option>
 
         <option v-else v-for="anime in dataArray" :key="anime.idMal" :value="anime">
-            {{ anime.title.english || anime.title.romaji }} ({{ anime.episodes }} eps.)
+            {{ anime.title.english || anime.title.romaji }} ({{ anime.episodes === null ? "Ongoing" : `${anime.episodes} eps.` }})
         </option>
     </select>
 </template>

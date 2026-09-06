@@ -37,5 +37,5 @@ public interface AnimeJdbiDAO {
     void updateAnime(@BindBean Anime anime);
 
     @SqlUpdate("DELETE FROM my_anime WHERE mal_id = :malId")
-    void deleteAnime(@Bind("malId") int malId);
+    int deleteAnime(@Bind("malId") int malId);
 }

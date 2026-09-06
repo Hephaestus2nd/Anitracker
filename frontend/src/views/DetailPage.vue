@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, watch, inject } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import MiniProgressBar from './components/MiniProgressBar.vue'
 import StatusBadge from './components/StatusBadge.vue'
@@ -9,12 +9,14 @@ import FullBlockLoadingSpinner from './components/FullBlockLoadingSpinner.vue'
 import ErrorMsg from './components/ErrorMsg.vue'
 
 // Routing and Links
+const apiLinks = inject('apiLinks')
+const apiAnimeIdLink = ref('')
 const linkAnimeId = useRoute() // ID extraction from links
 const redirect = useRouter() // Redirect to homepage if entry deleted
 
 // Anime data state
 const loading = ref(false)
-const error = ref('')
+const fetchAnimeListErr = ref('')
 const animeData = ref(null)
 const origAnimeData = ref(null) // For backup
 
@@ -22,72 +24,45 @@ const origAnimeData = ref(null) // For backup
 const showDeleteModal = ref(false)
 const showUpdateModal = ref(false)
 const isUpdating = ref(false)
+const deleteErr = ref('')
 
-/*
-const test = [
-    {
-        "malId": 1,
-        "title": "Akiba Maid War",
-        "totalEpisodes": 12,
-        "episodesWatched": 12,
-        "watchStatus": "Completed",
-        "coverImageUrl": "https://cdn.myanimelist.net/images/anime/1217/129604.jpg",
-        "backgroundImageUrl": "https://s4.anilist.co/file/anilistcdn/media/anime/banner/151379-9adZHzFGBTpV.jpg",
-        "synopsis": "Nagomi's first day seems completely normal—until she has to run an \"errand\" at a rival maid cafe along with her fellow recruit, the mature Ranko Mannen. There, things quickly go south, and Nagomi soon gets her first taste of Akihabara's violent maid wars. As she watches Ranko calmly battle her way through a horde of gun- and knife-wielding maids, Nagomi realizes that maid cafes are drastically unlike what she had envisioned."
-    },
-    {
-        "malId": 2,
-        "title": "Frieren: Beyond Journey's End",
-        "totalEpisodes": 12,
-        "episodesWatched": 8,
-        "watchStatus": "Watching",
-        "coverImageUrl": "https://cdn.myanimelist.net/images/anime/1015/138006.jpg",
-        "backgroundImageUrl": "https://s4.anilist.co/file/anilistcdn/media/anime/banner/154587-ivXNJ23SM1xB.jpg",
-        "synopsis": "As the years pass, Frieren gradually realizes how her days in the hero's party truly impacted her. Witnessing the deaths of two of her former companions, Frieren begins to regret having taken their presence for granted; she vows to better understand humans and create real personal connections. Although the story of that once memorable journey has long ended, a new tale is about to begin."
-    },
-    {
-        "malId": 3,
-        "title": "Uma Musume: Cinderella Gray",
-        "totalEpisodes": 13,
-        "episodesWatched": 0,
-        "watchStatus": "Plan to Watch",
-        "coverImageUrl": "https://cdn.myanimelist.net/images/anime/1626/148097.jpg",
-        "backgroundImageUrl": "https://s4.anilist.co/file/anilistcdn/media/anime/banner/180516-qxKVBsTW6Czx.jpg",
-        "synopsis": "Tokyo is the home of national-level horse girls and the next generation of running prodigies. Jou Kitahara, a rookie trainer with big dreams and modest expectations, does not expect to find talent in the quiet town of Kasamatsu—until he meets an ash-gray-haired girl with a wild, unconventional stride."
+const fetchAnimeData = async () => {
+    loading.value = true
+    fetchAnimeListErr.value = ''
+
+    try {
+        const response = await fetch(apiAnimeIdLink.value)
+
+        if (!response.ok) {
+            throw new Error('Anime not found')
+        }
+
+        animeData.value = await response.json()
+        animeData.value.backgroundImageUrl = animeData.value.backgroundImageUrl.replace(/\\/g, '')
+
+        origAnimeData.value = { ...animeData.value }
+    } catch (fetchError) {
+        animeData.value = null
+        fetchAnimeListErr.value = fetchError.message
+    } finally {
+        loading.value = false
     }
-]
-*/
-
-// Fetch stuff
-/*
-const fetchAnimeData = async (malId) => {
-    animeData.value = test.find(anime => anime.malId === Number(malId))
-    origAnimeData.value = { ...animeData.value }
-}
-*/
-
-const fetchAnimeData = async (malId) => {
-     loading.value = true
-     error.value = ''
-     try {
-         const response = await fetch(`/api/anime/${malId}`)
-         if (!response.ok) {
-             throw new Error('Anime not found')
-         }
-         animeData.value = await response.json()
-         origAnimeData.value = { ...animeData.value }
-     } catch (fetchError) {
-         animeData.value = null
-         error.value = fetchError.message
-     } finally {
-         loading.value = false
-     }
 }
 
 const deleteHandler = async () => {
-    console.log("Deleted")
+    try {
+        let response = await fetch(apiAnimeIdLink.value, {
+            method: "DELETE",
+        })
 
-    redirect.push('/')
+        if (!response.ok) {
+            throw new Error(`Error ${response.status}: ${response.statusText}`);
+        }
+
+        redirect.push('/')
+    } catch (deleteError) {
+        deleteErr.value = deleteError.message
+    }
 }
 
 const updateHandler = async () => {
@@ -107,7 +82,8 @@ const resetChanges = () => {
 // Keep it reactive for any link changes and refresh automatically
 // This also doubles as onMounted
 watch(() => linkAnimeId.params.id, (newId) => {
-    fetchAnimeData(newId)
+    apiAnimeIdLink.value = `${apiLinks.API_ANIME}/${newId}`
+    fetchAnimeData()
 }, { immediate: true })
 
 watch(() => showUpdateModal.value, (isShown) => {
@@ -116,11 +92,17 @@ watch(() => showUpdateModal.value, (isShown) => {
     if (isUpdating.value) isUpdating.value = false;
     else resetChanges();
 })
+
+watch(() => showDeleteModal.value, (isShown) => {
+    if (isShown) return;
+
+    if (deleteErr) deleteErr.value = '';
+})
 </script>
 
 <template>
     <FullBlockLoadingSpinner v-if="loading" message="Loading entry..." />
-    <ErrorMsg v-else-if="error" :error-msg="fetchAnimeListErr" />
+    <ErrorMsg v-else-if="fetchAnimeListErr" :error-msg="fetchAnimeListErr" />
     
     <section v-else class="data-container">
         <div class="banner-section">
@@ -147,11 +129,12 @@ watch(() => showUpdateModal.value, (isShown) => {
             <!-- Delete Modal -->
             <button @click="showDeleteModal = true">Delete</button>
             <ModalGeneric v-model="showDeleteModal">
-                <p>Are you sure to delete this entry?</p>
+                <p v-if="!deleteErr">Are you sure to delete this entry?</p>
+                <ErrorMsg v-else :error-msg="deleteErr" />
 
                 <div class="right-align-buttons">
                     <button class="emphasis" @click="showDeleteModal = false">Go Back</button>
-                    <button @click="deleteHandler">Delete</button>
+                    <button v-if="!deleteErr"  @click="deleteHandler">Delete</button>
                 </div>
             </ModalGeneric>
         </div>
@@ -168,7 +151,7 @@ watch(() => showUpdateModal.value, (isShown) => {
 
             <section>
                 <h2>Synopsis</h2>
-                <p>{{ animeData.synopsis }}</p>
+                <p v-html="animeData.synopsis"></p>
             </section>
         </section>
     </section>
@@ -216,6 +199,9 @@ div {
             position: relative; /* Need for the z-index to work */
             opacity: 0.5;
             z-index: -1; /* So as to not overlap */
+            width: 100%;
+            height: auto;
+            display: block;
         }
     }
 }

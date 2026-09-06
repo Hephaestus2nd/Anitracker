@@ -17,8 +17,8 @@ const progressPercentage = computed(() => {
 <template>
     <div class="progress-bar-container">
         <div class="progress-bg"></div>
-        <div class="progress-bar"></div>
-        <div class="progress-text">{{ progressPercentage + '%'}} ({{ animeData.episodesWatched }} out of {{ animeData.totalEpisodes }})</div>
+        <div class="progress-bar" :class="{ 'has-no-total' : animeData.totalEpisodes === null }"></div>
+        <div class="progress-text">{{ animeData.totalEpisodes === null ? `${animeData.episodesWatched} eps. watched` : `${progressPercentage}% (${animeData.episodesWatched} out of ${animeData.totalEpisodes})` }}</div>
     </div>
 </template>
 
@@ -38,6 +38,11 @@ div.progress-bar-container {
     > div.progress-bar {
         background: var(--color-secondary-light);
         width: v-bind('progressPercentage + "%"');
+
+        &.has-no-total {
+            background: linear-gradient(to right, var(--color-secondary), var(--color-secondary-light));
+            width: 100%;
+        }
     }
 
     > div.progress-bg {

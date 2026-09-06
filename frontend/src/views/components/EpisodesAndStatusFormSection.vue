@@ -33,7 +33,7 @@ watch(() => animeData.value.episodesWatched, (updatedWatchedEp) => {
             <option :value="watchStatusLabels.WATCHING">{{ watchStatusLabels.WATCHING }}</option>
             <option :value="watchStatusLabels.ON_HOLD">{{ watchStatusLabels.ON_HOLD }}</option>
             <option :value="watchStatusLabels.DROPPED">{{ watchStatusLabels.DROPPED }}</option>
-            <option :value="watchStatusLabels.COMPLETED">{{ watchStatusLabels.COMPLETED }}</option>
+            <option v-if="animeData.totalEpisodes != null" :value="watchStatusLabels.COMPLETED">{{ watchStatusLabels.COMPLETED }}</option>
         </select>
 
         <label for="episodesWatched">Episodes Watched</label>
