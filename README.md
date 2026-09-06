@@ -4,15 +4,26 @@ This repository implements a three-VM application for tracking anime watchlists.
 
 ## Architecture
 
-- Database VM: PostgreSQL instance on `192.168.56.10`.
+- Database VM: PostgreSQL 
   - Stores the `my_anime` table and seeded demo records.
   - Handles durable application state.
-- API VM: Java + Jooby service on `192.168.56.11:8080`.
+- API VM: Java + Jooby service 
   - Reads and writes the persisted list via JDBC.
   - Exposes `/health`, `/anime`, and `/anime/{id}` endpoints.
-- Web VM: Nginx + Vue frontend on `192.168.56.12` and host port `8080`.
+- Web VM: Nginx + Vue frontend
   - Renders a lightweight UI from the API results.
   - Proxies `/api` requests to the Java service.
+### Host ports
+
+The VMs use the following host port mappings:
+
+- Web: `http://localhost:8080`
+- API: `http://localhost:8081`
+- Database: `localhost:5433`
+
+The API and database also communicate over the private VM network
+(`192.168.56.0/24`).
+
 
 ## Tools used
 
@@ -25,12 +36,32 @@ This repository implements a three-VM application for tracking anime watchlists.
 
 ## Supported host environment
 
-- Host OS: Ubuntu, Debian, or macOS with VirtualBox and Vagrant installed.
-- Required versions:
-  - Vagrant 2.4+
-  - VirtualBox 7.x+
-  - Node.js 22+ for local frontend rebuilds
-  - Java 17+
+The project is designed to run on:
+
+- Windows
+- macOS
+- Linux
+
+The host machine must have:
+
+- Vagrant 2.4+
+- VirtualBox 7.x+
+- Git
+
+Node.js and Java do not need to be installed on the host for the standard
+`vagrant up` deployment, as they are installed inside the relevant VMs.
+
+VirtualBox and its Guest Additions should be compatible versions. A Guest
+Additions/VirtualBox version mismatch can occasionally prevent Vagrant's
+`/vagrant` shared folder from mounting correctly.
+### Database credentials
+
+The seeded database uses:
+
+- Database: `anitracker`
+- User: `app_user`
+- Password: `AppPass123`
+- 
 
 ## One-command deployment
 
@@ -39,10 +70,10 @@ From the repository root:
 ```bash
 vagrant up
 ```
-
-This provisions the three machines and runs the API and frontend services automatically.
-It might take a long time to start up. the API vm might take more than 10 minutes to the point that it may time out.
-
+This provisions the three machines, builds the API and frontend, and starts the required services automatically.
+It might take a long time to start up.
+This may take several minutes on the first deployment because the VMs need to download packages and build the API and frontend.
+If Vagrant appears to hang while connecting to a VM, allow it time to retry before assuming that the provisioning has failed.
 
 ## Vagrant troubleshooting
 
@@ -60,7 +91,7 @@ It might take a long time to start up. the API vm might take more than 10 minute
     "/c/Program Files/Oracle/VirtualBox/VBoxManage.exe" list vms
 
 4. If VirtualBox reports "<inaccessible>", investigate/remove
-   the stale VM registration before debugging the application. By unregistering it
+   the stale VM registration before debugging the application by unregistering it
 
 5. If Vagrant reaches the provisioning stage but the app doesn't work,
    check the relevant VM:
@@ -79,8 +110,51 @@ It might take a long time to start up. the API vm might take more than 10 minute
 
     Web:
     curl http://localhost
+### `/vagrant` does not exist inside a VM
 
-   
+If `/vagrant` is missing inside a VM, the VirtualBox shared folder may not
+have mounted correctly.
+
+First, exit the VM and try:
+```bash
+vagrant reload
+```
+If the problem persists, check that the VirtualBox Guest Additions version
+inside the VM is compatible with the VirtualBox version installed on the host.
+
+You can check the Guest Additions version with:
+```bash
+VBoxManage --version
+```
+
+If that doesn't work put the whole file path for Vbox eg. C:\Program Files\Oracle\VirtualBox\VBoxManage.exe
+
+and inspect the Vagrant output during:
+```bash
+vagrant up
+```
+
+If the web VM reports that the API is unavailable, check:
+
+```bash
+vagrant status
+```
+The API VM must be running before the web application can access it.
+
+You can also test the API with:
+```bash
+curl http://127.0.0.1:8081/health
+```
+A successful response should contain:
+```JSON
+{"status":"ok","database":"connected","service":"anime-tracker"}
+```
+If the API VM was unable to provision, run:
+```Bash
+vagrant provision api
+```
+
+
 ## Provisioning scripts
 
 Vagrant runs one script on each VM during `vagrant up`:
@@ -108,7 +182,6 @@ vagrant ssh api -- 'curl -s http://localhost:8080/health'
 vagrant ssh web -- 'curl -s http://localhost/api/anime | head'
 curl -I http://localhost:8080
 ```
-'Password is: AppPass123'
 
 The database should show seeded anime entries, the API should return a health payload, and the web VM should return anime data through the proxied `/api` route.
 
