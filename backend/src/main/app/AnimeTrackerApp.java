@@ -75,9 +75,6 @@ public class AnimeTrackerApp extends Jooby {
 
         // Actual DAO
         AnimeJdbiDAO animeDao = jdbi.onDemand(AnimeJdbiDAO.class);
-        AniListClient aniListClient = new AniListClient(
-                env.getOrDefault("ANILIST_GRAPHQL_URL", "https://graphql.anilist.co")
-        );
 
         // API Endpoints
         get("/health", ctx -> {
@@ -130,13 +127,6 @@ public class AnimeTrackerApp extends Jooby {
 
             normalizeEpisodeCounts(anime);
 
-            try {
-                anime.setBackgroundImageUrl(aniListClient.getBannerImage(anime.getMalId()));
-            } catch (IllegalStateException exception) {
-                ctx.setResponseCode(StatusCode.BAD_GATEWAY);
-                return errorResponse(exception.getMessage());
-            }
-
             animeDao.addAnime(anime);
             return animeDao.getAnimeByMalId(anime.getMalId());
         });
@@ -170,29 +160,10 @@ public class AnimeTrackerApp extends Jooby {
 
             normalizeEpisodeCounts(anime);
 
-            try {
-                anime.setBackgroundImageUrl(aniListClient.getBannerImage(anime.getMalId()));
-            } catch (IllegalStateException exception) {
-                ctx.setResponseCode(StatusCode.BAD_GATEWAY);
-                return errorResponse(exception.getMessage());
-            }
-
             animeDao.updateAnime(anime);
             return animeDao.getAnimeByMalId(malId);
         });
     }
-
-
-
-//This works for now . If we want to make it better we can use an enum for watchStatus and validate against that.
-//we do already have enums but it'll be a lot of overhead.
-    // private static boolean isValidWatchStatus(String status) {
-    //     return status.equals("Watching")
-    //             || status.equals("Completed")
-    //             || status.equals("On-Hold")
-    //             || status.equals("Dropped")
-    //             || status.equals("Plan to Watch");
-    // }
 
     public static void main(String[] args) {
         Jooby.runApp(args, AnimeTrackerApp::new);

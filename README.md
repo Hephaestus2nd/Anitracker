@@ -153,8 +153,9 @@ Expected: machines reported as `not created`.
 ## 7) Demonstration data
 
 - Seeded catalog data is preloaded so useful output is visible immediately after deployment.
-- Schema file: `/home/runner/work/Internet_Movie_Database/Internet_Movie_Database/schema.sql`
-- Seed file: `/home/runner/work/Internet_Movie_Database/Internet_Movie_Database/seed_data.sql`
+- Repository schema file: `schema.sql`
+- Repository seed file: `seed_data.sql`
+- Inside the DB VM, those files are mounted and applied from `/vagrant/schema.sql` and `/vagrant/seed_data.sql`.
 
 Why this is sufficient:
 
@@ -201,7 +202,7 @@ vagrant ssh web -- 'curl -s http://localhost/api/anime | head -c 200; echo'
 
 ### Schema/seed change
 
-1. Edit `schema.sql` and/or `seed_data.sql`.
+1. Edit `schema.sql` and/or `seed_data.sql` in the repository root.
 2. Reprovision DB VM:
 
 ```bash
@@ -209,6 +210,8 @@ vagrant provision db
 ```
 
 3. Re-run DB + API checks from verification section.
+
+Inside the DB VM, the provisioning scripts apply the files from `/vagrant/schema.sql` and `/vagrant/seed_data.sql`.
 
 ---
 
