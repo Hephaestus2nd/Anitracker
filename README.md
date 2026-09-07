@@ -61,7 +61,7 @@ The seeded database uses:
 - Database: `anitracker`
 - User: `app_user`
 - Password: `AppPass123`
-- 
+
 
 ## One-command deployment
 
@@ -75,7 +75,11 @@ It might take a long time to start up.
 This may take several minutes on the first deployment because the VMs need to download packages and build the API and frontend.
 If Vagrant appears to hang while connecting to a VM, allow it time to retry before assuming that the provisioning has failed.
 
+
 ## Vagrant troubleshooting
+
+If vagrant up hangs or times out on SSH intermittently, check for a turtle icon on the running VM in VirtualBox — this means Windows' Hyper-V platform is active and is a known cause of VM stalls unrelated to this project. Workaround: bcdedit /set hypervisorlaunchtype off, reboot, retry.
+
 
 1. Check VM state:
 
@@ -103,13 +107,14 @@ If Vagrant appears to hang while connecting to a VM, allow it time to retry befo
 6. Test the services individually:
 
     API:
-    curl http://localhost:8080/health
+    curl http://localhost:8081/health
 
     DB:
     pg_isready -h 192.168.56.10 -p 5432 -d anitracker
 
     Web:
-    curl http://localhost
+    curl http://localhost:8080
+   
 ### `/vagrant` does not exist inside a VM
 
 If `/vagrant` is missing inside a VM, the VirtualBox shared folder may not
@@ -125,6 +130,12 @@ inside the VM is compatible with the VirtualBox version installed on the host.
 You can check the Guest Additions version with:
 ```bash
 VBoxManage --version
+VBoxManage guestproperty get "<vmname>"
+/VirtualBox/GuestAdd/Version
+```
+Or from inside the guest
+```bash
+modinfo vboxguest | grep ^version
 ```
 
 If that doesn't work put the whole file path for Vbox eg. C:\Program Files\Oracle\VirtualBox\VBoxManage.exe
@@ -178,7 +189,7 @@ After deployment, verify the VMs and request flow:
 ```bash
 vagrant status
 vagrant ssh db -- 'psql -h localhost -U app_user -d anitracker -c "SELECT mal_id, title, watch_status FROM my_anime;"'
-vagrant ssh api -- 'curl -s http://localhost:8080/health'
+vagrant ssh api -- 'curl -s http://localhost:8081/health'
 vagrant ssh web -- 'curl -s http://localhost/api/anime | head'
 curl -I http://localhost:8080
 ```
@@ -215,7 +226,7 @@ A realistic change is adding a new field like `score` to the catalog and display
 
 1. Update the PostgreSQL schema and seed file.
 2. Extend the `Anime` bean and JDBI mapper.
-3. Rebuild the service on the API VM with `gradle build` and restart the service.
+3. Rebuild the service on the API VM and restart the service.
 4. Refresh the frontend and reload the browser to confirm the new field appears.
 
 Example rebuild command:
