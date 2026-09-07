@@ -39,7 +39,7 @@ const fetchAnimeData = async () => {
         }
 
         animeData.value = await response.json()
-        animeData.value.backgroundImageUrl = animeData.value.backgroundImageUrl.replace(/\\/g, '')
+        // animeData.value.backgroundImageUrl = animeData.value.backgroundImageUrl.replace(/\\/g, '')
 
         origAnimeData.value = { ...animeData.value }
     } catch (fetchError) {
