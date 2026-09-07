@@ -1,259 +1,295 @@
-# Anitracker
+# Anitracker (Three-VM Internet Movie/Anime Database)
 
-This repository implements a three-VM application for tracking anime watchlists. The database VM stores the persistent catalogue, the API VM serves the application logic, and the web VM presents a simple interface for end users.
+Anitracker is a small web application for tracking an anime watchlist with persistent storage and a browser UI. End users open the web interface, browse seeded entries, and manage records through API-backed actions. The project is designed for reproducible deployment across three virtual machines and can be brought up from a clean clone with one command (see [Quick start](#quick-start)).
 
-## Architecture
+## Quick start
 
-- Database VM: PostgreSQL 
-  - Stores the `my_anime` table and seeded demo records.
-  - Handles durable application state.
-- API VM: Java + Jooby service 
-  - Reads and writes the persisted list via JDBC.
-  - Exposes `/health`, `/anime`, and `/anime/{id}` endpoints.
-- Web VM: Nginx + Vue frontend
-  - Renders a lightweight UI from the API results.
-  - Proxies `/api` requests to the Java service.
-### Host ports
+```bash
+vagrant up
+```
 
-The VMs use the following host port mappings:
+Then open: `http://localhost:8080`
 
-- Web: `http://localhost:8080`
-- API: `http://localhost:8081`
-- Database: `localhost:5433`
+---
 
-The API and database also communicate over the private VM network
-(`192.168.56.0/24`).
+## 1) Architecture (3 VM requirement)
 
+### VM responsibilities
 
-## Tools used
+| VM | Hostname | Responsibility |
+|---|---|---|
+| Database VM | `anime-db` | Runs PostgreSQL and stores persistent application data (`my_anime` and related schema). |
+| API VM | `anime-api` | Runs Java/Jooby backend, exposes `/health`, `/anime`, `/anime/{malId}`, performs validation, reads/writes PostgreSQL. |
+| Web VM | `anime-web` | Runs Nginx and serves built Vue frontend, proxies `/api/*` requests to API VM. |
 
-- Vagrant: provisions and wires the three VMs from one configuration file.
-- VirtualBox: the local hypervisor used by Vagrant to create the guest machines.
-- PostgreSQL: persistent relational storage for important application data.
-- Java 17 + Jooby: backend API and business logic.
-- Vue + Vite: browser UI for a user-friendly interface.
-- Nginx: static file serving and reverse proxy.
+### Request flow (representative user action)
 
-## Supported host environment
+Example: user loads the catalog page.
 
-The project is designed to run on:
+1. Browser requests `http://localhost:8080` (Web VM).
+2. Web VM serves Vue app and proxies `/api/anime` to API VM.
+3. API VM queries PostgreSQL on DB VM for stored records.
+4. DB VM returns rows to API VM.
+5. API VM returns JSON to Web VM.
+6. Web VM returns proxied API response to browser UI.
 
-- Windows
-- macOS
-- Linux
+Each representative request path therefore uses all three VMs.
 
-The host machine must have:
+### Network and ports
 
-- Vagrant 2.4+
-- VirtualBox 7.x+
+| Service | Guest endpoint | Host access |
+|---|---|---|
+| Web (Nginx) | `anime-web:80` | `http://localhost:8080` |
+| API (Jooby) | `anime-api:8080` | `http://localhost:8081` |
+| PostgreSQL | `anime-db:5432` | `localhost:5433` |
+
+Private VM network: `192.168.56.0/24`  
+DB VM: `192.168.56.10` · API VM: `192.168.56.11` · Web VM: `192.168.56.12`
+
+---
+
+## 2) Tools and purpose
+
+- **Vagrant**: defines and provisions all three VMs from one reproducible configuration.
+- **VirtualBox**: hypervisor used by Vagrant to create/run guest machines.
+- **PostgreSQL**: persistent relational datastore for application records.
+- **Java 17 + Jooby**: backend HTTP API and business logic.
+- **Vue + Vite**: frontend UI build and static assets.
+- **Nginx**: serves frontend files and reverse proxies `/api` traffic to backend.
+
+---
+
+## 3) Supported host environment
+
+### Host OS
+
+- Ubuntu 22.04+ (primary tested environment)
+- Windows 10/11 and macOS (supported by tooling; validate locally before submission)
+
+### Required tools
+
+- Vagrant `2.4+`
+- VirtualBox `7.x+`
 - Git
 
-Node.js and Java do not need to be installed on the host for the standard
-`vagrant up` deployment, as they are installed inside the relevant VMs.
+Node.js and Java are installed inside VMs during provisioning; they are not required on the host for standard deployment.
 
-VirtualBox and its Guest Additions should be compatible versions. A Guest
-Additions/VirtualBox version mismatch can occasionally prevent Vagrant's
-`/vagrant` shared folder from mounting correctly.
-### Database credentials
+### Known host constraints
 
-The seeded database uses:
+- If VirtualBox shows a turtle icon and VM SSH/provisioning stalls on Windows, disable Hyper-V and reboot before retrying.
+- VirtualBox and Guest Additions version mismatches can break `/vagrant` shared folder mounting.
 
-- Database: `anitracker`
-- User: `app_user`
-- Password: `AppPass123`
+---
 
+## 4) One-command deployment
 
-## One-command deployment
-
-From the repository root:
+From repository root:
 
 ```bash
 vagrant up
 ```
-This provisions the three machines, builds the API and frontend, and starts the required services automatically.
-It might take a long time to start up.
-This may take several minutes on the first deployment because the VMs need to download packages and build the API and frontend.
-If Vagrant appears to hang while connecting to a VM, allow it time to retry before assuming that the provisioning has failed.
 
+This command:
 
-## Vagrant troubleshooting
+- creates/provisions `db`, `api`, and `web` VMs;
+- installs required packages in each VM;
+- applies schema + seed data in PostgreSQL;
+- builds and starts backend service;
+- builds frontend and serves it through Nginx.
 
-If vagrant up hangs or times out on SSH intermittently, check for a turtle icon on the running VM in VirtualBox — this means Windows' Hyper-V platform is active and is a known cause of VM stalls unrelated to this project. Workaround: bcdedit /set hypervisorlaunchtype off, reboot, retry.
+First deployment is slower because packages, dependencies, and VM resources are downloaded/built.
 
+---
 
-1. Check VM state:
+## 5) Verification (reproducible evidence)
 
-    vagrant status
-
-2. Check VirtualBox:
-
-    VBoxManage list vms
-    VBoxManage list runningvms
-
-3. If VBoxManage isn't in PATH on Windows, use:
-
-    "/c/Program Files/Oracle/VirtualBox/VBoxManage.exe" list vms
-
-4. If VirtualBox reports "<inaccessible>", investigate/remove
-   the stale VM registration before debugging the application by unregistering it
-
-5. If Vagrant reaches the provisioning stage but the app doesn't work,
-   check the relevant VM:
-
-    vagrant ssh db
-    vagrant ssh api
-    vagrant ssh web
-
-6. Test the services individually:
-
-    API:
-    curl http://localhost:8081/health
-
-    DB:
-    pg_isready -h 192.168.56.10 -p 5432 -d anitracker
-
-    Web:
-    curl http://localhost:8080
-   
-### `/vagrant` does not exist inside a VM
-
-If `/vagrant` is missing inside a VM, the VirtualBox shared folder may not
-have mounted correctly.
-
-First, exit the VM and try:
-```bash
-vagrant reload
-```
-If the problem persists, check that the VirtualBox Guest Additions version
-inside the VM is compatible with the VirtualBox version installed on the host.
-
-You can check the Guest Additions version with:
-```bash
-VBoxManage --version
-VBoxManage guestproperty get "<vmname>"
-/VirtualBox/GuestAdd/Version
-```
-Or from inside the guest
-```bash
-modinfo vboxguest | grep ^version
-```
-
-If that doesn't work put the whole file path for Vbox eg. C:\Program Files\Oracle\VirtualBox\VBoxManage.exe
-
-and inspect the Vagrant output during:
-```bash
-vagrant up
-```
-
-If the web VM reports that the API is unavailable, check:
+Run these commands after deployment:
 
 ```bash
+# 1) VM state
 vagrant status
-```
-The API VM must be running before the web application can access it.
 
-You can also test the API with:
-```bash
-curl http://127.0.0.1:8081/health
-```
-A successful response should contain:
-```JSON
-{"status":"ok","database":"connected","service":"anime-tracker"}
-```
-If the API VM was unable to provision, run:
-```Bash
-vagrant provision api
-```
+# 2) Database has seeded rows
+vagrant ssh db -- 'PGPASSWORD=AppPass123 psql -h localhost -U app_user -d anitracker -c "SELECT mal_id, title, watch_status FROM my_anime ORDER BY mal_id LIMIT 5;"'
 
+# 3) API health from inside API VM (service listens on 8080 in-VM)
+vagrant ssh api -- 'curl -s http://localhost:8080/health'
 
-## Provisioning scripts
+# 4) Proxied request through Web VM to API VM
+vagrant ssh web -- 'curl -s http://localhost/api/anime | head -c 300; echo'
 
-Vagrant runs one script on each VM during `vagrant up`:
-
-- `provision/db_provision.sh` installs PostgreSQL, creates the `anitracker` database and `app_user`, allows connections from the private network, and loads `schema.sql` and `seed_data.sql`.
-- `provision/api_provision.sh` installs Java and Gradle, copies the backend to `/opt/anitracker`, builds the distribution, and starts `anitracker-api.service`.
-- `provision/web_provision.sh` installs Nginx and Node.js, builds the Vue frontend with `npm ci` and `npm run build`, and serves the generated `dist` files from `/var/www/anitracker`.
-
-To run provisioning again after changing a script:
-
-```bash
-vagrant provision
-```
-
-The database script can be run repeatedly: the schema creation is guarded and the seed data uses conflict handling for existing anime records.
-
-## Verification
-
-After deployment, verify the VMs and request flow:
-
-```bash
-vagrant status
-vagrant ssh db -- 'psql -h localhost -U app_user -d anitracker -c "SELECT mal_id, title, watch_status FROM my_anime;"'
-vagrant ssh api -- 'curl -s http://localhost:8081/health'
-vagrant ssh web -- 'curl -s http://localhost/api/anime | head'
+# 5) Web UI reachable from host
 curl -I http://localhost:8080
 ```
 
-The database should show seeded anime entries, the API should return a health payload, and the web VM should return anime data through the proxied `/api` route.
+Expected indicators:
 
-### Adding anime
+- `vagrant status` shows all three machines as `running`.
+- DB query returns seeded anime rows.
+- Health endpoint returns JSON with `"status":"ok"` and `"database":"connected"`.
+- `/api/anime` returns JSON array/object data.
+- `curl -I` includes `HTTP/1.1 200 OK`.
 
-`POST /anime` accepts an `Anime` JSON object containing `malId`, `title`,
-`watchStatus`, episode counts, and the Jikan metadata fields used by the
-catalogue. The API validates the identifiers and watch status, defaults
-missing progress to zero, caps progress at the known total episode count, and
-queries AniList by MAL ID. The AniList `bannerImage` is merged into
-`backgroundImageUrl` before the record is saved. AniList failures return
-`502 Bad Gateway`; invalid submissions return `400 Bad Request`.
+---
 
-Useful service checks from the relevant VM:
+## 6) Removal / cleanup
 
-```bash
-vagrant ssh api -- 'systemctl status anitracker-api.service --no-pager'
-vagrant ssh api -- 'journalctl -u anitracker-api.service -n 50 --no-pager'
-vagrant ssh web -- 'nginx -t'
-```
-
-## Removal
+Destroy all created VM resources:
 
 ```bash
 vagrant destroy -f
 ```
 
-## Representative developer change
-
-A realistic change is adding a new field like `score` to the catalog and displaying it in the web UI.
-
-1. Update the PostgreSQL schema and seed file.
-2. Extend the `Anime` bean and JDBI mapper.
-3. Rebuild the service on the API VM and restart the service.
-4. Refresh the frontend and reload the browser to confirm the new field appears.
-
-Example rebuild command:
+Optional post-check:
 
 ```bash
-vagrant reload api
-vagrant ssh api -- 'cd /opt/anitracker && gradle build && systemctl restart anitracker-api.service'
+vagrant status
 ```
 
-## Repository notes
+Expected: machines reported as `not created`.
 
-- `Vagrantfile` defines the three-machine topology.
-- `provision/*.sh` installs the packages and configures each VM.
-- `schema.sql` and `seed_data.sql` provide the seeded demonstration data.
-- `backend` holds the API logic and database access layer.
-- `frontend` contains the user-facing Vue application.
+---
 
-## AI and attribution statement
+## 7) Demonstration data
 
-This project was built with standard Git and local project files. No external AI-generated code was used as the primary implementation; the repository work was created and verified by the project team. Any reused ideas are limited to the project’s own original implementation and standard library examples.
+- Seeded catalog data is preloaded so useful output is visible immediately after deployment.
+- Schema file: `/home/runner/work/Internet_Movie_Database/Internet_Movie_Database/schema.sql`
+- Seed file: `/home/runner/work/Internet_Movie_Database/Internet_Movie_Database/seed_data.sql`
 
-## Design justification
+Why this is sufficient:
 
-The storage responsibility is isolated to PostgreSQL so the database remains authoritative and durable. The API VM handles business logic and network-facing requests, while the web VM focuses on presentation and user interaction. Keeping these tasks separate makes the system easier to scale, debug, and redeploy than a single-server monolith.
+- The web page can render a non-empty catalog without manual entry.
+- API and DB verification commands show persisted rows immediately.
 
-The tradeoff is extra complexity: three VMs require more provisioning, more network configuration, and more attention to service startup order. In exchange, the architecture is clearer, more resilient, and closer to a real production deployment pattern.
+---
 
-## Evidence and redevelopment notes
+## 8) Developer modification and redeployment workflow
 
-A successful rebuild should produce a working backend API and at least one backed request returning seeded data. A clean deployment is reproducible via `vagrant up`, and a full teardown is handled through `vagrant destroy -f`.
+Developers edit files in their local Git clone, then reprovision/rebuild only the impacted VM(s).
+
+### Backend change (Java/API or DB access logic)
+
+1. Edit backend source under `backend/src/main/app`.
+2. Rebuild/reprovision API VM:
+
+```bash
+vagrant provision api
+```
+
+3. Re-verify:
+
+```bash
+vagrant ssh api -- 'curl -s http://localhost:8080/health'
+vagrant ssh web -- 'curl -s http://localhost/api/anime | head -c 200; echo'
+```
+
+### Frontend change (Vue UI)
+
+1. Edit frontend source under `frontend/src`.
+2. Rebuild/reprovision Web VM:
+
+```bash
+vagrant provision web
+```
+
+3. Re-verify:
+
+```bash
+curl -I http://localhost:8080
+vagrant ssh web -- 'curl -s http://localhost/api/anime | head -c 200; echo'
+```
+
+### Schema/seed change
+
+1. Edit `schema.sql` and/or `seed_data.sql`.
+2. Reprovision DB VM:
+
+```bash
+vagrant provision db
+```
+
+3. Re-run DB + API checks from verification section.
+
+---
+
+## 9) Repository structure
+
+- `Vagrantfile` — defines three-VM topology, private network, and forwarded ports.
+- `provision/` — VM provisioning scripts:
+  - `db_provision.sh`
+  - `api_provision.sh`
+  - `web_provision.sh`
+- `schema.sql` — database schema.
+- `seed_data.sql` — demonstration dataset.
+- `backend/` — Java/Jooby API.
+- `frontend/` — Vue/Vite web client.
+
+---
+
+## 10) Troubleshooting
+
+### VM boot/provision failures
+
+- Check VM state:
+  ```bash
+  vagrant status
+  ```
+- Check VirtualBox registration/running VMs:
+  ```bash
+  VBoxManage list vms
+  VBoxManage list runningvms
+  ```
+- Retry provisioning for a specific VM:
+  ```bash
+  vagrant provision db
+  vagrant provision api
+  vagrant provision web
+  ```
+
+### `/vagrant` shared folder missing
+
+- Reload VMs:
+  ```bash
+  vagrant reload
+  ```
+- Verify VirtualBox and Guest Additions compatibility.
+
+### Service-level checks
+
+- API VM:
+  ```bash
+  vagrant ssh api -- 'systemctl status anitracker-api.service --no-pager'
+  vagrant ssh api -- 'journalctl -u anitracker-api.service -n 50 --no-pager'
+  ```
+- Web VM:
+  ```bash
+  vagrant ssh web -- 'nginx -t'
+  ```
+- DB reachability:
+  ```bash
+  vagrant ssh db -- 'pg_isready -h 127.0.0.1 -p 5432 -d anitracker'
+  ```
+
+---
+
+## 11) Assessment evidence pointers
+
+- **Deployment command**: `vagrant up` (Quick start / One-command deployment).
+- **Verification commands**: section “Verification (reproducible evidence)”.
+- **Destroy command**: section “Removal / cleanup” (`vagrant destroy -f`).
+- **Seeded data files**: `schema.sql`, `seed_data.sql`.
+- **Architecture/provisioning files**: `Vagrantfile`, `provision/*.sh`.
+
+---
+
+## 12) API behavior notes
+
+- Current backend endpoints include `/health`, `/anime`, and `/anime/{malId}`.
+- The README does not assume active runtime AniList enrichment or a `502` path for that integration, because that behavior is currently not enabled in the backend implementation.
+
+---
+
+## 13) AI/reuse attribution note
+
+Include your formal AI-use/reuse declaration in the report.  
+Repository implementation is based on project-authored code and standard open-source tooling/libraries referenced in source files and build configs.
