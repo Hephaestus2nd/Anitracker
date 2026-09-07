@@ -75,6 +75,9 @@ It might take a long time to start up.
 This may take several minutes on the first deployment because the VMs need to download packages and build the API and frontend.
 If Vagrant appears to hang while connecting to a VM, allow it time to retry before assuming that the provisioning has failed.
 
+If vagrant up hangs or times out on SSH intermittently, check for a turtle icon on the running VM in VirtualBox — this means Windows' Hyper-V platform is active and is a known cause of VM stalls unrelated to this project. Workaround: bcdedit /set hypervisorlaunchtype off, reboot, retry.
+
+
 ## Vagrant troubleshooting
 
 1. Check VM state:

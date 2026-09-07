@@ -52,8 +52,8 @@ const fetchAnimeData = async () => {
 
 const deleteHandler = async () => {
     try {
-        let response = await fetch(`${apiAnimeIdLink.value}/delete`, {
-            method: "PUT",
+        let response = await fetch(apiAnimeIdLink.value, {
+            method: "DELETE",
         })
 
         if (!response.ok) {
