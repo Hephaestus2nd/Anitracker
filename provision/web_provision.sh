@@ -7,12 +7,18 @@ apt-get install -y nginx curl ca-certificates
 curl -fsSL https://deb.nodesource.com/setup_22.x | bash -
 apt-get install -y nodejs
 
-mkdir -p /var/www/anitracker
+rm -rf /tmp/anitracker-frontend
+mkdir -p /tmp/anitracker-frontend
 cp -r /vagrant/frontend/. /tmp/anitracker-frontend/
+
+
 cd /tmp/anitracker-frontend
 npm ci
 npm run build
+
+rm -rf /var/www/anitracker/*
 cp -r dist/. /var/www/anitracker/
+
 
 cat <<'EOF' >/etc/nginx/sites-available/anitracker
 server {
