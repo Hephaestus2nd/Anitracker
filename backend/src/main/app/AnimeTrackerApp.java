@@ -119,19 +119,6 @@ public class AnimeTrackerApp extends Jooby {
             return ""; // Standard format for DELETE
         });
 
-        put("/anime/{malId}/delete", ctx -> {
-            int malId = ctx.path("malId").intValue();
-            int rowsAffected = animeDao.deleteAnime(malId);
-
-            if (rowsAffected == 0) {
-                ctx.setResponseCode(StatusCode.NOT_FOUND);
-                return errorResponse("Anime not found");
-            }
-
-            ctx.setResponseCode(StatusCode.NO_CONTENT);
-            return "";
-        });
-
         post("/anime", ctx -> {
             Anime anime = ctx.body(Anime.class);
             String validationError = validateAnime(anime);
