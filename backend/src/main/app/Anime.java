@@ -42,7 +42,16 @@ public class Anime {
         return (watchStatus == null) ? null : watchStatus.getDatabaseValue();
     }
     public void setWatchStatus(String watchStatus) {
-        this.watchStatus = (watchStatus == null) ? null : WatchStatus.fromValue(watchStatus);
+        if (watchStatus == null || watchStatus.isBlank()) {
+            this.watchStatus = null;
+            return;
+        }
+
+        try {
+            this.watchStatus = WatchStatus.fromValue(watchStatus);
+        } catch (IllegalArgumentException ignored) {
+            this.watchStatus = null;
+        }
     }
 
     public String getCoverImageUrl() {
