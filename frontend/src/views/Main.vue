@@ -34,6 +34,7 @@ const fetchAnimeListErr = ref('');
 // Add Modal
 const showAddModal = ref(false)
 const isSearchDisabled = ref(false);
+const isAddDisabled = ref(false)
 const searchResults = ref(null)
 const searchAnimeNameErr = ref('');
 const selectedNewAnimeToAdd = ref(null);
@@ -59,6 +60,7 @@ const fetchAnimeData = async () => {
 
 const searchAnime = async (query) => {
     clearModalErrors()
+    resetSearch()
     isSearchDisabled.value = true
 
     try {
@@ -95,6 +97,7 @@ const searchAnime = async (query) => {
 
 const addAnime = async () => {
     clearModalErrors()
+    isSearchDisabled.value = true
     
     try {
         let response = await fetch(apiLinks.API_ANIME, {
@@ -114,6 +117,8 @@ const addAnime = async () => {
         await fetchAnimeData()
     } catch (addError) {
         newAnimeDataErr.value = addError.message
+    } finally {
+        isSearchDisabled.value = true
     }
 }
 
@@ -124,6 +129,11 @@ const resetForm = () => {
     selectedNewAnimeToAdd.value = null;
     newAnimeData.value = { ...defaultNewAnimeData };
 };
+
+const resetSearch = () => {
+    searchResults.value = null;
+    selectedNewAnimeToAdd.value = null;
+}
 
 const clearModalErrors = () => {
     searchAnimeNameErr.value = ''
@@ -182,8 +192,8 @@ onMounted(fetchAnimeData);
                     <EpisodesAndStatusFormSection v-model="newAnimeData" />
 
                     <div class="right-align-buttons">
-                        <button @click="showAddModal = false">Go Back</button>
-                        <button class="emphasis icon-span-container" type="submit" :disabled="isSearchDisabled || !selectedNewAnimeToAdd || !searchResults || !searchResults.data?.Page?.media"><AddIcon />Add</button>
+                        <button type="button" @click="showAddModal = false">Go Back</button>
+                        <button class="emphasis icon-span-container" type="submit" :disabled="isAddDisabled || isSearchDisabled || !selectedNewAnimeToAdd || !searchResults || !searchResults.data?.Page?.media"><AddIcon />Add</button>
                     </div>
                 </form>
             </ModalGeneric>
