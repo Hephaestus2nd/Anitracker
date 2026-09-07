@@ -106,7 +106,7 @@ public class AnimeTrackerApp extends Jooby {
             return anime;
         });
 
-        put("/anime/{malId}/delete", ctx -> {
+        delete("/anime/{malId}", ctx -> {
             int malId = ctx.path("malId").intValue();
             int rowsAffected = animeDao.deleteAnime(malId);
 
@@ -115,8 +115,8 @@ public class AnimeTrackerApp extends Jooby {
                 return errorResponse("Anime not found");
             }
 
-            ctx.setResponseCode(StatusCode.NO_CONTENT);
-            return "";
+            ctx.setResponseCode(StatusCode.NO_CONTENT)
+            return ""; // Standard format for DELETE
         });
 
         post("/anime", ctx -> {
@@ -130,20 +130,16 @@ public class AnimeTrackerApp extends Jooby {
 
             normalizeEpisodeCounts(anime);
 
-            try {
-                anime.setBackgroundImageUrl(aniListClient.getBannerImage(anime.getMalId()));
-            } catch (IllegalStateException exception) {
-                ctx.setResponseCode(StatusCode.BAD_GATEWAY);
-                return errorResponse(exception.getMessage());
-            }
+            // try {
+            //     anime.setBackgroundImageUrl(aniListClient.getBannerImage(anime.getMalId()));
+            // } catch (IllegalStateException exception) {
+            //     ctx.setResponseCode(StatusCode.BAD_GATEWAY);
+            //     return errorResponse(exception.getMessage());
+            // }
 
             animeDao.addAnime(anime);
             return animeDao.getAnimeByMalId(anime.getMalId());
         });
-
-//update section
-
-
     }
 
 
