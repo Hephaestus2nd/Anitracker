@@ -115,8 +115,21 @@ public class AnimeTrackerApp extends Jooby {
                 return errorResponse("Anime not found");
             }
 
-            ctx.setResponseCode(StatusCode.NO_CONTENT)
+            ctx.setResponseCode(StatusCode.NO_CONTENT);
             return ""; // Standard format for DELETE
+        });
+
+        put("/anime/{malId}/delete", ctx -> {
+            int malId = ctx.path("malId").intValue();
+            int rowsAffected = animeDao.deleteAnime(malId);
+
+            if (rowsAffected == 0) {
+                ctx.setResponseCode(StatusCode.NOT_FOUND);
+                return errorResponse("Anime not found");
+            }
+
+            ctx.setResponseCode(StatusCode.NO_CONTENT);
+            return "";
         });
 
         post("/anime", ctx -> {
@@ -130,15 +143,55 @@ public class AnimeTrackerApp extends Jooby {
 
             normalizeEpisodeCounts(anime);
 
-            // try {
-            //     anime.setBackgroundImageUrl(aniListClient.getBannerImage(anime.getMalId()));
-            // } catch (IllegalStateException exception) {
-            //     ctx.setResponseCode(StatusCode.BAD_GATEWAY);
-            //     return errorResponse(exception.getMessage());
-            // }
+            try {
+                anime.setBackgroundImageUrl(aniListClient.getBannerImage(anime.getMalId()));
+            } catch (IllegalStateException exception) {
+                ctx.setResponseCode(StatusCode.BAD_GATEWAY);
+                return errorResponse(exception.getMessage());
+            }
 
             animeDao.addAnime(anime);
             return animeDao.getAnimeByMalId(anime.getMalId());
+        });
+
+        put("/anime/{malId}", ctx -> {
+            int malId = ctx.path("malId").intValue();
+            Anime anime = ctx.body(Anime.class);
+
+            if (anime == null) {
+                ctx.setResponseCode(StatusCode.BAD_REQUEST);
+                return errorResponse("Request body is required.");
+            }
+
+            if (anime.getMalId() != null && anime.getMalId() != malId) {
+                ctx.setResponseCode(StatusCode.BAD_REQUEST);
+                return errorResponse("malId in the URL and request body must match.");
+            }
+
+            anime.setMalId(malId);
+
+            String validationError = validateAnime(anime);
+            if (validationError != null) {
+                ctx.setResponseCode(StatusCode.BAD_REQUEST);
+                return errorResponse(validationError);
+            }
+
+            if (animeDao.getAnimeByMalId(malId) == null) {
+                ctx.setResponseCode(StatusCode.NOT_FOUND);
+                return errorResponse("Anime not found");
+            }
+
+            normalizeEpisodeCounts(anime);
+
+            try {
+                anime.setBackgroundImageUrl(aniListClient.getBannerImage(anime.getMalId()));
+            } catch (IllegalStateException exception) {
+                ctx.setResponseCode(StatusCode.BAD_GATEWAY);
+                return errorResponse(exception.getMessage());
+            }
+
+            animeDao.updateAnime(anime);
+            return animeDao.getAnimeByMalId(malId);
         });
     }
 
