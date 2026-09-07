@@ -290,6 +290,5 @@ vagrant provision db
 ---
 
 ## 13) AI/reuse attribution note
-
-Include your formal AI-use/reuse declaration in the report.  
+AI has been used to check and rework read me.
 Repository implementation is based on project-authored code and standard open-source tooling/libraries referenced in source files and build configs.
