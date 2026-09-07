@@ -139,7 +139,7 @@ watch(() => showDeleteModal.value, (isShown) => {
                     <EpisodesAndStatusFormSection v-model="animeData" />
 
                     <div class="right-align-buttons">
-                        <button @click="showUpdateModal = false">Go Back</button>
+                        <button type="button" @click="showUpdateModal = false">Go Back</button>
                         <button class="emphasis" type="submit">Update</button>
                     </div>
                 </form>
@@ -152,7 +152,7 @@ watch(() => showDeleteModal.value, (isShown) => {
                 <ErrorMsg v-else :error-msg="deleteErr" />
 
                 <div class="right-align-buttons">
-                    <button class="emphasis" @click="showDeleteModal = false">Go Back</button>
+                    <button type="button" class="emphasis" @click="showDeleteModal = false">Go Back</button>
                     <button v-if="!deleteErr"  @click="deleteHandler">Delete</button>
                 </div>
             </ModalGeneric>
