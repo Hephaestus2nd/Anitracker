@@ -18,7 +18,7 @@ INSERT INTO my_anime (mal_id, title, total_episodes, episodes_watched, watch_sta
 (30276, 'One-Punch Man', 12, 12, 'Completed', 'https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx21087-B5DHjqZ3kW4b.jpg', 'https://s4.anilist.co/file/anilistcdn/media/anime/banner/21087-sHb9zUZFsHe1.jpg', 'A hero who can defeat any opponent with one punch searches for a worthy challenge.'),
 (38000, 'Demon Slayer: Kimetsu no Yaiba', 26, 6, 'Watching', 'https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx101922-WBsBl0ClmgYL.jpg', 'https://s4.anilist.co/file/anilistcdn/media/anime/banner/101922-33MtJGsUSxga.jpg', 'A young demon slayer travels to save his sister and avenge his family.'),
 (38524, 'Attack on Titan Season 3 Part 2', 10, 0, 'Plan to Watch', 'https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx104578-k61nx3LPjvgd.jpg', 'https://s4.anilist.co/file/anilistcdn/media/anime/banner/104578-z7SadpYEuAsy.jpg', 'The Survey Corps reaches the basement and faces the secrets beyond the walls.'),
-(44511, 'Chainsaw Man', 12, 0, 'Plan to Watch', 'https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx127230-DdP4vAdssLoz.png', 'https://s4.anilist.co/file/anilistcdn/media/anime/banner/127230-o8IRwCGVr9KW.jpg', 'A debt-ridden devil hunter gains a new life after merging with his loyal chainsaw devil.');
+(44511, 'Chainsaw Man', 12, 0, 'Plan to Watch', 'https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx127230-DdP4vAdssLoz.png', 'https://s4.anilist.co/file/anilistcdn/media/anime/banner/127230-o8IRwCGVr9KW.jpg', 'A debt-ridden devil hunter gains a new life after merging with his loyal chainsaw devil.')
 
 
 
