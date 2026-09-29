@@ -1,0 +1,337 @@
+{
+  "communities": {
+    "0": [
+      "backend_src_main_app_anime",
+      "backend_src_main_app_anime_anime",
+      "backend_src_main_app_anime_anime_getbackgroundimageurl",
+      "backend_src_main_app_anime_anime_getcoverimageurl",
+      "backend_src_main_app_anime_anime_getsynopsis",
+      "backend_src_main_app_anime_anime_setbackgroundimageurl",
+      "backend_src_main_app_anime_anime_setcoverimageurl",
+      "backend_src_main_app_anime_anime_setsynopsis",
+      "backend_src_main_app_anime_anime_settitle",
+      "backend_src_main_app_anime_anime_settotalepisodes",
+      "backend_src_main_app_animedao",
+      "backend_src_main_app_animedao_animedao",
+      "backend_src_main_app_animedao_animedao_addanime",
+      "backend_src_main_app_animedao_animedao_deleteanime",
+      "backend_src_main_app_animedao_animedao_getallanime",
+      "backend_src_main_app_animedao_animedao_getanimebymalid",
+      "backend_src_main_app_animedao_animedao_getanimebytitle",
+      "backend_src_main_app_animedao_animedao_updateanime",
+      "backend_src_main_app_animejdbidao",
+      "backend_src_main_app_animejdbidao_animejdbidao",
+      "backend_src_main_app_animejdbidao_animejdbidao_addanime",
+      "backend_src_main_app_animejdbidao_animejdbidao_deleteanime",
+      "backend_src_main_app_animejdbidao_animejdbidao_getallanime",
+      "backend_src_main_app_animejdbidao_animejdbidao_getanimebymalid",
+      "backend_src_main_app_animejdbidao_animejdbidao_getanimebytitle",
+      "backend_src_main_app_animejdbidao_animejdbidao_updateanime",
+      "bind",
+      "bindbean",
+      "list",
+      "org_jdbi_v3_sqlobject_config_registerbeanmapper",
+      "org_jdbi_v3_sqlobject_statement_sqlquery",
+      "org_jdbi_v3_sqlobject_statement_sqlupdate"
+    ],
+    "1": [
+      "frontend_src_assets_addicon",
+      "frontend_src_assets_warningicon",
+      "frontend_src_views_components_errormsg",
+      "frontend_src_views_components_modalgeneric",
+      "frontend_src_views_components_modalgeneric_close",
+      "frontend_src_views_components_modalgeneric_ismodalopen",
+      "frontend_src_views_components_search_searchresult",
+      "frontend_src_views_components_search_searchresult_dataarray",
+      "frontend_src_views_components_search_searchresult_props",
+      "frontend_src_views_components_search_searchresult_selectedanime",
+      "frontend_src_views_main",
+      "frontend_src_views_main_addanime",
+      "frontend_src_views_main_animelist",
+      "frontend_src_views_main_apilinks",
+      "frontend_src_views_main_apiqueries",
+      "frontend_src_views_main_clearmodalerrors",
+      "frontend_src_views_main_defaultnewanimedata",
+      "frontend_src_views_main_fetchanimedata",
+      "frontend_src_views_main_fetchanimelisterr",
+      "frontend_src_views_main_isadddisabled",
+      "frontend_src_views_main_issearchdisabled",
+      "frontend_src_views_main_loading",
+      "frontend_src_views_main_newanimedata",
+      "frontend_src_views_main_newanimedataerr",
+      "frontend_src_views_main_resetform",
+      "frontend_src_views_main_resetsearch",
+      "frontend_src_views_main_searchanime",
+      "frontend_src_views_main_searchanimenameerr",
+      "frontend_src_views_main_searchresults",
+      "frontend_src_views_main_selectednewanimetoadd",
+      "frontend_src_views_main_showaddmodal",
+      "frontend_src_views_main_watchstatuslabels"
+    ],
+    "2": [
+      "frontend_src_views_components_episodesandstatusformsection",
+      "frontend_src_views_components_episodesandstatusformsection_animedata",
+      "frontend_src_views_components_episodesandstatusformsection_watchstatuslabels",
+      "frontend_src_views_components_miniprogressbar",
+      "frontend_src_views_components_miniprogressbar_progresspercentage",
+      "frontend_src_views_components_miniprogressbar_props",
+      "frontend_src_views_components_statusbadge",
+      "frontend_src_views_components_statusbadge_iscompleted",
+      "frontend_src_views_components_statusbadge_isdropped",
+      "frontend_src_views_components_statusbadge_props",
+      "frontend_src_views_components_statusbadge_watchstatuslabels",
+      "frontend_src_views_detailpage",
+      "frontend_src_views_detailpage_animedata",
+      "frontend_src_views_detailpage_apianimeidlink",
+      "frontend_src_views_detailpage_apilinks",
+      "frontend_src_views_detailpage_deleteerr",
+      "frontend_src_views_detailpage_deletehandler",
+      "frontend_src_views_detailpage_fetchanimedata",
+      "frontend_src_views_detailpage_fetchanimelisterr",
+      "frontend_src_views_detailpage_isupdating",
+      "frontend_src_views_detailpage_linkanimeid",
+      "frontend_src_views_detailpage_loading",
+      "frontend_src_views_detailpage_origanimedata",
+      "frontend_src_views_detailpage_redirect",
+      "frontend_src_views_detailpage_resetchanges",
+      "frontend_src_views_detailpage_showdeletemodal",
+      "frontend_src_views_detailpage_showupdatemodal",
+      "frontend_src_views_detailpage_updateerr",
+      "frontend_src_views_detailpage_updatehandler",
+      "ref_vue"
+    ],
+    "3": [
+      "frontend_package",
+      "frontend_package_dependencies",
+      "frontend_package_dependencies_vue",
+      "frontend_package_dependencies_vue_router",
+      "frontend_package_devdependencies",
+      "frontend_package_devdependencies_vite",
+      "frontend_package_devdependencies_vite_plugin_vue_devtools",
+      "frontend_package_devdependencies_vitejs_plugin_vue",
+      "frontend_package_engines",
+      "frontend_package_engines_node",
+      "frontend_package_name",
+      "frontend_package_private",
+      "frontend_package_scripts",
+      "frontend_package_scripts_build",
+      "frontend_package_scripts_dev",
+      "frontend_package_scripts_preview",
+      "frontend_package_type",
+      "frontend_package_version",
+      "frontend_vite_config",
+      "package",
+      "package_dependencies",
+      "package_dependencies_vue_router",
+      "package_json_ref_vue_router",
+      "ref_node_url",
+      "ref_vite",
+      "ref_vite_plugin_vue_devtools",
+      "ref_vitejs_plugin_vue"
+    ],
+    "4": [
+      "backend_src_main_app_anime_anime_getepisodeswatched",
+      "backend_src_main_app_anime_anime_getmalid",
+      "backend_src_main_app_anime_anime_gettitle",
+      "backend_src_main_app_anime_anime_gettotalepisodes",
+      "backend_src_main_app_anime_anime_setepisodeswatched",
+      "backend_src_main_app_anime_anime_setmalid",
+      "backend_src_main_app_animetrackerapp",
+      "backend_src_main_app_animetrackerapp_animetrackerapp",
+      "backend_src_main_app_animetrackerapp_animetrackerapp_animetrackerapp",
+      "backend_src_main_app_animetrackerapp_animetrackerapp_errorresponse",
+      "backend_src_main_app_animetrackerapp_animetrackerapp_healthresponse",
+      "backend_src_main_app_animetrackerapp_animetrackerapp_main",
+      "backend_src_main_app_animetrackerapp_animetrackerapp_normalizeepisodecounts",
+      "backend_src_main_app_animetrackerapp_animetrackerapp_validateanime",
+      "io_jooby_jooby",
+      "jacksonmodule",
+      "jdbi",
+      "map",
+      "sqlobjectplugin",
+      "statuscode"
+    ],
+    "5": [
+      "backend_src_main_app_anime_anime_getwatchstatus",
+      "backend_src_main_app_anime_anime_setwatchstatus",
+      "backend_src_main_app_watchstatus",
+      "backend_src_main_app_watchstatus_watchstatus",
+      "backend_src_main_app_watchstatus_watchstatus_completed",
+      "backend_src_main_app_watchstatus_watchstatus_dropped",
+      "backend_src_main_app_watchstatus_watchstatus_fromvalue",
+      "backend_src_main_app_watchstatus_watchstatus_getdatabasevalue",
+      "backend_src_main_app_watchstatus_watchstatus_on_hold",
+      "backend_src_main_app_watchstatus_watchstatus_plan_to_watch",
+      "backend_src_main_app_watchstatus_watchstatus_tostring",
+      "backend_src_main_app_watchstatus_watchstatus_watching",
+      "backend_src_main_app_watchstatus_watchstatus_watchstatus",
+      "override"
+    ],
+    "6": [
+      "frontend_src_app",
+      "frontend_src_assets_logo",
+      "frontend_src_assets_styles",
+      "frontend_src_helpers_apistuff",
+      "frontend_src_helpers_apistuff_apilinks",
+      "frontend_src_helpers_apistuff_apiqueries",
+      "frontend_src_helpers_watchstatuslabels",
+      "frontend_src_helpers_watchstatuslabels_watchstatuslabels",
+      "frontend_src_main",
+      "frontend_src_router_index",
+      "frontend_src_router_index_router",
+      "frontend_src_views_components_mainnav",
+      "ref_vue_router"
+    ],
+    "7": [
+      "frontend_src_views_components_search_searchbargeneric",
+      "frontend_src_views_components_search_searchbargeneric_emit",
+      "frontend_src_views_components_search_searchbargeneric_handlesearch",
+      "frontend_src_views_components_search_searchbargeneric_issearchdisabled",
+      "frontend_src_views_components_search_searchbargeneric_searchquery"
+    ],
+    "8": [
+      "frontend_jsconfig",
+      "frontend_jsconfig_compileroptions",
+      "frontend_jsconfig_compileroptions_paths",
+      "frontend_jsconfig_exclude"
+    ],
+    "9": [
+      "frontend_src_assets_loadingspinner",
+      "frontend_src_assets_loadingspinner_props",
+      "frontend_src_views_components_fullblockloadingspinner",
+      "frontend_src_views_components_fullblockloadingspinner_props"
+    ],
+    "10": [
+      "frontend_src_views_components_card_templates_cardshowgrid",
+      "frontend_src_views_components_card_templates_cardshowgrid_props",
+      "frontend_src_views_components_card_templates_cardshowtemplate",
+      "frontend_src_views_components_card_templates_cardshowtemplate_props"
+    ],
+    "11": [
+      "gradlew",
+      "gradlew__entry",
+      "gradlew_die",
+      "gradlew_warn"
+    ],
+    "12": [
+      "provision_api_provision",
+      "provision_api_provision_debian_frontend",
+      "provision_api_provision_sh__entry"
+    ],
+    "13": [
+      "provision_db_provision",
+      "provision_db_provision_debian_frontend",
+      "provision_db_provision_sh__entry"
+    ],
+    "14": [
+      "provision_web_provision",
+      "provision_web_provision_debian_frontend",
+      "provision_web_provision_sh__entry"
+    ],
+    "15": [
+      "build"
+    ],
+    "16": [
+      "settings"
+    ]
+  },
+  "cohesion": {
+    "0": 0.0967741935483871,
+    "1": 0.07056451612903226,
+    "2": 0.0735632183908046,
+    "3": 0.07977207977207977,
+    "4": 0.14210526315789473,
+    "5": 0.14285714285714285,
+    "6": 0.23076923076923078,
+    "7": 0.5,
+    "8": 0.5,
+    "9": 0.5,
+    "10": 0.5,
+    "11": 0.8333333333333334,
+    "12": 0.6666666666666666,
+    "13": 0.6666666666666666,
+    "14": 0.6666666666666666,
+    "15": 1.0,
+    "16": 1.0
+  },
+  "gods": [
+    {
+      "id": "backend_src_main_app_anime_anime",
+      "label": "Anime",
+      "degree": 31
+    },
+    {
+      "id": "backend_src_main_app_watchstatus_watchstatus",
+      "label": "WatchStatus",
+      "degree": 11
+    },
+    {
+      "id": "ref_vue",
+      "label": "vue",
+      "degree": 10
+    },
+    {
+      "id": "backend_src_main_app_animejdbidao_animejdbidao",
+      "label": "AnimeJdbiDAO",
+      "degree": 9
+    },
+    {
+      "id": "backend_src_main_app_animetrackerapp_animetrackerapp",
+      "label": "AnimeTrackerApp",
+      "degree": 8
+    },
+    {
+      "id": "backend_src_main_app_animedao_animedao",
+      "label": "AnimeDAO",
+      "degree": 7
+    },
+    {
+      "id": "frontend_package_scripts",
+      "label": "scripts",
+      "degree": 4
+    },
+    {
+      "id": "frontend_src_views_main_searchanime",
+      "label": "searchAnime()",
+      "degree": 3
+    },
+    {
+      "id": "frontend_src_views_main_addanime",
+      "label": "addAnime()",
+      "degree": 3
+    },
+    {
+      "id": "frontend_src_views_main_clearmodalerrors",
+      "label": "clearModalErrors()",
+      "degree": 3
+    }
+  ],
+  "surprises": [
+    {
+      "source": "Anime",
+      "target": "WatchStatus",
+      "source_files": [
+        "backend/src/main/app/Anime.java",
+        "backend/src/main/app/WatchStatus.java"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "references",
+      "why": "bridges separate communities"
+    },
+    {
+      "source": "AnimeJdbiDAO",
+      "target": "Anime",
+      "source_files": [
+        "backend/src/main/app/AnimeJdbiDAO.java",
+        "backend/src/main/app/Anime.java"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "references",
+      "why": "cross-file semantic connection"
+    }
+  ],
+  "tokens": {
+    "input": 0,
+    "output": 0
+  }
+}
