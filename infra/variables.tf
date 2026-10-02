@@ -37,7 +37,7 @@ variable "key_name" {
 variable "repository_url" {
   description = "Public Git repository cloned by both EC2 instances during bootstrap."
   type        = string
-  default     = "https://github.com/Hephaestus2nd/Internet_Movie_Database.git"
+  default     = "https://github.com/Hephaestus2nd/Anitracker.git"
 }
 
 variable "repository_ref" {

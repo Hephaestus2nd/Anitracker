@@ -12,6 +12,95 @@ Then open: `http://localhost:8080`
 
 ---
 
+## AWS deployment
+
+The cloud deployment uses two interacting EC2 instances, RDS PostgreSQL, and
+an Application Load Balancer:
+
+```text
+Browser -> Application Load Balancer -> Web EC2 -> API EC2 -> RDS PostgreSQL
+```
+
+CloudFront and S3 are not required by this deployment. RDS is the application's
+managed persistent storage service. Terraform uploads the locally built
+backend, frontend, and SQL files to the EC2 instances over SSH during apply.
+
+### AWS prerequisites
+
+- AWS CLI 2.x
+- Terraform 1.6 or newer
+- An active AWS Academy Learner Lab session
+- A public Git repository containing the application source
+- An existing EC2 key pair named `cosc349-2026` (associated with instances;
+  SSH remains closed by the security groups)
+
+Configure the temporary Learner Lab credentials from **AWS Details > AWS CLI**
+before each session. Do not commit them or any Terraform state file.
+
+Set `repository_url` and `repository_ref` in `infra/terraform.tfvars` when
+deploying a different public repository or a pinned commit.
+
+### Deploy to AWS
+
+From the repository root, after starting the Learner Lab:
+
+```powershell
+.\scripts\deploy.ps1
+```
+
+or on Linux/macOS:
+
+```bash
+./scripts/deploy.sh
+```
+
+The script builds the backend and frontend, uploads the artifacts to EC2 over
+SSH, creates or updates the VPC, EC2 instances, RDS, security groups, and ALB,
+then prints the public ALB URL. Initial EC2 and RDS bootstrap can take several
+minutes.
+
+Useful Terraform commands:
+
+```bash
+terraform -chdir=infra init
+terraform -chdir=infra validate
+terraform -chdir=infra plan
+terraform -chdir=infra destroy
+```
+
+The AWS deployment uses the `us-east-1` default region and the `anitracker-`
+resource naming prefix. Terraform state and `terraform.tfvars` are local
+secrets and must not be committed.
+
+If an earlier deployment created the old S3 bucket, remove its stale entries
+from local Terraform state once before the next plan. This does not affect RDS
+or EC2 resources:
+
+```bash
+terraform -chdir=infra state list
+terraform -chdir=infra state rm aws_s3_bucket.artifacts
+```
+
+### AWS request flow
+
+1. A browser requests the public ALB DNS name.
+2. The ALB forwards HTTP traffic to the Web EC2 instance.
+3. Nginx serves the Vue application and proxies `/api/*` to the API EC2 private IP.
+4. The Java API reads and writes anime data in private RDS PostgreSQL.
+5. Terraform uploads build artifacts to the EC2 instances over SSH.
+
+### AWS cleanup
+
+```bash
+terraform -chdir=infra destroy
+```
+
+This removes the demonstration deployment, including the RDS instance because
+deletion protection is disabled. The local Vagrant deployment remains available
+for Assignment 1 testing.
+
+---
+
 ## 1) Architecture (3 VM requirement)
 
 ### VM responsibilities

@@ -6,5 +6,5 @@
 # key_name = "cosc349-2026"
 
 # Public source repository cloned by EC2 at startup.
-# repository_url = "https://github.com/Hephaestus2nd/Internet_Movie_Database.git"
+# repository_url = "https://github.com/Hephaestus2nd/Anitracker.git"
 # repository_ref = "main"
