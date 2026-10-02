@@ -1,0 +1,114 @@
+#!/usr/bin/env bash
+# Bootstraps the Anitracker API on EC2. Rendered by Terraform (templatefile).
+# Adapted from vagrant/provision/api_provision.sh and vagrant/provision/db_provision.sh.
+# artifact hash: ${artifact_hash}
+set -euo pipefail
+exec > >(tee -a /var/log/anitracker-bootstrap.log) 2>&1
+
+export DEBIAN_FRONTEND=noninteractive
+apt-get update
+apt-get install -y openjdk-17-jre-headless postgresql-client curl unzip awscli
+
+AWS_REGION="${aws_region}"
+ARTIFACT_BUCKET="${artifact_bucket}"
+DB_HOST="${db_host}"
+DB_PORT="${db_port}"
+DB_NAME="${db_name}"
+DB_ADMIN_USER="${db_admin_user}"
+DB_ADMIN_PASSWORD="${db_admin_password}"
+DB_APP_USER="${db_app_user}"
+DB_APP_PASSWORD="${db_app_password}"
+
+# ---------- Fetch build artifacts ----------
+mkdir -p /opt/anitracker/sql
+aws s3 cp --region "$AWS_REGION" "s3://$ARTIFACT_BUCKET/${api_zip_key}" /tmp/anitracker.zip
+aws s3 cp --region "$AWS_REGION" "s3://$ARTIFACT_BUCKET/${schema_key}" /opt/anitracker/sql/schema.sql
+aws s3 cp --region "$AWS_REGION" "s3://$ARTIFACT_BUCKET/${seed_key}" /opt/anitracker/sql/seed_data.sql
+
+rm -rf /opt/anitracker/app /tmp/anitracker-dist
+unzip -q /tmp/anitracker.zip -d /tmp/anitracker-dist
+mv /tmp/anitracker-dist/anitracker-* /opt/anitracker/app
+
+# ---------- Database setup (RDS) ----------
+for attempt in $(seq 1 60); do
+    if pg_isready -h "$DB_HOST" -p "$DB_PORT" -d "$DB_NAME"; then
+        break
+    fi
+    if [ "$attempt" -eq 60 ]; then
+        echo "RDS did not become reachable" >&2
+        exit 1
+    fi
+    sleep 5
+done
+
+admin_psql() {
+    PGPASSWORD="$DB_ADMIN_PASSWORD" psql -h "$DB_HOST" -p "$DB_PORT" -U "$DB_ADMIN_USER" -d "$DB_NAME" -v ON_ERROR_STOP=1 "$@"
+}
+
+if admin_psql -tAc "SELECT 1 FROM pg_roles WHERE rolname='$DB_APP_USER'" | grep -q 1; then
+    admin_psql -c "ALTER ROLE $DB_APP_USER WITH LOGIN PASSWORD '$DB_APP_PASSWORD';"
+else
+    admin_psql -c "CREATE ROLE $DB_APP_USER WITH LOGIN PASSWORD '$DB_APP_PASSWORD';"
+fi
+
+# schema.sql is idempotent (IF NOT EXISTS guards), so it is safe to apply on every boot.
+admin_psql -f /opt/anitracker/sql/schema.sql
+
+# Seed only an empty table: seed_data.sql upserts, which would overwrite user edits.
+if [ "$(admin_psql -tAc 'SELECT COUNT(*) FROM my_anime')" = "0" ]; then
+    admin_psql -f /opt/anitracker/sql/seed_data.sql
+fi
+
+admin_psql <<SQL
+GRANT USAGE ON SCHEMA public TO $DB_APP_USER;
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO $DB_APP_USER;
+GRANT USAGE, SELECT, UPDATE ON ALL SEQUENCES IN SCHEMA public TO $DB_APP_USER;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public
+    GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO $DB_APP_USER;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public
+    GRANT USAGE, SELECT, UPDATE ON SEQUENCES TO $DB_APP_USER;
+SQL
+
+# ---------- API service ----------
+mkdir -p /etc/anitracker
+cat <<EOF >/etc/anitracker/api.env
+DB_URL=jdbc:postgresql://$DB_HOST:$DB_PORT/$DB_NAME
+DB_USER=$DB_APP_USER
+DB_PASSWORD=$DB_APP_PASSWORD
+EOF
+chmod 0600 /etc/anitracker/api.env
+
+cat <<'EOF' >/etc/systemd/system/anitracker-api.service
+[Unit]
+Description=Anitracker API service
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+WorkingDirectory=/opt/anitracker/app
+ExecStart=/opt/anitracker/app/bin/anitracker
+EnvironmentFile=/etc/anitracker/api.env
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+systemctl daemon-reload
+systemctl enable anitracker-api.service
+systemctl restart anitracker-api.service
+
+for attempt in $(seq 1 30); do
+    if curl -fsS http://127.0.0.1:8080/health >/dev/null 2>&1; then
+        echo "Anitracker API is ready."
+        break
+    fi
+    if [ "$attempt" -eq 30 ]; then
+        echo "Anitracker API did not become ready" >&2
+        systemctl status anitracker-api.service --no-pager >&2 || true
+        journalctl -u anitracker-api.service --no-pager -n 50 >&2 || true
+        exit 1
+    fi
+    sleep 2
+done
