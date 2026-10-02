@@ -1,0 +1,7 @@
+# Copy to terraform.tfvars and adjust if needed. All values are optional.
+
+# CIDR allowed to SSH into the API instance. Leave unset to auto-detect your public IP.
+# my_ip_cidr = "203.0.113.10/32"
+
+# api_instance_type = "t3.small"
+# db_instance_class = "db.t3.micro"
