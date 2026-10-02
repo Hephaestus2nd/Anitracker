@@ -118,7 +118,7 @@ const addAnime = async () => {
     } catch (addError) {
         newAnimeDataErr.value = addError.message
     } finally {
-        isSearchDisabled.value = true
+        isSearchDisabled.value = false
     }
 }
 
