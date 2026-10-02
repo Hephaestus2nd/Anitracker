@@ -521,18 +521,6 @@
       "source_location": "L25"
     },
     {
-      "id": "frontend_src_views_components_modalgeneric_close",
-      "label": "close()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "Main.vue",
-      "file_type": "code",
-      "norm_label": "close()",
-      "source_file": "frontend/src/views/components/ModalGeneric.vue",
-      "source_location": "L6"
-    },
-    {
       "id": "frontend_src_views_main_addanime",
       "label": "addAnime()",
       "_callable": true,
@@ -605,28 +593,16 @@
       "source_location": "L61"
     },
     {
-      "id": "infra_functions_spa_rewrite_handler",
-      "label": "handler()",
+      "id": "frontend_src_views_components_modalgeneric_close",
+      "label": "close()",
       "_callable": true,
       "_origin": "ast",
-      "community": 17,
-      "community_name": "spa_rewrite.js",
+      "community": 2,
+      "community_name": "DetailPage.vue",
       "file_type": "code",
-      "norm_label": "handler()",
-      "source_file": "infra/functions/spa_rewrite.js",
-      "source_location": "L4"
-    },
-    {
-      "id": "infra_functions_strip_api_prefix_handler",
-      "label": "handler()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 18,
-      "community_name": "strip_api_prefix.js",
-      "file_type": "code",
-      "norm_label": "handler()",
-      "source_file": "infra/functions/strip_api_prefix.js",
-      "source_location": "L3"
+      "norm_label": "close()",
+      "source_file": "frontend/src/views/components/ModalGeneric.vue",
+      "source_location": "L6"
     },
     {
       "id": "frontend_src_views_detailpage_deletehandler",
@@ -860,17 +836,6 @@
       "source_location": "L1"
     },
     {
-      "id": "frontend_src_assets_warningicon",
-      "label": "WarningIcon.vue",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "Main.vue",
-      "file_type": "code",
-      "norm_label": "warningicon.vue",
-      "source_file": "frontend/src/assets/WarningIcon.vue",
-      "source_location": "L1"
-    },
-    {
       "id": "frontend_src_views_components_card_templates_cardshowgrid",
       "label": "CardShowGrid.vue",
       "_origin": "ast",
@@ -913,39 +878,6 @@
       "norm_label": "props",
       "source_file": "frontend/src/views/components/card_templates/CardShowTemplate.vue",
       "source_location": "L2"
-    },
-    {
-      "id": "frontend_src_views_components_errormsg",
-      "label": "ErrorMsg.vue",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "Main.vue",
-      "file_type": "code",
-      "norm_label": "errormsg.vue",
-      "source_file": "frontend/src/views/components/ErrorMsg.vue",
-      "source_location": "L1"
-    },
-    {
-      "id": "frontend_src_views_components_modalgeneric",
-      "label": "ModalGeneric.vue",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "Main.vue",
-      "file_type": "code",
-      "norm_label": "modalgeneric.vue",
-      "source_file": "frontend/src/views/components/ModalGeneric.vue",
-      "source_location": "L1"
-    },
-    {
-      "id": "frontend_src_views_components_modalgeneric_ismodalopen",
-      "label": "isModalOpen",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "Main.vue",
-      "file_type": "code",
-      "norm_label": "ismodalopen",
-      "source_file": "frontend/src/views/components/ModalGeneric.vue",
-      "source_location": "L3"
     },
     {
       "id": "frontend_src_views_components_search_searchresult",
@@ -1272,7 +1204,7 @@
       "source_location": "L94"
     },
     {
-      "id": "vagrant_provision_api_provision",
+      "id": "provision_api_provision",
       "label": "api_provision.sh",
       "_origin": "ast",
       "community": 12,
@@ -1283,11 +1215,11 @@
         "kind": "file"
       },
       "norm_label": "api_provision.sh",
-      "source_file": "vagrant/provision/api_provision.sh",
+      "source_file": "provision/api_provision.sh",
       "source_location": "L1"
     },
     {
-      "id": "vagrant_provision_api_provision_debian_frontend",
+      "id": "provision_api_provision_debian_frontend",
       "label": "DEBIAN_FRONTEND",
       "_origin": "ast",
       "community": 12,
@@ -1298,11 +1230,11 @@
         "kind": "code"
       },
       "norm_label": "debian_frontend",
-      "source_file": "vagrant/provision/api_provision.sh",
+      "source_file": "provision/api_provision.sh",
       "source_location": "L4"
     },
     {
-      "id": "vagrant_provision_api_provision_sh__entry",
+      "id": "provision_api_provision_sh__entry",
       "label": "api_provision.sh script",
       "_origin": "ast",
       "community": 12,
@@ -1313,11 +1245,11 @@
         "kind": "bash_entrypoint"
       },
       "norm_label": "api_provision.sh script",
-      "source_file": "vagrant/provision/api_provision.sh",
+      "source_file": "provision/api_provision.sh",
       "source_location": "L1"
     },
     {
-      "id": "vagrant_provision_db_provision",
+      "id": "provision_db_provision",
       "label": "db_provision.sh",
       "_origin": "ast",
       "community": 13,
@@ -1328,11 +1260,11 @@
         "kind": "file"
       },
       "norm_label": "db_provision.sh",
-      "source_file": "vagrant/provision/db_provision.sh",
+      "source_file": "provision/db_provision.sh",
       "source_location": "L1"
     },
     {
-      "id": "vagrant_provision_db_provision_debian_frontend",
+      "id": "provision_db_provision_debian_frontend",
       "label": "DEBIAN_FRONTEND",
       "_origin": "ast",
       "community": 13,
@@ -1343,11 +1275,11 @@
         "kind": "code"
       },
       "norm_label": "debian_frontend",
-      "source_file": "vagrant/provision/db_provision.sh",
+      "source_file": "provision/db_provision.sh",
       "source_location": "L4"
     },
     {
-      "id": "vagrant_provision_db_provision_sh__entry",
+      "id": "provision_db_provision_sh__entry",
       "label": "db_provision.sh script",
       "_origin": "ast",
       "community": 13,
@@ -1358,11 +1290,11 @@
         "kind": "bash_entrypoint"
       },
       "norm_label": "db_provision.sh script",
-      "source_file": "vagrant/provision/db_provision.sh",
+      "source_file": "provision/db_provision.sh",
       "source_location": "L1"
     },
     {
-      "id": "vagrant_provision_web_provision",
+      "id": "provision_web_provision",
       "label": "web_provision.sh",
       "_origin": "ast",
       "community": 14,
@@ -1373,11 +1305,11 @@
         "kind": "file"
       },
       "norm_label": "web_provision.sh",
-      "source_file": "vagrant/provision/web_provision.sh",
+      "source_file": "provision/web_provision.sh",
       "source_location": "L1"
     },
     {
-      "id": "vagrant_provision_web_provision_debian_frontend",
+      "id": "provision_web_provision_debian_frontend",
       "label": "DEBIAN_FRONTEND",
       "_origin": "ast",
       "community": 14,
@@ -1388,11 +1320,11 @@
         "kind": "code"
       },
       "norm_label": "debian_frontend",
-      "source_file": "vagrant/provision/web_provision.sh",
+      "source_file": "provision/web_provision.sh",
       "source_location": "L4"
     },
     {
-      "id": "vagrant_provision_web_provision_sh__entry",
+      "id": "provision_web_provision_sh__entry",
       "label": "web_provision.sh script",
       "_origin": "ast",
       "community": 14,
@@ -1403,7 +1335,7 @@
         "kind": "bash_entrypoint"
       },
       "norm_label": "web_provision.sh script",
-      "source_file": "vagrant/provision/web_provision.sh",
+      "source_file": "provision/web_provision.sh",
       "source_location": "L1"
     },
     {
@@ -1429,50 +1361,6 @@
       "source_location": "L1"
     },
     {
-      "id": "infra_functions_spa_rewrite",
-      "label": "spa_rewrite.js",
-      "_origin": "ast",
-      "community": 17,
-      "community_name": "spa_rewrite.js",
-      "file_type": "code",
-      "norm_label": "spa_rewrite.js",
-      "source_file": "infra/functions/spa_rewrite.js",
-      "source_location": "L1"
-    },
-    {
-      "id": "infra_functions_strip_api_prefix",
-      "label": "strip_api_prefix.js",
-      "_origin": "ast",
-      "community": 18,
-      "community_name": "strip_api_prefix.js",
-      "file_type": "code",
-      "norm_label": "strip_api_prefix.js",
-      "source_file": "infra/functions/strip_api_prefix.js",
-      "source_location": "L1"
-    },
-    {
-      "id": "scripts_deploy_invoke_checked",
-      "label": "Invoke-Checked()",
-      "_origin": "ast",
-      "community": 19,
-      "community_name": "Invoke-Checked",
-      "file_type": "code",
-      "norm_label": "invoke-checked()",
-      "source_file": "scripts/deploy.ps1",
-      "source_location": "L5"
-    },
-    {
-      "id": "scripts_deploy_ps1_scripts_deploy",
-      "label": "deploy.ps1",
-      "_origin": "ast",
-      "community": 19,
-      "community_name": "Invoke-Checked",
-      "file_type": "code",
-      "norm_label": "deploy.ps1",
-      "source_file": "scripts/deploy.ps1",
-      "source_location": "L1"
-    },
-    {
       "id": "frontend_src_assets_loadingspinner",
       "label": "LoadingSpinner.vue",
       "_origin": "ast",
@@ -1493,6 +1381,17 @@
       "norm_label": "props",
       "source_file": "frontend/src/assets/LoadingSpinner.vue",
       "source_location": "L2"
+    },
+    {
+      "id": "frontend_src_assets_warningicon",
+      "label": "WarningIcon.vue",
+      "_origin": "ast",
+      "community": 2,
+      "community_name": "DetailPage.vue",
+      "file_type": "code",
+      "norm_label": "warningicon.vue",
+      "source_file": "frontend/src/assets/WarningIcon.vue",
+      "source_location": "L1"
     },
     {
       "id": "frontend_src_views_components_episodesandstatusformsection",
@@ -1528,6 +1427,17 @@
       "source_location": "L5"
     },
     {
+      "id": "frontend_src_views_components_errormsg",
+      "label": "ErrorMsg.vue",
+      "_origin": "ast",
+      "community": 2,
+      "community_name": "DetailPage.vue",
+      "file_type": "code",
+      "norm_label": "errormsg.vue",
+      "source_file": "frontend/src/views/components/ErrorMsg.vue",
+      "source_location": "L1"
+    },
+    {
       "id": "frontend_src_views_components_fullblockloadingspinner",
       "label": "FullBlockLoadingSpinner.vue",
       "_origin": "ast",
@@ -1550,92 +1460,26 @@
       "source_location": "L4"
     },
     {
-      "id": "frontend_src_views_components_miniprogressbar",
-      "label": "MiniProgressBar.vue",
+      "id": "frontend_src_views_components_modalgeneric",
+      "label": "ModalGeneric.vue",
       "_origin": "ast",
       "community": 2,
       "community_name": "DetailPage.vue",
       "file_type": "code",
-      "norm_label": "miniprogressbar.vue",
-      "source_file": "frontend/src/views/components/MiniProgressBar.vue",
+      "norm_label": "modalgeneric.vue",
+      "source_file": "frontend/src/views/components/ModalGeneric.vue",
       "source_location": "L1"
     },
     {
-      "id": "frontend_src_views_components_miniprogressbar_progresspercentage",
-      "label": "progressPercentage",
+      "id": "frontend_src_views_components_modalgeneric_ismodalopen",
+      "label": "isModalOpen",
       "_origin": "ast",
       "community": 2,
       "community_name": "DetailPage.vue",
       "file_type": "code",
-      "norm_label": "progresspercentage",
-      "source_file": "frontend/src/views/components/MiniProgressBar.vue",
-      "source_location": "L11"
-    },
-    {
-      "id": "frontend_src_views_components_miniprogressbar_props",
-      "label": "props",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "DetailPage.vue",
-      "file_type": "code",
-      "norm_label": "props",
-      "source_file": "frontend/src/views/components/MiniProgressBar.vue",
-      "source_location": "L4"
-    },
-    {
-      "id": "frontend_src_views_components_statusbadge",
-      "label": "StatusBadge.vue",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "DetailPage.vue",
-      "file_type": "code",
-      "norm_label": "statusbadge.vue",
-      "source_file": "frontend/src/views/components/StatusBadge.vue",
-      "source_location": "L1"
-    },
-    {
-      "id": "frontend_src_views_components_statusbadge_iscompleted",
-      "label": "isCompleted",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "DetailPage.vue",
-      "file_type": "code",
-      "norm_label": "iscompleted",
-      "source_file": "frontend/src/views/components/StatusBadge.vue",
-      "source_location": "L12"
-    },
-    {
-      "id": "frontend_src_views_components_statusbadge_isdropped",
-      "label": "isDropped",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "DetailPage.vue",
-      "file_type": "code",
-      "norm_label": "isdropped",
-      "source_file": "frontend/src/views/components/StatusBadge.vue",
-      "source_location": "L16"
-    },
-    {
-      "id": "frontend_src_views_components_statusbadge_props",
-      "label": "props",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "DetailPage.vue",
-      "file_type": "code",
-      "norm_label": "props",
-      "source_file": "frontend/src/views/components/StatusBadge.vue",
-      "source_location": "L5"
-    },
-    {
-      "id": "frontend_src_views_components_statusbadge_watchstatuslabels",
-      "label": "watchStatusLabels",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "DetailPage.vue",
-      "file_type": "code",
-      "norm_label": "watchstatuslabels",
-      "source_file": "frontend/src/views/components/StatusBadge.vue",
-      "source_location": "L4"
+      "norm_label": "ismodalopen",
+      "source_file": "frontend/src/views/components/ModalGeneric.vue",
+      "source_location": "L3"
     },
     {
       "id": "frontend_src_views_detailpage",
@@ -1790,88 +1634,6 @@
       "norm_label": "updateerr",
       "source_file": "frontend/src/views/DetailPage.vue",
       "source_location": "L28"
-    },
-    {
-      "id": "ref_vue",
-      "label": "vue",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "DetailPage.vue",
-      "file_type": "concept",
-      "norm_label": "vue",
-      "source_file": "frontend/package.json",
-      "source_location": "L12"
-    },
-    {
-      "id": "scripts_deploy_sh__entry",
-      "label": "deploy.sh script",
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "deploy.sh script",
-      "file_type": "code",
-      "metadata": {
-        "language": "bash",
-        "kind": "bash_entrypoint"
-      },
-      "norm_label": "deploy.sh script",
-      "source_file": "scripts/deploy.sh",
-      "source_location": "L1"
-    },
-    {
-      "id": "scripts_deploy_sh_scripts_deploy",
-      "label": "deploy.sh",
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "deploy.sh script",
-      "file_type": "code",
-      "metadata": {
-        "language": "bash",
-        "kind": "file"
-      },
-      "norm_label": "deploy.sh",
-      "source_file": "scripts/deploy.sh",
-      "source_location": "L1"
-    },
-    {
-      "id": "scripts_destroy_sh__entry",
-      "label": "destroy.sh script",
-      "_origin": "ast",
-      "community": 21,
-      "community_name": "destroy.sh script",
-      "file_type": "code",
-      "metadata": {
-        "language": "bash",
-        "kind": "bash_entrypoint"
-      },
-      "norm_label": "destroy.sh script",
-      "source_file": "scripts/destroy.sh",
-      "source_location": "L1"
-    },
-    {
-      "id": "scripts_destroy_sh_scripts_destroy",
-      "label": "destroy.sh",
-      "_origin": "ast",
-      "community": 21,
-      "community_name": "destroy.sh script",
-      "file_type": "code",
-      "metadata": {
-        "language": "bash",
-        "kind": "file"
-      },
-      "norm_label": "destroy.sh",
-      "source_file": "scripts/destroy.sh",
-      "source_location": "L1"
-    },
-    {
-      "id": "scripts_destroy_ps1_scripts_destroy",
-      "label": "destroy.ps1",
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "destroy.ps1",
-      "file_type": "code",
-      "norm_label": "destroy.ps1",
-      "source_file": "scripts/destroy.ps1",
-      "source_location": "L1"
     },
     {
       "id": "frontend_package",
@@ -2148,7 +1910,7 @@
       "node_kind": "heading",
       "norm_label": "10) troubleshooting",
       "source_file": "README.md",
-      "source_location": "L246"
+      "source_location": "L232"
     },
     {
       "id": "readme_11_assessment_evidence_pointers",
@@ -2160,7 +1922,7 @@
       "node_kind": "heading",
       "norm_label": "11) assessment evidence pointers",
       "source_file": "README.md",
-      "source_location": "L292"
+      "source_location": "L278"
     },
     {
       "id": "readme_12_api_behavior_notes",
@@ -2172,7 +1934,7 @@
       "node_kind": "heading",
       "norm_label": "12) api behavior notes",
       "source_file": "README.md",
-      "source_location": "L387"
+      "source_location": "L288"
     },
     {
       "id": "readme_13_ai_reuse_attribution_note",
@@ -2184,7 +1946,7 @@
       "node_kind": "heading",
       "norm_label": "13) ai/reuse attribution note",
       "source_file": "README.md",
-      "source_location": "L394"
+      "source_location": "L295"
     },
     {
       "id": "readme_1_architecture_3_vm_requirement",
@@ -2196,7 +1958,7 @@
       "node_kind": "heading",
       "norm_label": "1) architecture (3 vm requirement)",
       "source_file": "README.md",
-      "source_location": "L26"
+      "source_location": "L15"
     },
     {
       "id": "readme_2_tools_and_purpose",
@@ -2208,7 +1970,7 @@
       "node_kind": "heading",
       "norm_label": "2) tools and purpose",
       "source_file": "README.md",
-      "source_location": "L62"
+      "source_location": "L51"
     },
     {
       "id": "readme_3_supported_host_environment",
@@ -2220,7 +1982,7 @@
       "node_kind": "heading",
       "norm_label": "3) supported host environment",
       "source_file": "README.md",
-      "source_location": "L74"
+      "source_location": "L62"
     },
     {
       "id": "readme_4_one_command_deployment",
@@ -2232,7 +1994,7 @@
       "node_kind": "heading",
       "norm_label": "4) one-command deployment",
       "source_file": "README.md",
-      "source_location": "L96"
+      "source_location": "L84"
     },
     {
       "id": "readme_5_verification_reproducible_evidence",
@@ -2244,7 +2006,7 @@
       "node_kind": "heading",
       "norm_label": "5) verification (reproducible evidence)",
       "source_file": "README.md",
-      "source_location": "L116"
+      "source_location": "L104"
     },
     {
       "id": "readme_6_removal_cleanup",
@@ -2256,7 +2018,7 @@
       "node_kind": "heading",
       "norm_label": "6) removal / cleanup",
       "source_file": "README.md",
-      "source_location": "L147"
+      "source_location": "L135"
     },
     {
       "id": "readme_7_demonstration_data",
@@ -2268,7 +2030,7 @@
       "node_kind": "heading",
       "norm_label": "7) demonstration data",
       "source_file": "README.md",
-      "source_location": "L165"
+      "source_location": "L153"
     },
     {
       "id": "readme_8_developer_modification_and_redeployment_workflow",
@@ -2280,7 +2042,7 @@
       "node_kind": "heading",
       "norm_label": "8) developer modification and redeployment workflow",
       "source_file": "README.md",
-      "source_location": "L179"
+      "source_location": "L167"
     },
     {
       "id": "readme_9_repository_structure",
@@ -2292,7 +2054,7 @@
       "node_kind": "heading",
       "norm_label": "9) repository structure",
       "source_file": "README.md",
-      "source_location": "L230"
+      "source_location": "L218"
     },
     {
       "id": "readme_anitracker_three_vm_internet_movie_anime_database",
@@ -2307,42 +2069,6 @@
       "source_location": "L1"
     },
     {
-      "id": "readme_architecture",
-      "label": "Architecture",
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "Anitracker (Three-VM Internet Movie/Anime Database)",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "architecture",
-      "source_file": "README.md",
-      "source_location": "L305"
-    },
-    {
-      "id": "readme_aws_credentials_learner_lab",
-      "label": "AWS credentials (Learner Lab)",
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "Anitracker (Three-VM Internet Movie/Anime Database)",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "aws credentials (learner lab)",
-      "source_file": "README.md",
-      "source_location": "L329"
-    },
-    {
-      "id": "readme_aws_deployment_terraform",
-      "label": "AWS deployment (Terraform)",
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "Anitracker (Three-VM Internet Movie/Anime Database)",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "aws deployment (terraform)",
-      "source_file": "README.md",
-      "source_location": "L303"
-    },
-    {
       "id": "readme_backend_change_java_api_or_db_access_logic",
       "label": "Backend change (Java/API or DB access logic)",
       "_origin": "ast",
@@ -2352,31 +2078,7 @@
       "node_kind": "heading",
       "norm_label": "backend change (java/api or db access logic)",
       "source_file": "README.md",
-      "source_location": "L183"
-    },
-    {
-      "id": "readme_deploy",
-      "label": "Deploy",
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "Anitracker (Three-VM Internet Movie/Anime Database)",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "deploy",
-      "source_file": "README.md",
-      "source_location": "L339"
-    },
-    {
-      "id": "readme_destroy",
-      "label": "Destroy",
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "Anitracker (Three-VM Internet Movie/Anime Database)",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "destroy",
-      "source_file": "README.md",
-      "source_location": "L377"
+      "source_location": "L171"
     },
     {
       "id": "readme_frontend_change_vue_ui",
@@ -2388,7 +2090,7 @@
       "node_kind": "heading",
       "norm_label": "frontend change (vue ui)",
       "source_file": "README.md",
-      "source_location": "L199"
+      "source_location": "L187"
     },
     {
       "id": "readme_host_os",
@@ -2400,7 +2102,7 @@
       "node_kind": "heading",
       "norm_label": "host os",
       "source_file": "README.md",
-      "source_location": "L76"
+      "source_location": "L64"
     },
     {
       "id": "readme_known_host_constraints",
@@ -2412,7 +2114,7 @@
       "node_kind": "heading",
       "norm_label": "known host constraints",
       "source_file": "README.md",
-      "source_location": "L89"
+      "source_location": "L77"
     },
     {
       "id": "readme_network_and_ports",
@@ -2424,19 +2126,7 @@
       "node_kind": "heading",
       "norm_label": "network and ports",
       "source_file": "README.md",
-      "source_location": "L49"
-    },
-    {
-      "id": "readme_prerequisites_host",
-      "label": "Prerequisites (host)",
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "Anitracker (Three-VM Internet Movie/Anime Database)",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "prerequisites (host)",
-      "source_file": "README.md",
-      "source_location": "L324"
+      "source_location": "L38"
     },
     {
       "id": "readme_quick_start",
@@ -2451,18 +2141,6 @@
       "source_location": "L5"
     },
     {
-      "id": "readme_redeploy_after_changes",
-      "label": "Redeploy after changes",
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "Anitracker (Three-VM Internet Movie/Anime Database)",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "redeploy after changes",
-      "source_file": "README.md",
-      "source_location": "L369"
-    },
-    {
       "id": "readme_request_flow_representative_user_action",
       "label": "Request flow (representative user action)",
       "_origin": "ast",
@@ -2472,7 +2150,7 @@
       "node_kind": "heading",
       "norm_label": "request flow (representative user action)",
       "source_file": "README.md",
-      "source_location": "L36"
+      "source_location": "L25"
     },
     {
       "id": "readme_required_tools",
@@ -2484,7 +2162,7 @@
       "node_kind": "heading",
       "norm_label": "required tools",
       "source_file": "README.md",
-      "source_location": "L81"
+      "source_location": "L69"
     },
     {
       "id": "readme_schema_seed_change",
@@ -2496,7 +2174,7 @@
       "node_kind": "heading",
       "norm_label": "schema/seed change",
       "source_file": "README.md",
-      "source_location": "L215"
+      "source_location": "L203"
     },
     {
       "id": "readme_service_level_checks",
@@ -2508,7 +2186,7 @@
       "node_kind": "heading",
       "norm_label": "service-level checks",
       "source_file": "README.md",
-      "source_location": "L274"
+      "source_location": "L260"
     },
     {
       "id": "readme_vagrant_shared_folder_missing",
@@ -2520,19 +2198,7 @@
       "node_kind": "heading",
       "norm_label": "`/vagrant` shared folder missing",
       "source_file": "README.md",
-      "source_location": "L266"
-    },
-    {
-      "id": "readme_verify",
-      "label": "Verify",
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "Anitracker (Three-VM Internet Movie/Anime Database)",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "verify",
-      "source_file": "README.md",
-      "source_location": "L350"
+      "source_location": "L252"
     },
     {
       "id": "readme_vm_boot_provision_failures",
@@ -2544,7 +2210,7 @@
       "node_kind": "heading",
       "norm_label": "vm boot/provision failures",
       "source_file": "README.md",
-      "source_location": "L248"
+      "source_location": "L234"
     },
     {
       "id": "readme_vm_responsibilities",
@@ -2556,7 +2222,7 @@
       "node_kind": "heading",
       "norm_label": "vm responsibilities",
       "source_file": "README.md",
-      "source_location": "L28"
+      "source_location": "L17"
     },
     {
       "id": "backend_src_main_app_watchstatus",
@@ -2640,7 +2306,7 @@
       "label": "App.vue",
       "_origin": "ast",
       "community": 6,
-      "community_name": "App.vue",
+      "community_name": "vue",
       "file_type": "code",
       "norm_label": "app.vue",
       "source_file": "frontend/src/App.vue",
@@ -2651,7 +2317,7 @@
       "label": "Logo.vue",
       "_origin": "ast",
       "community": 6,
-      "community_name": "App.vue",
+      "community_name": "vue",
       "file_type": "code",
       "norm_label": "logo.vue",
       "source_file": "frontend/src/assets/Logo.vue",
@@ -2662,7 +2328,7 @@
       "label": "apiStuff.js",
       "_origin": "ast",
       "community": 6,
-      "community_name": "App.vue",
+      "community_name": "vue",
       "file_type": "code",
       "norm_label": "apistuff.js",
       "source_file": "frontend/src/helpers/apiStuff.js",
@@ -2673,7 +2339,7 @@
       "label": "apiLinks",
       "_origin": "ast",
       "community": 6,
-      "community_name": "App.vue",
+      "community_name": "vue",
       "file_type": "code",
       "norm_label": "apilinks",
       "source_file": "frontend/src/helpers/apiStuff.js",
@@ -2684,7 +2350,7 @@
       "label": "apiQueries",
       "_origin": "ast",
       "community": 6,
-      "community_name": "App.vue",
+      "community_name": "vue",
       "file_type": "code",
       "norm_label": "apiqueries",
       "source_file": "frontend/src/helpers/apiStuff.js",
@@ -2695,7 +2361,7 @@
       "label": "watchStatusLabels.js",
       "_origin": "ast",
       "community": 6,
-      "community_name": "App.vue",
+      "community_name": "vue",
       "file_type": "code",
       "norm_label": "watchstatuslabels.js",
       "source_file": "frontend/src/helpers/watchStatusLabels.js",
@@ -2706,7 +2372,7 @@
       "label": "watchStatusLabels",
       "_origin": "ast",
       "community": 6,
-      "community_name": "App.vue",
+      "community_name": "vue",
       "file_type": "code",
       "norm_label": "watchstatuslabels",
       "source_file": "frontend/src/helpers/watchStatusLabels.js",
@@ -2717,7 +2383,7 @@
       "label": "main.js",
       "_origin": "ast",
       "community": 6,
-      "community_name": "App.vue",
+      "community_name": "vue",
       "file_type": "code",
       "norm_label": "main.js",
       "source_file": "frontend/src/main.js",
@@ -2728,7 +2394,7 @@
       "label": "index.js",
       "_origin": "ast",
       "community": 6,
-      "community_name": "App.vue",
+      "community_name": "vue",
       "file_type": "code",
       "norm_label": "index.js",
       "source_file": "frontend/src/router/index.js",
@@ -2739,7 +2405,7 @@
       "label": "router",
       "_origin": "ast",
       "community": 6,
-      "community_name": "App.vue",
+      "community_name": "vue",
       "file_type": "code",
       "norm_label": "router",
       "source_file": "frontend/src/router/index.js",
@@ -2750,11 +2416,110 @@
       "label": "MainNav.vue",
       "_origin": "ast",
       "community": 6,
-      "community_name": "App.vue",
+      "community_name": "vue",
       "file_type": "code",
       "norm_label": "mainnav.vue",
       "source_file": "frontend/src/views/components/MainNav.vue",
       "source_location": "L1"
+    },
+    {
+      "id": "frontend_src_views_components_miniprogressbar",
+      "label": "MiniProgressBar.vue",
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "vue",
+      "file_type": "code",
+      "norm_label": "miniprogressbar.vue",
+      "source_file": "frontend/src/views/components/MiniProgressBar.vue",
+      "source_location": "L1"
+    },
+    {
+      "id": "frontend_src_views_components_miniprogressbar_progresspercentage",
+      "label": "progressPercentage",
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "vue",
+      "file_type": "code",
+      "norm_label": "progresspercentage",
+      "source_file": "frontend/src/views/components/MiniProgressBar.vue",
+      "source_location": "L11"
+    },
+    {
+      "id": "frontend_src_views_components_miniprogressbar_props",
+      "label": "props",
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "vue",
+      "file_type": "code",
+      "norm_label": "props",
+      "source_file": "frontend/src/views/components/MiniProgressBar.vue",
+      "source_location": "L4"
+    },
+    {
+      "id": "frontend_src_views_components_statusbadge",
+      "label": "StatusBadge.vue",
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "vue",
+      "file_type": "code",
+      "norm_label": "statusbadge.vue",
+      "source_file": "frontend/src/views/components/StatusBadge.vue",
+      "source_location": "L1"
+    },
+    {
+      "id": "frontend_src_views_components_statusbadge_iscompleted",
+      "label": "isCompleted",
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "vue",
+      "file_type": "code",
+      "norm_label": "iscompleted",
+      "source_file": "frontend/src/views/components/StatusBadge.vue",
+      "source_location": "L12"
+    },
+    {
+      "id": "frontend_src_views_components_statusbadge_isdropped",
+      "label": "isDropped",
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "vue",
+      "file_type": "code",
+      "norm_label": "isdropped",
+      "source_file": "frontend/src/views/components/StatusBadge.vue",
+      "source_location": "L16"
+    },
+    {
+      "id": "frontend_src_views_components_statusbadge_props",
+      "label": "props",
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "vue",
+      "file_type": "code",
+      "norm_label": "props",
+      "source_file": "frontend/src/views/components/StatusBadge.vue",
+      "source_location": "L5"
+    },
+    {
+      "id": "frontend_src_views_components_statusbadge_watchstatuslabels",
+      "label": "watchStatusLabels",
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "vue",
+      "file_type": "code",
+      "norm_label": "watchstatuslabels",
+      "source_file": "frontend/src/views/components/StatusBadge.vue",
+      "source_location": "L4"
+    },
+    {
+      "id": "ref_vue",
+      "label": "vue",
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "vue",
+      "file_type": "concept",
+      "norm_label": "vue",
+      "source_file": "frontend/package.json",
+      "source_location": "L12"
     },
     {
       "id": "frontend_src_views_components_search_searchbargeneric",
@@ -3053,7 +2818,7 @@
       "label": "frontend_src_assets_styles",
       "_origin": "semantic",
       "community": 6,
-      "community_name": "App.vue",
+      "community_name": "vue",
       "external": true,
       "file_type": "concept",
       "norm_label": "frontend_src_assets_styles",
@@ -3065,7 +2830,7 @@
       "label": "ref_vue_router",
       "_origin": "semantic",
       "community": 6,
-      "community_name": "App.vue",
+      "community_name": "vue",
       "external": true,
       "file_type": "concept",
       "norm_label": "ref_vue_router",
@@ -5379,28 +5144,6 @@
       "weight": 1.0
     },
     {
-      "source": "infra_functions_spa_rewrite",
-      "target": "infra_functions_spa_rewrite_handler",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "infra/functions/spa_rewrite.js",
-      "source_location": "L4",
-      "weight": 1.0
-    },
-    {
-      "source": "infra_functions_strip_api_prefix",
-      "target": "infra_functions_strip_api_prefix_handler",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "infra/functions/strip_api_prefix.js",
-      "source_location": "L3",
-      "weight": 1.0
-    },
-    {
       "source": "package",
       "target": "package_dependencies",
       "relation": "contains",
@@ -5423,6 +5166,39 @@
       "weight": 1.0
     },
     {
+      "source": "provision_api_provision",
+      "target": "provision_api_provision_sh__entry",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "provision/api_provision.sh",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "provision_db_provision",
+      "target": "provision_db_provision_sh__entry",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "provision/db_provision.sh",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "provision_web_provision",
+      "target": "provision_web_provision_sh__entry",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "provision/web_provision.sh",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
       "source": "readme",
       "target": "readme_anitracker_three_vm_internet_movie_anime_database",
       "relation": "contains",
@@ -5441,7 +5217,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L248",
+      "source_location": "L234",
       "weight": 1.0
     },
     {
@@ -5452,7 +5228,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L266",
+      "source_location": "L252",
       "weight": 1.0
     },
     {
@@ -5463,7 +5239,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L274",
+      "source_location": "L260",
       "weight": 1.0
     },
     {
@@ -5474,7 +5250,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L28",
+      "source_location": "L17",
       "weight": 1.0
     },
     {
@@ -5485,7 +5261,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L36",
+      "source_location": "L25",
       "weight": 1.0
     },
     {
@@ -5496,7 +5272,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L49",
+      "source_location": "L38",
       "weight": 1.0
     },
     {
@@ -5507,7 +5283,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L76",
+      "source_location": "L64",
       "weight": 1.0
     },
     {
@@ -5518,7 +5294,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L81",
+      "source_location": "L69",
       "weight": 1.0
     },
     {
@@ -5529,7 +5305,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L89",
+      "source_location": "L77",
       "weight": 1.0
     },
     {
@@ -5540,7 +5316,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L183",
+      "source_location": "L171",
       "weight": 1.0
     },
     {
@@ -5551,7 +5327,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L199",
+      "source_location": "L187",
       "weight": 1.0
     },
     {
@@ -5562,7 +5338,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L215",
+      "source_location": "L203",
       "weight": 1.0
     },
     {
@@ -5573,7 +5349,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L116",
+      "source_location": "L104",
       "weight": 1.0
     },
     {
@@ -5584,51 +5360,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L147",
-      "weight": 1.0
-    },
-    {
-      "source": "readme_anitracker_three_vm_internet_movie_anime_database",
-      "target": "readme_7_demonstration_data",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": "L165",
-      "weight": 1.0
-    },
-    {
-      "source": "readme_anitracker_three_vm_internet_movie_anime_database",
-      "target": "readme_8_developer_modification_and_redeployment_workflow",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": "L179",
-      "weight": 1.0
-    },
-    {
-      "source": "readme_anitracker_three_vm_internet_movie_anime_database",
-      "target": "readme_9_repository_structure",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": "L230",
-      "weight": 1.0
-    },
-    {
-      "source": "readme_anitracker_three_vm_internet_movie_anime_database",
-      "target": "readme_10_troubleshooting",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": "L246",
+      "source_location": "L135",
       "weight": 1.0
     },
     {
@@ -5639,7 +5371,51 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L26",
+      "source_location": "L15",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_anitracker_three_vm_internet_movie_anime_database",
+      "target": "readme_7_demonstration_data",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L153",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_anitracker_three_vm_internet_movie_anime_database",
+      "target": "readme_8_developer_modification_and_redeployment_workflow",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L167",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_anitracker_three_vm_internet_movie_anime_database",
+      "target": "readme_9_repository_structure",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L218",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_anitracker_three_vm_internet_movie_anime_database",
+      "target": "readme_10_troubleshooting",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L232",
       "weight": 1.0
     },
     {
@@ -5650,18 +5426,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L292",
-      "weight": 1.0
-    },
-    {
-      "source": "readme_anitracker_three_vm_internet_movie_anime_database",
-      "target": "readme_aws_deployment_terraform",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": "L303",
+      "source_location": "L278",
       "weight": 1.0
     },
     {
@@ -5672,7 +5437,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L387",
+      "source_location": "L288",
       "weight": 1.0
     },
     {
@@ -5683,7 +5448,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L394",
+      "source_location": "L295",
       "weight": 1.0
     },
     {
@@ -5705,7 +5470,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L62",
+      "source_location": "L51",
       "weight": 1.0
     },
     {
@@ -5716,7 +5481,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L74",
+      "source_location": "L62",
       "weight": 1.0
     },
     {
@@ -5727,150 +5492,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L96",
-      "weight": 1.0
-    },
-    {
-      "source": "readme_aws_deployment_terraform",
-      "target": "readme_architecture",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": "L305",
-      "weight": 1.0
-    },
-    {
-      "source": "readme_aws_deployment_terraform",
-      "target": "readme_prerequisites_host",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": "L324",
-      "weight": 1.0
-    },
-    {
-      "source": "readme_aws_deployment_terraform",
-      "target": "readme_aws_credentials_learner_lab",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": "L329",
-      "weight": 1.0
-    },
-    {
-      "source": "readme_aws_deployment_terraform",
-      "target": "readme_deploy",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": "L339",
-      "weight": 1.0
-    },
-    {
-      "source": "readme_aws_deployment_terraform",
-      "target": "readme_verify",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": "L350",
-      "weight": 1.0
-    },
-    {
-      "source": "readme_aws_deployment_terraform",
-      "target": "readme_redeploy_after_changes",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": "L369",
-      "weight": 1.0
-    },
-    {
-      "source": "readme_aws_deployment_terraform",
-      "target": "readme_destroy",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": "L377",
-      "weight": 1.0
-    },
-    {
-      "source": "scripts_deploy_ps1_scripts_deploy",
-      "target": "scripts_deploy_invoke_checked",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "scripts/deploy.ps1",
-      "source_location": "L5",
-      "weight": 1.0
-    },
-    {
-      "source": "scripts_deploy_sh_scripts_deploy",
-      "target": "scripts_deploy_sh__entry",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "scripts/deploy.sh",
-      "source_location": "L1",
-      "weight": 1.0
-    },
-    {
-      "source": "scripts_destroy_sh_scripts_destroy",
-      "target": "scripts_destroy_sh__entry",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "scripts/destroy.sh",
-      "source_location": "L1",
-      "weight": 1.0
-    },
-    {
-      "source": "vagrant_provision_api_provision",
-      "target": "vagrant_provision_api_provision_sh__entry",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "vagrant/provision/api_provision.sh",
-      "source_location": "L1",
-      "weight": 1.0
-    },
-    {
-      "source": "vagrant_provision_db_provision",
-      "target": "vagrant_provision_db_provision_sh__entry",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "vagrant/provision/db_provision.sh",
-      "source_location": "L1",
-      "weight": 1.0
-    },
-    {
-      "source": "vagrant_provision_web_provision",
-      "target": "vagrant_provision_web_provision_sh__entry",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "vagrant/provision/web_provision.sh",
-      "source_location": "L1",
+      "source_location": "L84",
       "weight": 1.0
     },
     {
@@ -5896,35 +5518,35 @@
       "weight": 1.0
     },
     {
-      "source": "vagrant_provision_api_provision",
-      "target": "vagrant_provision_api_provision_debian_frontend",
+      "source": "provision_api_provision",
+      "target": "provision_api_provision_debian_frontend",
       "relation": "defines",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
-      "source_file": "vagrant/provision/api_provision.sh",
+      "source_file": "provision/api_provision.sh",
       "source_location": "L4",
       "weight": 1.0
     },
     {
-      "source": "vagrant_provision_db_provision",
-      "target": "vagrant_provision_db_provision_debian_frontend",
+      "source": "provision_db_provision",
+      "target": "provision_db_provision_debian_frontend",
       "relation": "defines",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
-      "source_file": "vagrant/provision/db_provision.sh",
+      "source_file": "provision/db_provision.sh",
       "source_location": "L4",
       "weight": 1.0
     },
     {
-      "source": "vagrant_provision_web_provision",
-      "target": "vagrant_provision_web_provision_debian_frontend",
+      "source": "provision_web_provision",
+      "target": "provision_web_provision_debian_frontend",
       "relation": "defines",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
-      "source_file": "vagrant/provision/web_provision.sh",
+      "source_file": "provision/web_provision.sh",
       "source_location": "L4",
       "weight": 1.0
     },
@@ -6563,5 +6185,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "d0cb46c125ccb3510ef5557a03d5cbb826b5c198"
+  "built_at_commit": "dae0a7ba84b085d0a350cc934ac7f7432945ef14"
 }

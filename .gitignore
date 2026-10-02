@@ -134,3 +134,9 @@ nbproject/private/
 !*.tfvars.example
 crash.log
 *.pem
+
+# Python virtual environment (graphify)
+.venv/
+
+# graphify: keep the graph/report, ignore regenerable cache
+graphify-out/cache/
