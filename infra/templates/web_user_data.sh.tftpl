@@ -1,0 +1,66 @@
+#!/usr/bin/env bash
+# Bootstraps the Anitracker web tier on EC2.
+# source: ${repository_url} @ ${repository_ref}
+set -euo pipefail
+exec > >(tee -a /var/log/anitracker-web-bootstrap.log) 2>&1
+
+export DEBIAN_FRONTEND=noninteractive
+apt-get update
+apt-get install -y nginx curl ca-certificates git
+systemctl stop nginx 2>/dev/null || true
+curl -fsSL https://deb.nodesource.com/setup_22.x | bash -
+apt-get install -y nodejs
+
+rm -rf /var/www/anitracker
+mkdir -p /var/www/anitracker
+
+REPOSITORY_URL="${repository_url}"
+REPOSITORY_REF="${repository_ref}"
+rm -rf /opt/anitracker/source
+git clone --depth 1 --branch "$REPOSITORY_REF" "$REPOSITORY_URL" /opt/anitracker/source
+cd /opt/anitracker/source/frontend
+npm ci
+npm run build
+cp -r dist/. /var/www/anitracker/
+
+cat <<'EOF' >/etc/nginx/sites-available/anitracker
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    server_name _;
+
+    root /var/www/anitracker;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    location /api/ {
+        proxy_pass http://${api_private_ip}:8080/;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+}
+EOF
+
+rm -f /etc/nginx/sites-enabled/default
+ln -sf /etc/nginx/sites-available/anitracker /etc/nginx/sites-enabled/anitracker
+nginx -t
+systemctl enable nginx
+systemctl restart nginx
+
+for attempt in $(seq 1 60); do
+    if curl -fsS http://127.0.0.1/ >/dev/null 2>&1; then
+        echo "Anitracker web server is ready."
+        exit 0
+    fi
+    if [ "$attempt" -eq 60 ]; then
+        echo "Anitracker web server did not become ready" >&2
+        systemctl status nginx --no-pager >&2 || true
+        exit 1
+    fi
+    sleep 2
+done

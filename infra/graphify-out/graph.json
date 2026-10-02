@@ -1,0 +1,3308 @@
+{
+  "directed": false,
+  "multigraph": false,
+  "graph": {},
+  "nodes": [
+    {
+      "id": "functions_spa_rewrite_handler",
+      "label": "handler()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "file_type": "code",
+      "norm_label": "handler()",
+      "source_file": "functions/spa_rewrite.js",
+      "source_location": "L4"
+    },
+    {
+      "id": "functions_strip_api_prefix_handler",
+      "label": "handler()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 9,
+      "file_type": "code",
+      "norm_label": "handler()",
+      "source_file": "functions/strip_api_prefix.js",
+      "source_location": "L3"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_aws_db_instance_main",
+      "label": "aws_db_instance.main",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "attributes": {
+        "identifier": "\"${var.project_name}-db\"",
+        "engine": "postgres",
+        "engine_version": "var.db_engine_version",
+        "instance_class": "var.db_instance_class",
+        "allocated_storage": 20,
+        "storage_type": "gp3",
+        "db_name": "local.db_name",
+        "username": "local.db_admin_user",
+        "password": "[redacted]",
+        "db_subnet_group_name": "aws_db_subnet_group.main.name",
+        "vpc_security_group_ids": [
+          "aws_security_group.db.id"
+        ],
+        "publicly_accessible": false,
+        "multi_az": false,
+        "backup_retention_period": 0,
+        "skip_final_snapshot": true,
+        "deletion_protection": false,
+        "apply_immediately": true,
+        "tags": {
+          "Name": "\"${var.project_name}-db\""
+        }
+      },
+      "community": 3,
+      "file_type": "code",
+      "norm_label": "aws_db_instance.main",
+      "source_file": "rds.tf",
+      "source_location": "L25"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_aws_instance_api",
+      "label": "aws_instance.api",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "attributes": {
+        "ami": "data.aws_ami.ubuntu.id",
+        "instance_type": "var.api_instance_type",
+        "subnet_id": "aws_subnet.public[0].id",
+        "vpc_security_group_ids": [
+          "aws_security_group.api.id"
+        ],
+        "key_name": "var.key_name",
+        "iam_instance_profile": "var.instance_profile",
+        "user_data": "replace(templatefile(\"${path.module}/templates/api_user_data.sh.tftpl\", {    aws_region        = var.aws_region    artifact_bucket   = aws_s3_bucket.artifacts.id    api_zip_key       = local.api_zip_key    schema_key        = local.schema_key    seed_key          = local.seed_key    db_host           = aws_db_instance.main.address    db_port           = aws_db_instance.main.port    db_name           = local.db_name    db_admin_user     = local.db_admin_user    db_admin_password = random_password.db_admin.re",
+        "user_data_replace_on_change": true,
+        "tags": {
+          "Name": "\"${var.project_name}-api\""
+        }
+      },
+      "community": 4,
+      "file_type": "code",
+      "norm_label": "aws_instance.api",
+      "source_file": "ec2_api.tf",
+      "source_location": "L16"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_aws_subnet_private",
+      "label": "aws_subnet.private",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "attributes": {
+        "count": "length(local.azs)",
+        "vpc_id": "aws_vpc.main.id",
+        "cidr_block": "cidrsubnet(aws_vpc.main.cidr_block, 8, count.index + 10)",
+        "availability_zone": "local.azs[count.index]",
+        "tags": {
+          "Name": "\"${var.project_name}-private-${count.index}\""
+        }
+      },
+      "community": 2,
+      "file_type": "code",
+      "norm_label": "aws_subnet.private",
+      "source_file": "network.tf",
+      "source_location": "L35"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_aws_subnet_public",
+      "label": "aws_subnet.public",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "attributes": {
+        "count": "length(local.azs)",
+        "vpc_id": "aws_vpc.main.id",
+        "cidr_block": "cidrsubnet(aws_vpc.main.cidr_block, 8, count.index)",
+        "availability_zone": "local.azs[count.index]",
+        "map_public_ip_on_launch": true,
+        "tags": {
+          "Name": "\"${var.project_name}-public-${count.index}\""
+        }
+      },
+      "community": 2,
+      "file_type": "code",
+      "norm_label": "aws_subnet.public",
+      "source_file": "network.tf",
+      "source_location": "L24"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_aws_s3_bucket_public_access_block_artifacts",
+      "label": "aws_s3_bucket_public_access_block.artifacts",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "attributes": {
+        "bucket": "aws_s3_bucket.artifacts.id",
+        "block_public_acls": true,
+        "block_public_policy": true,
+        "ignore_public_acls": true,
+        "restrict_public_buckets": true
+      },
+      "community": 0,
+      "file_type": "code",
+      "norm_label": "aws_s3_bucket_public_access_block.artifacts",
+      "source_file": "s3.tf",
+      "source_location": "L40"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_aws_s3_bucket_public_access_block_frontend",
+      "label": "aws_s3_bucket_public_access_block.frontend",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "attributes": {
+        "bucket": "aws_s3_bucket.frontend.id",
+        "block_public_acls": true,
+        "block_public_policy": true,
+        "ignore_public_acls": true,
+        "restrict_public_buckets": true
+      },
+      "community": 0,
+      "file_type": "code",
+      "norm_label": "aws_s3_bucket_public_access_block.frontend",
+      "source_file": "s3.tf",
+      "source_location": "L76"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_aws_s3_bucket_artifacts",
+      "label": "aws_s3_bucket.artifacts",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "attributes": {
+        "bucket": "\"${var.project_name}-artifacts-${random_id.bucket_suffix.hex}\"",
+        "force_destroy": true
+      },
+      "community": 0,
+      "file_type": "code",
+      "norm_label": "aws_s3_bucket.artifacts",
+      "source_file": "s3.tf",
+      "source_location": "L35"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_aws_s3_bucket_frontend",
+      "label": "aws_s3_bucket.frontend",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "attributes": {
+        "bucket": "\"${var.project_name}-frontend-${random_id.bucket_suffix.hex}\"",
+        "force_destroy": true
+      },
+      "community": 0,
+      "file_type": "code",
+      "norm_label": "aws_s3_bucket.frontend",
+      "source_file": "s3.tf",
+      "source_location": "L71"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_aws_s3_object_schema",
+      "label": "aws_s3_object.schema",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "attributes": {
+        "bucket": "aws_s3_bucket.artifacts.id",
+        "key": "local.schema_key",
+        "source": "\"${local.repo_root}/schema.sql\"",
+        "etag": "filemd5(\"${local.repo_root}/schema.sql\")"
+      },
+      "community": 0,
+      "file_type": "code",
+      "norm_label": "aws_s3_object.schema",
+      "source_file": "s3.tf",
+      "source_location": "L55"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_aws_s3_object_seed",
+      "label": "aws_s3_object.seed",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "attributes": {
+        "bucket": "aws_s3_bucket.artifacts.id",
+        "key": "local.seed_key",
+        "source": "\"${local.repo_root}/seed_data.sql\"",
+        "etag": "filemd5(\"${local.repo_root}/seed_data.sql\")"
+      },
+      "community": 0,
+      "file_type": "code",
+      "norm_label": "aws_s3_object.seed",
+      "source_file": "s3.tf",
+      "source_location": "L62"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_aws_s3_object_api_zip",
+      "label": "aws_s3_object.api_zip",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "attributes": {
+        "bucket": "aws_s3_bucket.artifacts.id",
+        "key": "local.api_zip_key",
+        "source": "local.api_zip_path",
+        "etag": "filemd5(local.api_zip_path)"
+      },
+      "community": 0,
+      "file_type": "code",
+      "norm_label": "aws_s3_object.api_zip",
+      "source_file": "s3.tf",
+      "source_location": "L48"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_aws_s3_object_frontend",
+      "label": "aws_s3_object.frontend",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "attributes": {
+        "for_each": "fileset(local.frontend_dist, \"**\")",
+        "bucket": "aws_s3_bucket.frontend.id",
+        "key": "each.value",
+        "source": "\"${local.frontend_dist}/${each.value}\"",
+        "etag": "filemd5(\"${local.frontend_dist}/${each.value}\")",
+        "content_type": "lookup(local.content_types, lower(try(regex(\"\\\\.([^.]+)$\", each.value)[0], \"\")), \"application/octet-stream\")",
+        "cache_control": "each.value == \"index.html\" ? \"no-cache\" : \"public, max-age=31536000, immutable\""
+      },
+      "community": 0,
+      "file_type": "code",
+      "norm_label": "aws_s3_object.frontend",
+      "source_file": "s3.tf",
+      "source_location": "L84"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_aws_s3_bucket_policy_frontend",
+      "label": "aws_s3_bucket_policy.frontend",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "attributes": {
+        "bucket": "aws_s3_bucket.frontend.id",
+        "policy": "data.aws_iam_policy_document.frontend.json",
+        "depends_on": [
+          "aws_s3_bucket_public_access_block.frontend"
+        ]
+      },
+      "community": 0,
+      "file_type": "code",
+      "norm_label": "aws_s3_bucket_policy.frontend",
+      "source_file": "s3.tf",
+      "source_location": "L115"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_random_id_bucket_suffix",
+      "label": "random_id.bucket_suffix",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "attributes": {
+        "byte_length": 4
+      },
+      "community": 0,
+      "file_type": "code",
+      "norm_label": "random_id.bucket_suffix",
+      "source_file": "s3.tf",
+      "source_location": "L1"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_aws_vpc_main",
+      "label": "aws_vpc.main",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "attributes": {
+        "cidr_block": "10.0.0.0/16",
+        "enable_dns_support": true,
+        "enable_dns_hostnames": true,
+        "tags": {
+          "Name": "\"${var.project_name}-vpc\""
+        }
+      },
+      "community": 2,
+      "file_type": "code",
+      "norm_label": "aws_vpc.main",
+      "source_file": "network.tf",
+      "source_location": "L9"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_aws_cloudfront_function_spa_rewrite",
+      "label": "aws_cloudfront_function.spa_rewrite",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "attributes": {
+        "name": "\"${var.project_name}-spa-rewrite\"",
+        "runtime": "cloudfront-js-2.0",
+        "publish": true,
+        "code": "file(\"${path.module}/functions/spa_rewrite.js\")"
+      },
+      "community": 1,
+      "file_type": "code",
+      "norm_label": "aws_cloudfront_function.spa_rewrite",
+      "source_file": "cloudfront.tf",
+      "source_location": "L27"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_aws_cloudfront_function_strip_api_prefix",
+      "label": "aws_cloudfront_function.strip_api_prefix",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "attributes": {
+        "name": "\"${var.project_name}-strip-api-prefix\"",
+        "runtime": "cloudfront-js-2.0",
+        "publish": true,
+        "code": "file(\"${path.module}/functions/strip_api_prefix.js\")"
+      },
+      "community": 1,
+      "file_type": "code",
+      "norm_label": "aws_cloudfront_function.strip_api_prefix",
+      "source_file": "cloudfront.tf",
+      "source_location": "L20"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_aws_cloudfront_distribution_main",
+      "label": "aws_cloudfront_distribution.main",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "attributes": {
+        "enabled": true,
+        "comment": "\"${var.project_name} web + api\"",
+        "default_root_object": "index.html",
+        "price_class": "PriceClass_100",
+        "tags": {
+          "Name": "\"${var.project_name}-cdn\""
+        }
+      },
+      "community": 1,
+      "file_type": "code",
+      "norm_label": "aws_cloudfront_distribution.main",
+      "source_file": "cloudfront.tf",
+      "source_location": "L39"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_provider_registry_terraform_io_hashicorp_http",
+      "label": "provider.registry.terraform.io/hashicorp/http",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "attributes": {
+        "version": "3.6.2",
+        "constraints": "~> 3.4",
+        "hashes": [
+          "h1:N/wta5L2f9Gdn7r43i/R82WDbVJscE4C9CxSVk8jav0=",
+          "zh:1de57c0f889a6a35e018e8f83b1a1fcaafccda31b1c300fbbb29d29c3a1ce038",
+          "zh:502925fe2ebd90715922db22588727c4c688e56939a3e87568ad1ae32ace0da3",
+          "zh:5dc16040d1f59e1fadef2247ab4026b661f0e6e06fee8f44fad6bcbce7c1cb73",
+          "zh:699d2f4834b3a8b35ab3bfff07e3cf9e0b829b4a7afc0cc5441ee693f7be2495",
+          "zh:7898ac80ea83cf234500bf9ec06eca339261381964889cc4a0c79ef7f75fe5d3",
+          "zh:78d5eefdd9e494defcb3c68d282b8f96630502cac21d1ea161f53cfe9bb483b3",
+          "zh:a305c06a862e6313ffee934ed77a530c4a85d165841f08b625ec272d59ad422c",
+          "zh:a843dc181dec46190db292547405c74a989349999219211a1fe8381daa158e8f",
+          "zh:cd8b6ff9622f3e200584da91ba28f6636318c526fb0110fec91a460c1fb81a9d",
+          "zh:d1443f92590cf368f6b125c667be8f1d65e18f844b365d4226ec5765b92daac5",
+          "zh:e9a70abe3333e9d038d99857a3275c8d448611b5fd351c15400d221ae4beaf1b",
+          "zh:ea7fd748143074a7ab6a21c3e37f9e4823f352a7f9f4172803820b92ec989d7b",
+          "zh:ef91118b14dc6acdd7f9693b2cb83c5a6e74623fb91b6f6b63c441b90d7734ee"
+        ]
+      },
+      "community": 7,
+      "file_type": "code",
+      "norm_label": "provider.registry.terraform.io/hashicorp/http",
+      "source_file": ".terraform.lock.hcl",
+      "source_location": "L27"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_provider_registry_terraform_io_hashicorp_random",
+      "label": "provider.registry.terraform.io/hashicorp/random",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "attributes": {
+        "version": "3.9.1",
+        "constraints": "~> 3.6",
+        "hashes": [
+          "h1:7uiStw0Rl9KOdX5UNMG/sp9nyadoD4LZekQTiYlYPhE=",
+          "zh:05f4734c1f0be840b711b3eff259ebc5fca436784c728955b1678078466f48d7",
+          "zh:0b91bf19371d012434eba1deeb6aab77158def9b39601dcbd94450b3974a2a26",
+          "zh:0ee6eacd47ec00183d55d726a4b6c4ce951a199f944bf22f1aa58392ebdfa7a2",
+          "zh:19388a4074b76a89a43a6c8328d7ae8ee2e7de3d346af51e80d3e6d3d12925f1",
+          "zh:23e74d48c5e2ac2e823fd527f49fee9db37d32a1990c9e3bf126ead697b843eb",
+          "zh:3cabf7fbd096c520064aae3aba61aba670af83ab91291a71fa1b1332929c2b7f",
+          "zh:5c0a3b8af0be60be4eca12ddee385cfa8babc1ec8e98cdf9de2f2274c73eabfa",
+          "zh:60b4f8a8ef18f52bf8e19215229dae408bee732825964092db7c989fd2de4097",
+          "zh:7359015acfedcbd6366f2329c854cf8d3c8ca5cd0faa89d2d37db358d6eba6c5",
+          "zh:78d5eefdd9e494defcb3c68d282b8f96630502cac21d1ea161f53cfe9bb483b3",
+          "zh:7b38758402f0e13a1071162da28994023cd2ac676e54af350c9ffd8dfa73fa7b",
+          "zh:7c7fbb8895eb75bb4de1f933e98553bd99c8d048c89a925ddba490aa5a67f7dc",
+          "zh:8c2b8c6a7ccdec16b73e2fb9f3700ea097f58c592571e4c5de60c93d2301732c"
+        ]
+      },
+      "community": 7,
+      "file_type": "code",
+      "norm_label": "provider.registry.terraform.io/hashicorp/random",
+      "source_file": ".terraform.lock.hcl",
+      "source_location": "L48"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_provider_registry_terraform_io_hashicorp_aws",
+      "label": "provider.registry.terraform.io/hashicorp/aws",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "attributes": {
+        "version": "5.100.0",
+        "constraints": "~> 5.0",
+        "hashes": [
+          "h1:H3mU/7URhP0uCRGK8jeQRKxx2XFzEqLiOq/L2Bbiaxs=",
+          "zh:054b8dd49f0549c9a7cc27d159e45327b7b65cf404da5e5a20da154b90b8a644",
+          "zh:0b97bf8d5e03d15d83cc40b0530a1f84b459354939ba6f135a0086c20ebbe6b2",
+          "zh:1589a2266af699cbd5d80737a0fe02e54ec9cf2ca54e7e00ac51c7359056f274",
+          "zh:6330766f1d85f01ae6ea90d1b214b8b74cc8c1badc4696b165b36ddd4cc15f7b",
+          "zh:7c8c2e30d8e55291b86fcb64bdf6c25489d538688545eb48fd74ad622e5d3862",
+          "zh:99b1003bd9bd32ee323544da897148f46a527f622dc3971af63ea3e251596342",
+          "zh:9b12af85486a96aedd8d7984b0ff811a4b42e3d88dad1a3fb4c0b580d04fa425",
+          "zh:9f8b909d3ec50ade83c8062290378b1ec553edef6a447c56dadc01a99f4eaa93",
+          "zh:aaef921ff9aabaf8b1869a86d692ebd24fbd4e12c21205034bb679b9caf883a2",
+          "zh:ac882313207aba00dd5a76dbd572a0ddc818bb9cbf5c9d61b28fe30efaec951e",
+          "zh:bb64e8aff37becab373a1a0cc1080990785304141af42ed6aa3dd4913b000421",
+          "zh:dfe495f6621df5540d9c92ad40b8067376350b005c637ea6efac5dc15028add4",
+          "zh:f0ddf0eaf052766cfe09dea8200a946519f653c384ab4336e2a4a64fdd6310e9",
+          "zh:f1b7e684f4c7ae1eed272b6de7d2049bb87a0275cb04dbb7cda6636f600699c9",
+          "zh:ff461571e3f233699bf690db319dfe46aec75e58726636a0d97dd9ac6e32fb70"
+        ]
+      },
+      "community": 7,
+      "file_type": "code",
+      "norm_label": "provider.registry.terraform.io/hashicorp/aws",
+      "source_file": ".terraform.lock.hcl",
+      "source_location": "L4"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_aws_route_table_association_public",
+      "label": "aws_route_table_association.public",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "attributes": {
+        "count": "length(aws_subnet.public)",
+        "subnet_id": "aws_subnet.public[count.index].id",
+        "route_table_id": "aws_route_table.public.id"
+      },
+      "community": 2,
+      "file_type": "code",
+      "norm_label": "aws_route_table_association.public",
+      "source_file": "network.tf",
+      "source_location": "L55"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_var_my_ip_cidr",
+      "label": "var.my_ip_cidr",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "attributes": {
+        "description": "CIDR allowed to SSH into the API instance. Leave empty to auto-detect this machine's public IP.",
+        "type": "string",
+        "default": ""
+      },
+      "community": 6,
+      "file_type": "code",
+      "norm_label": "var.my_ip_cidr",
+      "source_file": "variables.tf",
+      "source_location": "L13"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_var_db_engine_version",
+      "label": "var.db_engine_version",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "attributes": {
+        "description": "RDS PostgreSQL major version.",
+        "type": "string",
+        "default": "16"
+      },
+      "community": 6,
+      "file_type": "code",
+      "norm_label": "var.db_engine_version",
+      "source_file": "variables.tf",
+      "source_location": "L31"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_var_instance_profile",
+      "label": "var.instance_profile",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "attributes": {
+        "description": "Existing IAM instance profile (Learner Lab cannot create IAM roles, so use 'LabInstanceProfile').",
+        "type": "string",
+        "default": "LabInstanceProfile"
+      },
+      "community": 6,
+      "file_type": "code",
+      "norm_label": "var.instance_profile",
+      "source_file": "variables.tf",
+      "source_location": "L43"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_var_project_name",
+      "label": "var.project_name",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "attributes": {
+        "description": "Prefix used for resource names.",
+        "type": "string",
+        "default": "anitracker"
+      },
+      "community": 2,
+      "file_type": "code",
+      "norm_label": "var.project_name",
+      "source_file": "variables.tf",
+      "source_location": "L7"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_var_db_instance_class",
+      "label": "var.db_instance_class",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "attributes": {
+        "description": "RDS instance class.",
+        "type": "string",
+        "default": "db.t3.micro"
+      },
+      "community": 3,
+      "file_type": "code",
+      "norm_label": "var.db_instance_class",
+      "source_file": "variables.tf",
+      "source_location": "L25"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_var_api_instance_type",
+      "label": "var.api_instance_type",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "attributes": {
+        "description": "EC2 instance type for the API server.",
+        "type": "string",
+        "default": "t3.small"
+      },
+      "community": 6,
+      "file_type": "code",
+      "norm_label": "var.api_instance_type",
+      "source_file": "variables.tf",
+      "source_location": "L19"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_var_aws_region",
+      "label": "var.aws_region",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "attributes": {
+        "description": "AWS region (Learner Lab only allows us-east-1).",
+        "type": "string",
+        "default": "us-east-1"
+      },
+      "community": 4,
+      "file_type": "code",
+      "norm_label": "var.aws_region",
+      "source_file": "variables.tf",
+      "source_location": "L1"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_var_key_name",
+      "label": "var.key_name",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "attributes": {
+        "description": "Existing EC2 key pair for SSH (Learner Lab provides 'vockey').",
+        "type": "string",
+        "default": "vockey"
+      },
+      "community": 6,
+      "file_type": "code",
+      "norm_label": "var.key_name",
+      "source_file": "variables.tf",
+      "source_location": "L37"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_output_api_public_dns",
+      "label": "output.api_public_dns",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "attributes": {
+        "description": "API instance public DNS (port 8080 is reachable from CloudFront only).",
+        "value": "aws_eip.api.public_dns"
+      },
+      "community": 1,
+      "file_type": "code",
+      "norm_label": "output.api_public_dns",
+      "source_file": "outputs.tf",
+      "source_location": "L11"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_aws_security_group_api",
+      "label": "aws_security_group.api",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "attributes": {
+        "name": "\"${var.project_name}-api-sg\"",
+        "description": "API: 8080 from CloudFront only, SSH from admin IP",
+        "vpc_id": "aws_vpc.main.id",
+        "tags": {
+          "Name": "\"${var.project_name}-api-sg\""
+        }
+      },
+      "community": 5,
+      "file_type": "code",
+      "norm_label": "aws_security_group.api",
+      "source_file": "security.tf",
+      "source_location": "L13"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_output_db_app_password",
+      "label": "output.db_app_password",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "attributes": {
+        "description": "Password for app_user (terraform output -raw db_app_password).",
+        "value": "[redacted]",
+        "sensitive": true
+      },
+      "community": 1,
+      "file_type": "code",
+      "norm_label": "output.db_app_password",
+      "source_file": "outputs.tf",
+      "source_location": "L26"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_aws_security_group_db",
+      "label": "aws_security_group.db",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "attributes": {
+        "name": "\"${var.project_name}-db-sg\"",
+        "description": "PostgreSQL from the API instance only",
+        "vpc_id": "aws_vpc.main.id",
+        "tags": {
+          "Name": "\"${var.project_name}-db-sg\""
+        }
+      },
+      "community": 5,
+      "file_type": "code",
+      "norm_label": "aws_security_group.db",
+      "source_file": "security.tf",
+      "source_location": "L44"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_output_site_url",
+      "label": "output.site_url",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "attributes": {
+        "description": "Public URL of the application.",
+        "value": "\"https://${aws_cloudfront_distribution.main.domain_name}\""
+      },
+      "community": 1,
+      "file_type": "code",
+      "norm_label": "output.site_url",
+      "source_file": "outputs.tf",
+      "source_location": "L1"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_output_rds_endpoint",
+      "label": "output.rds_endpoint",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "attributes": {
+        "description": "RDS endpoint (private; reachable from the API instance only).",
+        "value": "aws_db_instance.main.endpoint"
+      },
+      "community": 1,
+      "file_type": "code",
+      "norm_label": "output.rds_endpoint",
+      "source_file": "outputs.tf",
+      "source_location": "L16"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_output_ssh_command",
+      "label": "output.ssh_command",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "attributes": {
+        "description": "SSH into the API instance using the Learner Lab key.",
+        "value": "\"ssh -i labsuser.pem ubuntu@${aws_eip.api.public_dns}\""
+      },
+      "community": 1,
+      "file_type": "code",
+      "norm_label": "output.ssh_command",
+      "source_file": "outputs.tf",
+      "source_location": "L21"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_output_cloudfront_distribution_id",
+      "label": "output.cloudfront_distribution_id",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "attributes": {
+        "description": "Used by the deploy script to invalidate the cache.",
+        "value": "aws_cloudfront_distribution.main.id"
+      },
+      "community": 1,
+      "file_type": "code",
+      "norm_label": "output.cloudfront_distribution_id",
+      "source_file": "outputs.tf",
+      "source_location": "L6"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_aws_eip_api",
+      "label": "aws_eip.api",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "attributes": {
+        "instance": "aws_instance.api.id",
+        "domain": "vpc",
+        "tags": {
+          "Name": "\"${var.project_name}-api-eip\""
+        }
+      },
+      "community": 1,
+      "file_type": "code",
+      "norm_label": "aws_eip.api",
+      "source_file": "ec2_api.tf",
+      "source_location": "L56"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_random_password_db_admin",
+      "label": "random_password.db_admin",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "attributes": {
+        "length": 24,
+        "special": false
+      },
+      "community": 3,
+      "file_type": "code",
+      "norm_label": "random_password.db_admin",
+      "source_file": "rds.tf",
+      "source_location": "L2"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_random_password_db_app",
+      "label": "random_password.db_app",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "attributes": {
+        "length": 24,
+        "special": false
+      },
+      "community": 3,
+      "file_type": "code",
+      "norm_label": "random_password.db_app",
+      "source_file": "rds.tf",
+      "source_location": "L7"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_data_aws_ami_ubuntu",
+      "label": "data.aws_ami.ubuntu",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "attributes": {
+        "most_recent": true,
+        "owners": [
+          "099720109477"
+        ]
+      },
+      "community": 4,
+      "file_type": "code",
+      "norm_label": "data.aws_ami.ubuntu",
+      "source_file": "ec2_api.tf",
+      "source_location": "L1"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_data_aws_cloudfront_origin_request_policy_all_viewer_except_host",
+      "label": "data.aws_cloudfront_origin_request_policy.all_viewer_except_host",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "attributes": {
+        "name": "Managed-AllViewerExceptHostHeader"
+      },
+      "community": 1,
+      "file_type": "code",
+      "norm_label": "data.aws_cloudfront_origin_request_policy.all_viewer_except_host",
+      "source_file": "cloudfront.tf",
+      "source_location": "L9"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_data_aws_cloudfront_cache_policy_disabled",
+      "label": "data.aws_cloudfront_cache_policy.disabled",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "attributes": {
+        "name": "Managed-CachingDisabled"
+      },
+      "community": 1,
+      "file_type": "code",
+      "norm_label": "data.aws_cloudfront_cache_policy.disabled",
+      "source_file": "cloudfront.tf",
+      "source_location": "L5"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_data_aws_cloudfront_cache_policy_optimized",
+      "label": "data.aws_cloudfront_cache_policy.optimized",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "attributes": {
+        "name": "Managed-CachingOptimized"
+      },
+      "community": 1,
+      "file_type": "code",
+      "norm_label": "data.aws_cloudfront_cache_policy.optimized",
+      "source_file": "cloudfront.tf",
+      "source_location": "L1"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_aws_db_subnet_group_main",
+      "label": "aws_db_subnet_group.main",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "attributes": {
+        "name": "\"${var.project_name}-db-subnets\"",
+        "subnet_ids": "aws_subnet.private[*].id",
+        "tags": {
+          "Name": "\"${var.project_name}-db-subnets\""
+        }
+      },
+      "community": 3,
+      "file_type": "code",
+      "norm_label": "aws_db_subnet_group.main",
+      "source_file": "rds.tf",
+      "source_location": "L18"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_aws_cloudfront_origin_access_control_frontend",
+      "label": "aws_cloudfront_origin_access_control.frontend",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "attributes": {
+        "name": "\"${var.project_name}-frontend-oac\"",
+        "origin_access_control_origin_type": "s3",
+        "signing_behavior": "always",
+        "signing_protocol": "sigv4"
+      },
+      "community": 1,
+      "file_type": "code",
+      "norm_label": "aws_cloudfront_origin_access_control.frontend",
+      "source_file": "cloudfront.tf",
+      "source_location": "L13"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_data_aws_ec2_managed_prefix_list_cloudfront",
+      "label": "data.aws_ec2_managed_prefix_list.cloudfront",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "attributes": {
+        "name": "com.amazonaws.global.cloudfront.origin-facing"
+      },
+      "community": 5,
+      "file_type": "code",
+      "norm_label": "data.aws_ec2_managed_prefix_list.cloudfront",
+      "source_file": "security.tf",
+      "source_location": "L5"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_provider_aws",
+      "label": "provider.aws",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "attributes": {
+        "region": "var.aws_region"
+      },
+      "community": 4,
+      "file_type": "code",
+      "norm_label": "provider.aws",
+      "source_file": "versions.tf",
+      "source_location": "L20"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_data_aws_availability_zones_available",
+      "label": "data.aws_availability_zones.available",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "attributes": {
+        "state": "available"
+      },
+      "community": 2,
+      "file_type": "code",
+      "norm_label": "data.aws_availability_zones.available",
+      "source_file": "network.tf",
+      "source_location": "L1"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_aws_internet_gateway_main",
+      "label": "aws_internet_gateway.main",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "attributes": {
+        "vpc_id": "aws_vpc.main.id",
+        "tags": {
+          "Name": "\"${var.project_name}-igw\""
+        }
+      },
+      "community": 2,
+      "file_type": "code",
+      "norm_label": "aws_internet_gateway.main",
+      "source_file": "network.tf",
+      "source_location": "L17"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_aws_route_table_public",
+      "label": "aws_route_table.public",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "attributes": {
+        "vpc_id": "aws_vpc.main.id",
+        "tags": {
+          "Name": "\"${var.project_name}-public-rt\""
+        }
+      },
+      "community": 2,
+      "file_type": "code",
+      "norm_label": "aws_route_table.public",
+      "source_file": "network.tf",
+      "source_location": "L44"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_data_http_my_ip",
+      "label": "data.http.my_ip",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "attributes": {
+        "url": "https://checkip.amazonaws.com"
+      },
+      "community": 5,
+      "file_type": "code",
+      "norm_label": "data.http.my_ip",
+      "source_file": "security.tf",
+      "source_location": "L1"
+    },
+    {
+      "id": "s3",
+      "label": "s3.tf",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "community": 0,
+      "file_type": "code",
+      "norm_label": "s3.tf",
+      "source_file": "s3.tf",
+      "source_location": null,
+      "type": "terraform_file"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_data_aws_iam_policy_document_frontend",
+      "label": "data.aws_iam_policy_document.frontend",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "community": 0,
+      "file_type": "code",
+      "norm_label": "data.aws_iam_policy_document.frontend",
+      "source_file": "s3.tf",
+      "source_location": "L96"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_local_api_zip_key",
+      "label": "local.api_zip_key",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "community": 0,
+      "file_type": "code",
+      "norm_label": "local.api_zip_key",
+      "source_file": "s3.tf",
+      "source_location": "L10"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_local_api_zip_path",
+      "label": "local.api_zip_path",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "community": 0,
+      "file_type": "code",
+      "norm_label": "local.api_zip_path",
+      "source_file": "s3.tf",
+      "source_location": "L7"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_local_content_types",
+      "label": "local.content_types",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "community": 0,
+      "file_type": "code",
+      "norm_label": "local.content_types",
+      "source_file": "s3.tf",
+      "source_location": "L14"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_local_frontend_dist",
+      "label": "local.frontend_dist",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "community": 0,
+      "file_type": "code",
+      "norm_label": "local.frontend_dist",
+      "source_file": "s3.tf",
+      "source_location": "L8"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_local_repo_root",
+      "label": "local.repo_root",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "community": 0,
+      "file_type": "code",
+      "norm_label": "local.repo_root",
+      "source_file": "s3.tf",
+      "source_location": "L6"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_local_schema_key",
+      "label": "local.schema_key",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "community": 0,
+      "file_type": "code",
+      "norm_label": "local.schema_key",
+      "source_file": "s3.tf",
+      "source_location": "L11"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_local_seed_key",
+      "label": "local.seed_key",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "community": 0,
+      "file_type": "code",
+      "norm_label": "local.seed_key",
+      "source_file": "s3.tf",
+      "source_location": "L12"
+    },
+    {
+      "id": "cloudfront",
+      "label": "cloudfront.tf",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "community": 1,
+      "file_type": "code",
+      "norm_label": "cloudfront.tf",
+      "source_file": "cloudfront.tf",
+      "source_location": null,
+      "type": "terraform_file"
+    },
+    {
+      "id": "outputs",
+      "label": "outputs.tf",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "community": 1,
+      "file_type": "code",
+      "norm_label": "outputs.tf",
+      "source_file": "outputs.tf",
+      "source_location": null,
+      "type": "terraform_file"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_local_api_origin_id",
+      "label": "local.api_origin_id",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "community": 1,
+      "file_type": "code",
+      "norm_label": "local.api_origin_id",
+      "source_file": "cloudfront.tf",
+      "source_location": "L36"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_local_frontend_origin_id",
+      "label": "local.frontend_origin_id",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "community": 1,
+      "file_type": "code",
+      "norm_label": "local.frontend_origin_id",
+      "source_file": "cloudfront.tf",
+      "source_location": "L35"
+    },
+    {
+      "id": "network",
+      "label": "network.tf",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "community": 2,
+      "file_type": "code",
+      "norm_label": "network.tf",
+      "source_file": "network.tf",
+      "source_location": null,
+      "type": "terraform_file"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_local_azs",
+      "label": "local.azs",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "community": 2,
+      "file_type": "code",
+      "norm_label": "local.azs",
+      "source_file": "network.tf",
+      "source_location": "L6"
+    },
+    {
+      "id": "rds",
+      "label": "rds.tf",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "community": 3,
+      "file_type": "code",
+      "norm_label": "rds.tf",
+      "source_file": "rds.tf",
+      "source_location": null,
+      "type": "terraform_file"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_local_db_admin_user",
+      "label": "local.db_admin_user",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "community": 3,
+      "file_type": "code",
+      "norm_label": "local.db_admin_user",
+      "source_file": "rds.tf",
+      "source_location": "L14"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_local_db_app_user",
+      "label": "local.db_app_user",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "community": 3,
+      "file_type": "code",
+      "norm_label": "local.db_app_user",
+      "source_file": "rds.tf",
+      "source_location": "L15"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_local_db_name",
+      "label": "local.db_name",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "community": 3,
+      "file_type": "code",
+      "norm_label": "local.db_name",
+      "source_file": "rds.tf",
+      "source_location": "L13"
+    },
+    {
+      "id": "ec2_api",
+      "label": "ec2_api.tf",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "community": 4,
+      "file_type": "code",
+      "norm_label": "ec2_api.tf",
+      "source_file": "ec2_api.tf",
+      "source_location": null,
+      "type": "terraform_file"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_directory",
+      "label": "Terraform module: .",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "community": 4,
+      "file_type": "code",
+      "language": "terraform",
+      "norm_label": "terraform module: .",
+      "source_file": "cloudfront.tf",
+      "source_location": null,
+      "type": "module"
+    },
+    {
+      "id": "versions",
+      "label": "versions.tf",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "community": 4,
+      "file_type": "code",
+      "norm_label": "versions.tf",
+      "source_file": "versions.tf",
+      "source_location": null,
+      "type": "terraform_file"
+    },
+    {
+      "id": "security",
+      "label": "security.tf",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "community": 5,
+      "file_type": "code",
+      "norm_label": "security.tf",
+      "source_file": "security.tf",
+      "source_location": null,
+      "type": "terraform_file"
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_local_ssh_cidr",
+      "label": "local.ssh_cidr",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "community": 5,
+      "file_type": "code",
+      "norm_label": "local.ssh_cidr",
+      "source_file": "security.tf",
+      "source_location": "L10"
+    },
+    {
+      "id": "variables",
+      "label": "variables.tf",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "community": 6,
+      "file_type": "code",
+      "norm_label": "variables.tf",
+      "source_file": "variables.tf",
+      "source_location": null,
+      "type": "terraform_file"
+    },
+    {
+      "id": "terraform_lock",
+      "label": ".terraform.lock.hcl",
+      "_origin": "ast",
+      "_terraform_directory": ".",
+      "community": 7,
+      "file_type": "code",
+      "norm_label": ".terraform.lock.hcl",
+      "source_file": ".terraform.lock.hcl",
+      "source_location": null,
+      "type": "terraform_file"
+    },
+    {
+      "id": "functions_spa_rewrite",
+      "label": "spa_rewrite.js",
+      "_origin": "ast",
+      "community": 8,
+      "file_type": "code",
+      "norm_label": "spa_rewrite.js",
+      "source_file": "functions/spa_rewrite.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "functions_strip_api_prefix",
+      "label": "strip_api_prefix.js",
+      "_origin": "ast",
+      "community": 9,
+      "file_type": "code",
+      "norm_label": "strip_api_prefix.js",
+      "source_file": "functions/strip_api_prefix.js",
+      "source_location": "L1"
+    }
+  ],
+  "links": [
+    {
+      "source": "cloudfront",
+      "target": "terraform_cdb4ee2aea69cc6a_data_aws_cloudfront_cache_policy_optimized",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "cloudfront.tf",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "cloudfront",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_cloudfront_origin_access_control_frontend",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "cloudfront.tf",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "cloudfront",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_cloudfront_function_strip_api_prefix",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "cloudfront.tf",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "cloudfront",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_cloudfront_function_spa_rewrite",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "cloudfront.tf",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "cloudfront",
+      "target": "terraform_cdb4ee2aea69cc6a_local_frontend_origin_id",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "cloudfront.tf",
+      "source_location": "L35",
+      "weight": 1.0
+    },
+    {
+      "source": "cloudfront",
+      "target": "terraform_cdb4ee2aea69cc6a_local_api_origin_id",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "cloudfront.tf",
+      "source_location": "L36",
+      "weight": 1.0
+    },
+    {
+      "source": "cloudfront",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_cloudfront_distribution_main",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "cloudfront.tf",
+      "source_location": "L39",
+      "weight": 1.0
+    },
+    {
+      "source": "cloudfront",
+      "target": "terraform_cdb4ee2aea69cc6a_data_aws_cloudfront_cache_policy_disabled",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "cloudfront.tf",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "cloudfront",
+      "target": "terraform_cdb4ee2aea69cc6a_data_aws_cloudfront_origin_request_policy_all_viewer_except_host",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "cloudfront.tf",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "ec2_api",
+      "target": "terraform_cdb4ee2aea69cc6a_data_aws_ami_ubuntu",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "ec2_api.tf",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "ec2_api",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_instance_api",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "ec2_api.tf",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "ec2_api",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_eip_api",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "ec2_api.tf",
+      "source_location": "L56",
+      "weight": 1.0
+    },
+    {
+      "source": "functions_spa_rewrite",
+      "target": "functions_spa_rewrite_handler",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "functions/spa_rewrite.js",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "functions_strip_api_prefix",
+      "target": "functions_strip_api_prefix_handler",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "functions/strip_api_prefix.js",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "network",
+      "target": "terraform_cdb4ee2aea69cc6a_data_aws_availability_zones_available",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "network.tf",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "network",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_internet_gateway_main",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "network.tf",
+      "source_location": "L17",
+      "weight": 1.0
+    },
+    {
+      "source": "network",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_subnet_public",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "network.tf",
+      "source_location": "L24",
+      "weight": 1.0
+    },
+    {
+      "source": "network",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_subnet_private",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "network.tf",
+      "source_location": "L35",
+      "weight": 1.0
+    },
+    {
+      "source": "network",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_route_table_public",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "network.tf",
+      "source_location": "L44",
+      "weight": 1.0
+    },
+    {
+      "source": "network",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_route_table_association_public",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "network.tf",
+      "source_location": "L55",
+      "weight": 1.0
+    },
+    {
+      "source": "network",
+      "target": "terraform_cdb4ee2aea69cc6a_local_azs",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "network.tf",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "network",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_vpc_main",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "network.tf",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "outputs",
+      "target": "terraform_cdb4ee2aea69cc6a_output_site_url",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "outputs.tf",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "outputs",
+      "target": "terraform_cdb4ee2aea69cc6a_output_api_public_dns",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "outputs.tf",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "outputs",
+      "target": "terraform_cdb4ee2aea69cc6a_output_rds_endpoint",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "outputs.tf",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "outputs",
+      "target": "terraform_cdb4ee2aea69cc6a_output_ssh_command",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "outputs.tf",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "outputs",
+      "target": "terraform_cdb4ee2aea69cc6a_output_db_app_password",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "outputs.tf",
+      "source_location": "L26",
+      "weight": 1.0
+    },
+    {
+      "source": "outputs",
+      "target": "terraform_cdb4ee2aea69cc6a_output_cloudfront_distribution_id",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "outputs.tf",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "rds",
+      "target": "terraform_cdb4ee2aea69cc6a_local_db_name",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "rds.tf",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "rds",
+      "target": "terraform_cdb4ee2aea69cc6a_local_db_admin_user",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "rds.tf",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "rds",
+      "target": "terraform_cdb4ee2aea69cc6a_local_db_app_user",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "rds.tf",
+      "source_location": "L15",
+      "weight": 1.0
+    },
+    {
+      "source": "rds",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_db_subnet_group_main",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "rds.tf",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "rds",
+      "target": "terraform_cdb4ee2aea69cc6a_random_password_db_admin",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "rds.tf",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "rds",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_db_instance_main",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "rds.tf",
+      "source_location": "L25",
+      "weight": 1.0
+    },
+    {
+      "source": "rds",
+      "target": "terraform_cdb4ee2aea69cc6a_random_password_db_app",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "rds.tf",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "s3",
+      "target": "terraform_cdb4ee2aea69cc6a_random_id_bucket_suffix",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "s3.tf",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "s3",
+      "target": "terraform_cdb4ee2aea69cc6a_local_api_zip_key",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "s3.tf",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "s3",
+      "target": "terraform_cdb4ee2aea69cc6a_local_schema_key",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "s3.tf",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "s3",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_s3_bucket_policy_frontend",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "s3.tf",
+      "source_location": "L115",
+      "weight": 1.0
+    },
+    {
+      "source": "s3",
+      "target": "terraform_cdb4ee2aea69cc6a_local_seed_key",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "s3.tf",
+      "source_location": "L12",
+      "weight": 1.0
+    },
+    {
+      "source": "s3",
+      "target": "terraform_cdb4ee2aea69cc6a_local_content_types",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "s3.tf",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "s3",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_s3_bucket_artifacts",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "s3.tf",
+      "source_location": "L35",
+      "weight": 1.0
+    },
+    {
+      "source": "s3",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_s3_bucket_public_access_block_artifacts",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "s3.tf",
+      "source_location": "L40",
+      "weight": 1.0
+    },
+    {
+      "source": "s3",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_s3_object_api_zip",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "s3.tf",
+      "source_location": "L48",
+      "weight": 1.0
+    },
+    {
+      "source": "s3",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_s3_object_schema",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "s3.tf",
+      "source_location": "L55",
+      "weight": 1.0
+    },
+    {
+      "source": "s3",
+      "target": "terraform_cdb4ee2aea69cc6a_local_repo_root",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "s3.tf",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "s3",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_s3_object_seed",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "s3.tf",
+      "source_location": "L62",
+      "weight": 1.0
+    },
+    {
+      "source": "s3",
+      "target": "terraform_cdb4ee2aea69cc6a_local_api_zip_path",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "s3.tf",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "s3",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_s3_bucket_frontend",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "s3.tf",
+      "source_location": "L71",
+      "weight": 1.0
+    },
+    {
+      "source": "s3",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_s3_bucket_public_access_block_frontend",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "s3.tf",
+      "source_location": "L76",
+      "weight": 1.0
+    },
+    {
+      "source": "s3",
+      "target": "terraform_cdb4ee2aea69cc6a_local_frontend_dist",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "s3.tf",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "s3",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_s3_object_frontend",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "s3.tf",
+      "source_location": "L84",
+      "weight": 1.0
+    },
+    {
+      "source": "s3",
+      "target": "terraform_cdb4ee2aea69cc6a_data_aws_iam_policy_document_frontend",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "s3.tf",
+      "source_location": "L96",
+      "weight": 1.0
+    },
+    {
+      "source": "security",
+      "target": "terraform_cdb4ee2aea69cc6a_data_http_my_ip",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "security.tf",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "security",
+      "target": "terraform_cdb4ee2aea69cc6a_local_ssh_cidr",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "security.tf",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "security",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_security_group_api",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "security.tf",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "security",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_security_group_db",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "security.tf",
+      "source_location": "L44",
+      "weight": 1.0
+    },
+    {
+      "source": "security",
+      "target": "terraform_cdb4ee2aea69cc6a_data_aws_ec2_managed_prefix_list_cloudfront",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "security.tf",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_directory",
+      "target": "cloudfront",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "cloudfront.tf",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_directory",
+      "target": "ec2_api",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "ec2_api.tf",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_directory",
+      "target": "network",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "network.tf",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_directory",
+      "target": "outputs",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "outputs.tf",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_directory",
+      "target": "rds",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "rds.tf",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_directory",
+      "target": "s3",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "s3.tf",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_directory",
+      "target": "security",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "security.tf",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_directory",
+      "target": "variables",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "variables.tf",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_directory",
+      "target": "versions",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "versions.tf",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_lock",
+      "target": "terraform_cdb4ee2aea69cc6a_provider_registry_terraform_io_hashicorp_http",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".terraform.lock.hcl",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_lock",
+      "target": "terraform_cdb4ee2aea69cc6a_provider_registry_terraform_io_hashicorp_aws",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".terraform.lock.hcl",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_lock",
+      "target": "terraform_cdb4ee2aea69cc6a_provider_registry_terraform_io_hashicorp_random",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".terraform.lock.hcl",
+      "source_location": "L48",
+      "weight": 1.0
+    },
+    {
+      "source": "variables",
+      "target": "terraform_cdb4ee2aea69cc6a_var_aws_region",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "variables.tf",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "variables",
+      "target": "terraform_cdb4ee2aea69cc6a_var_my_ip_cidr",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "variables.tf",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "variables",
+      "target": "terraform_cdb4ee2aea69cc6a_var_api_instance_type",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "variables.tf",
+      "source_location": "L19",
+      "weight": 1.0
+    },
+    {
+      "source": "variables",
+      "target": "terraform_cdb4ee2aea69cc6a_var_db_instance_class",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "variables.tf",
+      "source_location": "L25",
+      "weight": 1.0
+    },
+    {
+      "source": "variables",
+      "target": "terraform_cdb4ee2aea69cc6a_var_db_engine_version",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "variables.tf",
+      "source_location": "L31",
+      "weight": 1.0
+    },
+    {
+      "source": "variables",
+      "target": "terraform_cdb4ee2aea69cc6a_var_key_name",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "variables.tf",
+      "source_location": "L37",
+      "weight": 1.0
+    },
+    {
+      "source": "variables",
+      "target": "terraform_cdb4ee2aea69cc6a_var_instance_profile",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "variables.tf",
+      "source_location": "L43",
+      "weight": 1.0
+    },
+    {
+      "source": "variables",
+      "target": "terraform_cdb4ee2aea69cc6a_var_project_name",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "variables.tf",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "versions",
+      "target": "terraform_cdb4ee2aea69cc6a_provider_aws",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "versions.tf",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_s3_bucket_policy_frontend",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_s3_bucket_public_access_block_frontend",
+      "relation": "depends_on",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "s3.tf",
+      "source_location": "L119",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_cloudfront_distribution_main",
+      "target": "terraform_cdb4ee2aea69cc6a_var_project_name",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "cloudfront.tf",
+      "source_location": "L41",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_cloudfront_distribution_main",
+      "target": "terraform_cdb4ee2aea69cc6a_local_frontend_origin_id",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "cloudfront.tf",
+      "source_location": "L46",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_cloudfront_distribution_main",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_s3_bucket_frontend",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "cloudfront.tf",
+      "source_location": "L47",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_cloudfront_distribution_main",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_cloudfront_origin_access_control_frontend",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "cloudfront.tf",
+      "source_location": "L48",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_cloudfront_distribution_main",
+      "target": "terraform_cdb4ee2aea69cc6a_local_api_origin_id",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "cloudfront.tf",
+      "source_location": "L52",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_cloudfront_distribution_main",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_eip_api",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "cloudfront.tf",
+      "source_location": "L53",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_cloudfront_distribution_main",
+      "target": "terraform_cdb4ee2aea69cc6a_data_aws_cloudfront_cache_policy_optimized",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "cloudfront.tf",
+      "source_location": "L69",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_cloudfront_distribution_main",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_cloudfront_function_spa_rewrite",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "cloudfront.tf",
+      "source_location": "L74",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_cloudfront_distribution_main",
+      "target": "terraform_cdb4ee2aea69cc6a_data_aws_cloudfront_cache_policy_disabled",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "cloudfront.tf",
+      "source_location": "L85",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_cloudfront_distribution_main",
+      "target": "terraform_cdb4ee2aea69cc6a_data_aws_cloudfront_origin_request_policy_all_viewer_except_host",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "cloudfront.tf",
+      "source_location": "L86",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_cloudfront_distribution_main",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_cloudfront_function_strip_api_prefix",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "cloudfront.tf",
+      "source_location": "L90",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_cloudfront_function_spa_rewrite",
+      "target": "terraform_cdb4ee2aea69cc6a_var_project_name",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "cloudfront.tf",
+      "source_location": "L28",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_cloudfront_function_strip_api_prefix",
+      "target": "terraform_cdb4ee2aea69cc6a_var_project_name",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "cloudfront.tf",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_cloudfront_origin_access_control_frontend",
+      "target": "terraform_cdb4ee2aea69cc6a_var_project_name",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "cloudfront.tf",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_db_instance_main",
+      "target": "terraform_cdb4ee2aea69cc6a_var_project_name",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "rds.tf",
+      "source_location": "L26",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_db_instance_main",
+      "target": "terraform_cdb4ee2aea69cc6a_var_db_engine_version",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "rds.tf",
+      "source_location": "L28",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_db_instance_main",
+      "target": "terraform_cdb4ee2aea69cc6a_var_db_instance_class",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "rds.tf",
+      "source_location": "L29",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_db_instance_main",
+      "target": "terraform_cdb4ee2aea69cc6a_local_db_name",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "rds.tf",
+      "source_location": "L34",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_db_instance_main",
+      "target": "terraform_cdb4ee2aea69cc6a_local_db_admin_user",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "rds.tf",
+      "source_location": "L35",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_db_instance_main",
+      "target": "terraform_cdb4ee2aea69cc6a_random_password_db_admin",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "rds.tf",
+      "source_location": "L36",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_db_instance_main",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_db_subnet_group_main",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "rds.tf",
+      "source_location": "L38",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_db_instance_main",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_security_group_db",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "rds.tf",
+      "source_location": "L39",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_db_subnet_group_main",
+      "target": "terraform_cdb4ee2aea69cc6a_var_project_name",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "rds.tf",
+      "source_location": "L19",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_db_subnet_group_main",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_subnet_private",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "rds.tf",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_eip_api",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_instance_api",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "ec2_api.tf",
+      "source_location": "L57",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_eip_api",
+      "target": "terraform_cdb4ee2aea69cc6a_var_project_name",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "ec2_api.tf",
+      "source_location": "L60",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_instance_api",
+      "target": "terraform_cdb4ee2aea69cc6a_data_aws_ami_ubuntu",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "ec2_api.tf",
+      "source_location": "L17",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_instance_api",
+      "target": "terraform_cdb4ee2aea69cc6a_var_api_instance_type",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "ec2_api.tf",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_instance_api",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_subnet_public",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "ec2_api.tf",
+      "source_location": "L19",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_instance_api",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_security_group_api",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "ec2_api.tf",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_instance_api",
+      "target": "terraform_cdb4ee2aea69cc6a_var_key_name",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "ec2_api.tf",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_instance_api",
+      "target": "terraform_cdb4ee2aea69cc6a_var_instance_profile",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "ec2_api.tf",
+      "source_location": "L22",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_instance_api",
+      "target": "terraform_cdb4ee2aea69cc6a_var_aws_region",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "ec2_api.tf",
+      "source_location": "L26",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_instance_api",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_s3_bucket_artifacts",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "ec2_api.tf",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_instance_api",
+      "target": "terraform_cdb4ee2aea69cc6a_local_api_zip_key",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "ec2_api.tf",
+      "source_location": "L28",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_instance_api",
+      "target": "terraform_cdb4ee2aea69cc6a_local_schema_key",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "ec2_api.tf",
+      "source_location": "L29",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_instance_api",
+      "target": "terraform_cdb4ee2aea69cc6a_local_seed_key",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "ec2_api.tf",
+      "source_location": "L30",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_instance_api",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_db_instance_main",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "ec2_api.tf",
+      "source_location": "L31",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_instance_api",
+      "target": "terraform_cdb4ee2aea69cc6a_local_db_name",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "ec2_api.tf",
+      "source_location": "L33",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_instance_api",
+      "target": "terraform_cdb4ee2aea69cc6a_local_db_admin_user",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "ec2_api.tf",
+      "source_location": "L34",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_instance_api",
+      "target": "terraform_cdb4ee2aea69cc6a_random_password_db_admin",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "ec2_api.tf",
+      "source_location": "L35",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_instance_api",
+      "target": "terraform_cdb4ee2aea69cc6a_local_db_app_user",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "ec2_api.tf",
+      "source_location": "L36",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_instance_api",
+      "target": "terraform_cdb4ee2aea69cc6a_random_password_db_app",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "ec2_api.tf",
+      "source_location": "L37",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_instance_api",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_s3_object_api_zip",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "ec2_api.tf",
+      "source_location": "L40",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_instance_api",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_s3_object_schema",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "ec2_api.tf",
+      "source_location": "L41",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_instance_api",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_s3_object_seed",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "ec2_api.tf",
+      "source_location": "L42",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_instance_api",
+      "target": "terraform_cdb4ee2aea69cc6a_var_project_name",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "ec2_api.tf",
+      "source_location": "L52",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_internet_gateway_main",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_vpc_main",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "network.tf",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_internet_gateway_main",
+      "target": "terraform_cdb4ee2aea69cc6a_var_project_name",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "network.tf",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_route_table_association_public",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_subnet_public",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "network.tf",
+      "source_location": "L56",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_route_table_association_public",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_route_table_public",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "network.tf",
+      "source_location": "L58",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_route_table_public",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_vpc_main",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "network.tf",
+      "source_location": "L45",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_route_table_public",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_internet_gateway_main",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "network.tf",
+      "source_location": "L49",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_route_table_public",
+      "target": "terraform_cdb4ee2aea69cc6a_var_project_name",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "network.tf",
+      "source_location": "L52",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_s3_bucket_artifacts",
+      "target": "terraform_cdb4ee2aea69cc6a_random_id_bucket_suffix",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "s3.tf",
+      "source_location": "L36",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_s3_bucket_artifacts",
+      "target": "terraform_cdb4ee2aea69cc6a_var_project_name",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "s3.tf",
+      "source_location": "L36",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_s3_bucket_frontend",
+      "target": "terraform_cdb4ee2aea69cc6a_random_id_bucket_suffix",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "s3.tf",
+      "source_location": "L72",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_s3_bucket_frontend",
+      "target": "terraform_cdb4ee2aea69cc6a_var_project_name",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "s3.tf",
+      "source_location": "L72",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_s3_bucket_policy_frontend",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_s3_bucket_frontend",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "s3.tf",
+      "source_location": "L116",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_s3_bucket_policy_frontend",
+      "target": "terraform_cdb4ee2aea69cc6a_data_aws_iam_policy_document_frontend",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "s3.tf",
+      "source_location": "L117",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_s3_bucket_public_access_block_artifacts",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_s3_bucket_artifacts",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "s3.tf",
+      "source_location": "L41",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_s3_bucket_public_access_block_frontend",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_s3_bucket_frontend",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "s3.tf",
+      "source_location": "L77",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_s3_object_api_zip",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_s3_bucket_artifacts",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "s3.tf",
+      "source_location": "L49",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_s3_object_api_zip",
+      "target": "terraform_cdb4ee2aea69cc6a_local_api_zip_key",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "s3.tf",
+      "source_location": "L50",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_s3_object_api_zip",
+      "target": "terraform_cdb4ee2aea69cc6a_local_api_zip_path",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "s3.tf",
+      "source_location": "L51",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_s3_object_frontend",
+      "target": "terraform_cdb4ee2aea69cc6a_local_frontend_dist",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "s3.tf",
+      "source_location": "L85",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_s3_object_frontend",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_s3_bucket_frontend",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "s3.tf",
+      "source_location": "L87",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_s3_object_frontend",
+      "target": "terraform_cdb4ee2aea69cc6a_local_content_types",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "s3.tf",
+      "source_location": "L91",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_s3_object_schema",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_s3_bucket_artifacts",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "s3.tf",
+      "source_location": "L56",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_s3_object_schema",
+      "target": "terraform_cdb4ee2aea69cc6a_local_schema_key",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "s3.tf",
+      "source_location": "L57",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_s3_object_schema",
+      "target": "terraform_cdb4ee2aea69cc6a_local_repo_root",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "s3.tf",
+      "source_location": "L58",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_s3_object_seed",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_s3_bucket_artifacts",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "s3.tf",
+      "source_location": "L63",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_s3_object_seed",
+      "target": "terraform_cdb4ee2aea69cc6a_local_seed_key",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "s3.tf",
+      "source_location": "L64",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_s3_object_seed",
+      "target": "terraform_cdb4ee2aea69cc6a_local_repo_root",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "s3.tf",
+      "source_location": "L65",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_security_group_api",
+      "target": "terraform_cdb4ee2aea69cc6a_var_project_name",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "security.tf",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_security_group_api",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_vpc_main",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "security.tf",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_security_group_api",
+      "target": "terraform_cdb4ee2aea69cc6a_data_aws_ec2_managed_prefix_list_cloudfront",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "security.tf",
+      "source_location": "L23",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_security_group_api",
+      "target": "terraform_cdb4ee2aea69cc6a_local_ssh_cidr",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "security.tf",
+      "source_location": "L31",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_security_group_db",
+      "target": "terraform_cdb4ee2aea69cc6a_var_project_name",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "security.tf",
+      "source_location": "L45",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_security_group_db",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_vpc_main",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "security.tf",
+      "source_location": "L47",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_security_group_db",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_security_group_api",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "security.tf",
+      "source_location": "L54",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_subnet_private",
+      "target": "terraform_cdb4ee2aea69cc6a_local_azs",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "network.tf",
+      "source_location": "L36",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_subnet_private",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_vpc_main",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "network.tf",
+      "source_location": "L37",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_subnet_private",
+      "target": "terraform_cdb4ee2aea69cc6a_var_project_name",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "network.tf",
+      "source_location": "L41",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_subnet_public",
+      "target": "terraform_cdb4ee2aea69cc6a_local_azs",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "network.tf",
+      "source_location": "L25",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_subnet_public",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_vpc_main",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "network.tf",
+      "source_location": "L26",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_subnet_public",
+      "target": "terraform_cdb4ee2aea69cc6a_var_project_name",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "network.tf",
+      "source_location": "L31",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_aws_vpc_main",
+      "target": "terraform_cdb4ee2aea69cc6a_var_project_name",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "network.tf",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_data_aws_iam_policy_document_frontend",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_s3_bucket_frontend",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "s3.tf",
+      "source_location": "L100",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_data_aws_iam_policy_document_frontend",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_cloudfront_distribution_main",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "s3.tf",
+      "source_location": "L110",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_local_api_zip_path",
+      "target": "terraform_cdb4ee2aea69cc6a_local_repo_root",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "s3.tf",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_local_azs",
+      "target": "terraform_cdb4ee2aea69cc6a_data_aws_availability_zones_available",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "network.tf",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_local_frontend_dist",
+      "target": "terraform_cdb4ee2aea69cc6a_local_repo_root",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "s3.tf",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_local_ssh_cidr",
+      "target": "terraform_cdb4ee2aea69cc6a_data_http_my_ip",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "security.tf",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_local_ssh_cidr",
+      "target": "terraform_cdb4ee2aea69cc6a_var_my_ip_cidr",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "security.tf",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_output_api_public_dns",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_eip_api",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "outputs.tf",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_output_cloudfront_distribution_id",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_cloudfront_distribution_main",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "outputs.tf",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_output_db_app_password",
+      "target": "terraform_cdb4ee2aea69cc6a_random_password_db_app",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "outputs.tf",
+      "source_location": "L28",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_output_rds_endpoint",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_db_instance_main",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "outputs.tf",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_output_site_url",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_cloudfront_distribution_main",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "outputs.tf",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_output_ssh_command",
+      "target": "terraform_cdb4ee2aea69cc6a_aws_eip_api",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "outputs.tf",
+      "source_location": "L23",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_provider_aws",
+      "target": "terraform_cdb4ee2aea69cc6a_var_aws_region",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "versions.tf",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_cdb4ee2aea69cc6a_provider_aws",
+      "target": "terraform_cdb4ee2aea69cc6a_var_project_name",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "versions.tf",
+      "source_location": "L25",
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": [],
+  "built_at_commit": "009feac67b0ab89f53558db7477821152c53ad1a"
+}
