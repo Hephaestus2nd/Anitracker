@@ -5,7 +5,7 @@
   "3": "frontend/package.json",
   "4": "Anitracker (Three-VM Internet Movie/Anime Database)",
   "5": "WatchStatus",
-  "6": "App.vue",
+  "6": "vue",
   "7": "SearchBarGeneric.vue",
   "8": "jsconfig.json",
   "9": "mala-imdb",
@@ -15,11 +15,5 @@
   "13": "db_provision.sh",
   "14": "web_provision.sh",
   "15": "build.gradle",
-  "16": "settings.gradle",
-  "17": "spa_rewrite.js",
-  "18": "strip_api_prefix.js",
-  "19": "Invoke-Checked",
-  "20": "deploy.sh script",
-  "21": "destroy.sh script",
-  "22": "destroy.ps1"
+  "16": "settings.gradle"
 }

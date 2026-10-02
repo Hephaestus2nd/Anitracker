@@ -122,7 +122,21 @@ web_modules/
 dist/
 dist-ssr/
 
-
 # NetBeans build output
 build/
 nbproject/private/
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+!*.tfvars.example
+crash.log
+*.pem
+
+# Python virtual environment (graphify)
+.venv/
+
+# graphify: keep the graph/report, ignore regenerable cache
+graphify-out/cache/
