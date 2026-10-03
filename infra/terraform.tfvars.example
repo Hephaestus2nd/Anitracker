@@ -1,10 +1,8 @@
-# Copy to terraform.tfvars and adjust if needed. All values are optional.
+# Copy to terraform.tfvars and adjust if needed.
 
-
-# api_instance_type = "t3.small"
-# db_instance_class = "db.t3.micro"
-# key_name = "cosc349-2026"
-
-# Public source repository cloned by EC2 at startup.
-# repository_url = "https://github.com/Hephaestus2nd/Anitracker.git"
-# repository_ref = "main"
+api_instance_type = "t3.small"
+db_instance_class = "db.t3.micro"
+key_name = "cosc349-2026"
+repository_url = "https://github.com/Hephaestus2nd/Anitracker.git"
+repository_ref = "main"
+bootstrap_revision = "1"

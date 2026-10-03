@@ -3,12 +3,12 @@
   "1": "Main.vue",
   "2": "DetailPage.vue",
   "3": "frontend/package.json",
-  "4": "Local Deployment (Vagrant)",
+  "4": "Anitracker (Three-VM Internet Movie/Anime Database)",
   "5": "WatchStatus",
-  "6": "var.project_name",
+  "6": "App.vue",
   "7": "SearchBarGeneric.vue",
   "8": "jsconfig.json",
-  "9": "AWS deployment (Terraform)",
+  "9": "mala-imdb",
   "10": "package.json",
   "11": "gradlew",
   "12": "api_provision.sh",
@@ -21,6 +21,5 @@
   "19": "Invoke-Checked",
   "20": "deploy.sh script",
   "21": "destroy.sh script",
-  "22": "destroy.ps1",
-  "23": ".terraform.lock.hcl"
+  "22": "destroy.ps1"
 }
