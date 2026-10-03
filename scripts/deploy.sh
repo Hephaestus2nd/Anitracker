@@ -2,8 +2,7 @@
 # Provisions AWS infrastructure with Terraform; EC2 builds the pinned repository during bootstrap.
 set -euo pipefail
 
-ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-cd "$ROOT"
+cd "$(dirname "$0")/.."
 
 if ! aws sts get-caller-identity >/dev/null 2>&1; then
     echo "AWS credentials missing or expired. Paste fresh Learner Lab credentials (AWS Details > AWS CLI) into ~/.aws/credentials." >&2
