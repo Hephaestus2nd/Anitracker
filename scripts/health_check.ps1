@@ -65,7 +65,9 @@ Test-Check "Target group $project-web-tg targets are healthy" {
 
 foreach ($role in 'web', 'api') {
     Test-Check "$($role.ToUpper()) EC2 instance is running with status checks ok" {
-        $status = aws ec2 describe-instance-status --filters "Name=tag:Name,Values=$project-$role" 'Name=instance-state-name,Values=running' --query 'InstanceStatuses[0].[InstanceStatus.Status,SystemStatus.Status]' --output text
+        # describe-instance-status has no tag filters, so resolve the instance ID first.
+        $id = aws ec2 describe-instances --filters "Name=tag:Name,Values=$project-$role" 'Name=instance-state-name,Values=running' --query 'Reservations[0].Instances[0].InstanceId' --output text
+        $status = aws ec2 describe-instance-status --instance-ids $id --query 'InstanceStatuses[0].[InstanceStatus.Status,SystemStatus.Status]' --output text
         ($status -split '\s+') -join ' ' -eq 'ok ok'
     }.GetNewClosure()
 }

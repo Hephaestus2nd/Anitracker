@@ -54,8 +54,12 @@ targets_healthy() {
 }
 
 instance_ok() {
-    [ "$(aws ec2 describe-instance-status \
+    # describe-instance-status has no tag filters, so resolve the instance ID first.
+    local id
+    id="$(aws ec2 describe-instances \
         --filters "Name=tag:Name,Values=$PROJECT-$1" "Name=instance-state-name,Values=running" \
+        --query 'Reservations[0].Instances[0].InstanceId' --output text)"
+    [ "$(aws ec2 describe-instance-status --instance-ids "$id" \
         --query 'InstanceStatuses[0].[InstanceStatus.Status,SystemStatus.Status]' --output text)" = "ok	ok" ]
 }
 
