@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # Bootstraps the Anitracker web tier on EC2.
+# bootstrap revision: ${bootstrap_revision}
 # source: ${repository_url} @ ${repository_ref}
 set -euo pipefail
 exec > >(tee -a /var/log/anitracker-web-bootstrap.log) 2>&1

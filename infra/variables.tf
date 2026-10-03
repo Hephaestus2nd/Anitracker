@@ -45,3 +45,9 @@ variable "repository_ref" {
   type        = string
   default     = "main"
 }
+
+variable "bootstrap_revision" {
+  description = "Change this value to force EC2 user-data to run again after a bootstrap fix."
+  type        = string
+  default     = "1"
+}

@@ -153,6 +153,18 @@
       "source_location": "L27"
     },
     {
+      "id": "backend_src_main_app_anime_anime_getwatchstatus",
+      "label": ".getWatchStatus()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "Anime",
+      "file_type": "code",
+      "norm_label": ".getwatchstatus()",
+      "source_file": "backend/src/main/app/Anime.java",
+      "source_location": "L41"
+    },
+    {
       "id": "backend_src_main_app_anime_anime_setbackgroundimageurl",
       "label": ".setBackgroundImageUrl()",
       "_callable": true,
@@ -465,28 +477,6 @@
       "source_location": "L13"
     },
     {
-      "id": "backend_src_main_app_animetrackerapp_animetrackerapp_main",
-      "label": ".main()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "Anime",
-      "file_type": "code",
-      "metadata": {
-        "unresolved_calls": [
-          {
-            "callee": "runApp",
-            "receiver_type": "Jooby",
-            "lang": "java",
-            "line": "L169"
-          }
-        ]
-      },
-      "norm_label": ".main()",
-      "source_file": "backend/src/main/app/AnimeTrackerApp.java",
-      "source_location": "L168"
-    },
-    {
       "id": "backend_src_main_app_animetrackerapp_animetrackerapp_normalizeepisodecounts",
       "label": ".normalizeEpisodeCounts()",
       "_callable": true,
@@ -518,6 +508,18 @@
       "file_type": "code",
       "norm_label": ".validateanime()",
       "source_file": "backend/src/main/app/AnimeTrackerApp.java",
+      "source_location": "L25"
+    },
+    {
+      "id": "backend_src_main_app_watchstatus_watchstatus_getdatabasevalue",
+      "label": ".getDatabaseValue()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "Anime",
+      "file_type": "code",
+      "norm_label": ".getdatabasevalue()",
+      "source_file": "backend/src/main/app/WatchStatus.java",
       "source_location": "L25"
     },
     {
@@ -677,18 +679,6 @@
       "source_location": "L68"
     },
     {
-      "id": "backend_src_main_app_anime_anime_getwatchstatus",
-      "label": ".getWatchStatus()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "WatchStatus",
-      "file_type": "code",
-      "norm_label": ".getwatchstatus()",
-      "source_file": "backend/src/main/app/Anime.java",
-      "source_location": "L41"
-    },
-    {
       "id": "backend_src_main_app_anime_anime_setwatchstatus",
       "label": ".setWatchStatus()",
       "_callable": true,
@@ -711,18 +701,6 @@
       "norm_label": ".fromvalue()",
       "source_file": "backend/src/main/app/WatchStatus.java",
       "source_location": "L16"
-    },
-    {
-      "id": "backend_src_main_app_watchstatus_watchstatus_getdatabasevalue",
-      "label": ".getDatabaseValue()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "WatchStatus",
-      "file_type": "code",
-      "norm_label": ".getdatabasevalue()",
-      "source_file": "backend/src/main/app/WatchStatus.java",
-      "source_location": "L25"
     },
     {
       "id": "backend_src_main_app_watchstatus_watchstatus_tostring",
@@ -759,6 +737,950 @@
       "norm_label": "handlesearch()",
       "source_file": "frontend/src/views/components/search/SearchBarGeneric.vue",
       "source_location": "L8"
+    },
+    {
+      "id": "backend_src_main_app_animetrackerapp_animetrackerapp_main",
+      "label": ".main()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "AWS deployment (Terraform)",
+      "file_type": "code",
+      "metadata": {
+        "unresolved_calls": [
+          {
+            "callee": "runApp",
+            "receiver_type": "Jooby",
+            "lang": "java",
+            "line": "L169"
+          }
+        ]
+      },
+      "norm_label": ".main()",
+      "source_file": "backend/src/main/app/AnimeTrackerApp.java",
+      "source_location": "L168"
+    },
+    {
+      "id": "terraform_infra_eb0de251ac21fb67_aws_db_instance_main",
+      "label": "aws_db_instance.main",
+      "_origin": "ast",
+      "_terraform_directory": "infra",
+      "attributes": {
+        "identifier": "\"${var.project_name}-db\"",
+        "engine": "postgres",
+        "engine_version": "var.db_engine_version",
+        "instance_class": "var.db_instance_class",
+        "allocated_storage": 20,
+        "storage_type": "gp3",
+        "db_name": "local.db_name",
+        "username": "local.db_admin_user",
+        "password": "[redacted]",
+        "db_subnet_group_name": "aws_db_subnet_group.main.name",
+        "vpc_security_group_ids": [
+          "aws_security_group.db.id"
+        ],
+        "publicly_accessible": false,
+        "multi_az": false,
+        "backup_retention_period": 0,
+        "skip_final_snapshot": true,
+        "deletion_protection": false,
+        "apply_immediately": true,
+        "tags": {
+          "Name": "\"${var.project_name}-db\""
+        }
+      },
+      "community": 6,
+      "community_name": "var.project_name",
+      "file_type": "code",
+      "norm_label": "aws_db_instance.main",
+      "source_file": "infra/rds.tf",
+      "source_location": "L25"
+    },
+    {
+      "id": "terraform_infra_eb0de251ac21fb67_aws_instance_api",
+      "label": "aws_instance.api",
+      "_origin": "ast",
+      "_terraform_directory": "infra",
+      "attributes": {
+        "ami": "data.aws_ami.ubuntu.id",
+        "instance_type": "var.api_instance_type",
+        "subnet_id": "aws_subnet.public[0].id",
+        "vpc_security_group_ids": [
+          "aws_security_group.api.id"
+        ],
+        "key_name": "var.key_name",
+        "user_data": "replace(templatefile(\"${path.module}/templates/api_user_data.sh.tftpl\", {    repository_url   = var.repository_url    repository_ref   = var.repository_ref    db_host           = aws_db_instance.main.address    db_port           = aws_db_instance.main.port    db_name           = local.db_name    db_admin_user     = local.db_admin_user    db_admin_password = random_password.db_admin.result    db_app_user       = local.db_app_user    db_app_password   = random_password.db_app.result  }), \"\\r\\n\", \"\\n\")",
+        "user_data_replace_on_change": true,
+        "tags": {
+          "Name": "\"${var.project_name}-api\""
+        }
+      },
+      "community": 6,
+      "community_name": "var.project_name",
+      "file_type": "code",
+      "norm_label": "aws_instance.api",
+      "source_file": "infra/ec2_api.tf",
+      "source_location": "L16"
+    },
+    {
+      "id": "terraform_infra_eb0de251ac21fb67_aws_instance_web",
+      "label": "aws_instance.web",
+      "_origin": "ast",
+      "_terraform_directory": "infra",
+      "attributes": {
+        "ami": "data.aws_ami.ubuntu.id",
+        "instance_type": "var.api_instance_type",
+        "subnet_id": "aws_subnet.public[0].id",
+        "vpc_security_group_ids": [
+          "aws_security_group.web.id"
+        ],
+        "key_name": "var.key_name",
+        "user_data": "replace(templatefile(\"${path.module}/templates/web_user_data.sh.tftpl\", {    repository_url = var.repository_url    repository_ref = var.repository_ref    api_private_ip = aws_instance.api.private_ip  }), \"\\r\\n\", \"\\n\")",
+        "user_data_replace_on_change": true,
+        "tags": {
+          "Name": "\"${var.project_name}-web\""
+        }
+      },
+      "community": 6,
+      "community_name": "var.project_name",
+      "file_type": "code",
+      "norm_label": "aws_instance.web",
+      "source_file": "infra/ec2_web.tf",
+      "source_location": "L1"
+    },
+    {
+      "id": "terraform_infra_eb0de251ac21fb67_aws_subnet_private",
+      "label": "aws_subnet.private",
+      "_origin": "ast",
+      "_terraform_directory": "infra",
+      "attributes": {
+        "count": "length(local.azs)",
+        "vpc_id": "aws_vpc.main.id",
+        "cidr_block": "cidrsubnet(aws_vpc.main.cidr_block, 8, count.index + 10)",
+        "availability_zone": "local.azs[count.index]",
+        "tags": {
+          "Name": "\"${var.project_name}-private-${count.index}\""
+        }
+      },
+      "community": 6,
+      "community_name": "var.project_name",
+      "file_type": "code",
+      "norm_label": "aws_subnet.private",
+      "source_file": "infra/network.tf",
+      "source_location": "L35"
+    },
+    {
+      "id": "terraform_infra_eb0de251ac21fb67_aws_subnet_public",
+      "label": "aws_subnet.public",
+      "_origin": "ast",
+      "_terraform_directory": "infra",
+      "attributes": {
+        "count": "length(local.azs)",
+        "vpc_id": "aws_vpc.main.id",
+        "cidr_block": "cidrsubnet(aws_vpc.main.cidr_block, 8, count.index)",
+        "availability_zone": "local.azs[count.index]",
+        "map_public_ip_on_launch": true,
+        "tags": {
+          "Name": "\"${var.project_name}-public-${count.index}\""
+        }
+      },
+      "community": 6,
+      "community_name": "var.project_name",
+      "file_type": "code",
+      "norm_label": "aws_subnet.public",
+      "source_file": "infra/network.tf",
+      "source_location": "L24"
+    },
+    {
+      "id": "terraform_infra_eb0de251ac21fb67_aws_vpc_main",
+      "label": "aws_vpc.main",
+      "_origin": "ast",
+      "_terraform_directory": "infra",
+      "attributes": {
+        "cidr_block": "10.0.0.0/16",
+        "enable_dns_support": true,
+        "enable_dns_hostnames": true,
+        "tags": {
+          "Name": "\"${var.project_name}-vpc\""
+        }
+      },
+      "community": 6,
+      "community_name": "var.project_name",
+      "file_type": "code",
+      "norm_label": "aws_vpc.main",
+      "source_file": "infra/network.tf",
+      "source_location": "L9"
+    },
+    {
+      "id": "terraform_infra_eb0de251ac21fb67_provider_registry_terraform_io_hashicorp_random",
+      "label": "provider.registry.terraform.io/hashicorp/random",
+      "_origin": "ast",
+      "_terraform_directory": "infra",
+      "attributes": {
+        "version": "3.9.1",
+        "constraints": "~> 3.6",
+        "hashes": [
+          "h1:7uiStw0Rl9KOdX5UNMG/sp9nyadoD4LZekQTiYlYPhE=",
+          "zh:05f4734c1f0be840b711b3eff259ebc5fca436784c728955b1678078466f48d7",
+          "zh:0b91bf19371d012434eba1deeb6aab77158def9b39601dcbd94450b3974a2a26",
+          "zh:0ee6eacd47ec00183d55d726a4b6c4ce951a199f944bf22f1aa58392ebdfa7a2",
+          "zh:19388a4074b76a89a43a6c8328d7ae8ee2e7de3d346af51e80d3e6d3d12925f1",
+          "zh:23e74d48c5e2ac2e823fd527f49fee9db37d32a1990c9e3bf126ead697b843eb",
+          "zh:3cabf7fbd096c520064aae3aba61aba670af83ab91291a71fa1b1332929c2b7f",
+          "zh:5c0a3b8af0be60be4eca12ddee385cfa8babc1ec8e98cdf9de2f2274c73eabfa",
+          "zh:60b4f8a8ef18f52bf8e19215229dae408bee732825964092db7c989fd2de4097",
+          "zh:7359015acfedcbd6366f2329c854cf8d3c8ca5cd0faa89d2d37db358d6eba6c5",
+          "zh:78d5eefdd9e494defcb3c68d282b8f96630502cac21d1ea161f53cfe9bb483b3",
+          "zh:7b38758402f0e13a1071162da28994023cd2ac676e54af350c9ffd8dfa73fa7b",
+          "zh:7c7fbb8895eb75bb4de1f933e98553bd99c8d048c89a925ddba490aa5a67f7dc",
+          "zh:8c2b8c6a7ccdec16b73e2fb9f3700ea097f58c592571e4c5de60c93d2301732c"
+        ]
+      },
+      "community": 23,
+      "community_name": ".terraform.lock.hcl",
+      "file_type": "code",
+      "norm_label": "provider.registry.terraform.io/hashicorp/random",
+      "source_file": "infra/.terraform.lock.hcl",
+      "source_location": "L27"
+    },
+    {
+      "id": "terraform_infra_eb0de251ac21fb67_provider_registry_terraform_io_hashicorp_aws",
+      "label": "provider.registry.terraform.io/hashicorp/aws",
+      "_origin": "ast",
+      "_terraform_directory": "infra",
+      "attributes": {
+        "version": "5.100.0",
+        "constraints": "~> 5.0",
+        "hashes": [
+          "h1:H3mU/7URhP0uCRGK8jeQRKxx2XFzEqLiOq/L2Bbiaxs=",
+          "zh:054b8dd49f0549c9a7cc27d159e45327b7b65cf404da5e5a20da154b90b8a644",
+          "zh:0b97bf8d5e03d15d83cc40b0530a1f84b459354939ba6f135a0086c20ebbe6b2",
+          "zh:1589a2266af699cbd5d80737a0fe02e54ec9cf2ca54e7e00ac51c7359056f274",
+          "zh:6330766f1d85f01ae6ea90d1b214b8b74cc8c1badc4696b165b36ddd4cc15f7b",
+          "zh:7c8c2e30d8e55291b86fcb64bdf6c25489d538688545eb48fd74ad622e5d3862",
+          "zh:99b1003bd9bd32ee323544da897148f46a527f622dc3971af63ea3e251596342",
+          "zh:9b12af85486a96aedd8d7984b0ff811a4b42e3d88dad1a3fb4c0b580d04fa425",
+          "zh:9f8b909d3ec50ade83c8062290378b1ec553edef6a447c56dadc01a99f4eaa93",
+          "zh:aaef921ff9aabaf8b1869a86d692ebd24fbd4e12c21205034bb679b9caf883a2",
+          "zh:ac882313207aba00dd5a76dbd572a0ddc818bb9cbf5c9d61b28fe30efaec951e",
+          "zh:bb64e8aff37becab373a1a0cc1080990785304141af42ed6aa3dd4913b000421",
+          "zh:dfe495f6621df5540d9c92ad40b8067376350b005c637ea6efac5dc15028add4",
+          "zh:f0ddf0eaf052766cfe09dea8200a946519f653c384ab4336e2a4a64fdd6310e9",
+          "zh:f1b7e684f4c7ae1eed272b6de7d2049bb87a0275cb04dbb7cda6636f600699c9",
+          "zh:ff461571e3f233699bf690db319dfe46aec75e58726636a0d97dd9ac6e32fb70"
+        ]
+      },
+      "community": 23,
+      "community_name": ".terraform.lock.hcl",
+      "file_type": "code",
+      "norm_label": "provider.registry.terraform.io/hashicorp/aws",
+      "source_file": "infra/.terraform.lock.hcl",
+      "source_location": "L4"
+    },
+    {
+      "id": "terraform_infra_eb0de251ac21fb67_aws_route_table_association_public",
+      "label": "aws_route_table_association.public",
+      "_origin": "ast",
+      "_terraform_directory": "infra",
+      "attributes": {
+        "count": "length(aws_subnet.public)",
+        "subnet_id": "aws_subnet.public[count.index].id",
+        "route_table_id": "aws_route_table.public.id"
+      },
+      "community": 6,
+      "community_name": "var.project_name",
+      "file_type": "code",
+      "norm_label": "aws_route_table_association.public",
+      "source_file": "infra/network.tf",
+      "source_location": "L55"
+    },
+    {
+      "id": "terraform_infra_eb0de251ac21fb67_var_db_engine_version",
+      "label": "var.db_engine_version",
+      "_origin": "ast",
+      "_terraform_directory": "infra",
+      "attributes": {
+        "description": "RDS PostgreSQL major version.",
+        "type": "string",
+        "default": "16"
+      },
+      "community": 6,
+      "community_name": "var.project_name",
+      "file_type": "code",
+      "norm_label": "var.db_engine_version",
+      "source_file": "infra/variables.tf",
+      "source_location": "L25"
+    },
+    {
+      "id": "terraform_infra_eb0de251ac21fb67_var_project_name",
+      "label": "var.project_name",
+      "_origin": "ast",
+      "_terraform_directory": "infra",
+      "attributes": {
+        "description": "Prefix used for resource names.",
+        "type": "string",
+        "default": "anitracker"
+      },
+      "community": 6,
+      "community_name": "var.project_name",
+      "file_type": "code",
+      "norm_label": "var.project_name",
+      "source_file": "infra/variables.tf",
+      "source_location": "L7"
+    },
+    {
+      "id": "terraform_infra_eb0de251ac21fb67_var_key_name",
+      "label": "var.key_name",
+      "_origin": "ast",
+      "_terraform_directory": "infra",
+      "attributes": {
+        "description": "Existing EC2 key pair associated with instances for emergency administration.",
+        "type": "string",
+        "default": "cosc349-2026"
+      },
+      "community": 6,
+      "community_name": "var.project_name",
+      "file_type": "code",
+      "norm_label": "var.key_name",
+      "source_file": "infra/variables.tf",
+      "source_location": "L31"
+    },
+    {
+      "id": "terraform_infra_eb0de251ac21fb67_var_db_instance_class",
+      "label": "var.db_instance_class",
+      "_origin": "ast",
+      "_terraform_directory": "infra",
+      "attributes": {
+        "description": "RDS instance class.",
+        "type": "string",
+        "default": "db.t3.micro"
+      },
+      "community": 6,
+      "community_name": "var.project_name",
+      "file_type": "code",
+      "norm_label": "var.db_instance_class",
+      "source_file": "infra/variables.tf",
+      "source_location": "L19"
+    },
+    {
+      "id": "terraform_infra_eb0de251ac21fb67_var_repository_url",
+      "label": "var.repository_url",
+      "_origin": "ast",
+      "_terraform_directory": "infra",
+      "attributes": {
+        "description": "Public Git repository cloned by both EC2 instances during bootstrap.",
+        "type": "string",
+        "default": "https://github.com/Hephaestus2nd/Anitracker.git"
+      },
+      "community": 6,
+      "community_name": "var.project_name",
+      "file_type": "code",
+      "norm_label": "var.repository_url",
+      "source_file": "infra/variables.tf",
+      "source_location": "L37"
+    },
+    {
+      "id": "terraform_infra_eb0de251ac21fb67_var_repository_ref",
+      "label": "var.repository_ref",
+      "_origin": "ast",
+      "_terraform_directory": "infra",
+      "attributes": {
+        "description": "Git branch or commit checked out by the EC2 bootstrap scripts.",
+        "type": "string",
+        "default": "main"
+      },
+      "community": 6,
+      "community_name": "var.project_name",
+      "file_type": "code",
+      "norm_label": "var.repository_ref",
+      "source_file": "infra/variables.tf",
+      "source_location": "L43"
+    },
+    {
+      "id": "terraform_infra_eb0de251ac21fb67_var_api_instance_type",
+      "label": "var.api_instance_type",
+      "_origin": "ast",
+      "_terraform_directory": "infra",
+      "attributes": {
+        "description": "EC2 instance type for the API server.",
+        "type": "string",
+        "default": "t3.small"
+      },
+      "community": 6,
+      "community_name": "var.project_name",
+      "file_type": "code",
+      "norm_label": "var.api_instance_type",
+      "source_file": "infra/variables.tf",
+      "source_location": "L13"
+    },
+    {
+      "id": "terraform_infra_eb0de251ac21fb67_var_aws_region",
+      "label": "var.aws_region",
+      "_origin": "ast",
+      "_terraform_directory": "infra",
+      "attributes": {
+        "description": "AWS region (Learner Lab only allows us-east-1).",
+        "type": "string",
+        "default": "us-east-1"
+      },
+      "community": 6,
+      "community_name": "var.project_name",
+      "file_type": "code",
+      "norm_label": "var.aws_region",
+      "source_file": "infra/variables.tf",
+      "source_location": "L1"
+    },
+    {
+      "id": "terraform_infra_eb0de251ac21fb67_aws_security_group_api",
+      "label": "aws_security_group.api",
+      "_origin": "ast",
+      "_terraform_directory": "infra",
+      "attributes": {
+        "name": "\"${var.project_name}-api-sg\"",
+        "description": "API: 8080 from web server",
+        "vpc_id": "aws_vpc.main.id",
+        "tags": {
+          "Name": "\"${var.project_name}-api-sg\""
+        }
+      },
+      "community": 6,
+      "community_name": "var.project_name",
+      "file_type": "code",
+      "norm_label": "aws_security_group.api",
+      "source_file": "infra/security.tf",
+      "source_location": "L47"
+    },
+    {
+      "id": "terraform_infra_eb0de251ac21fb67_output_db_app_password",
+      "label": "output.db_app_password",
+      "_origin": "ast",
+      "_terraform_directory": "infra",
+      "attributes": {
+        "description": "Password for app_user (terraform output -raw db_app_password).",
+        "value": "[redacted]",
+        "sensitive": true
+      },
+      "community": 6,
+      "community_name": "var.project_name",
+      "file_type": "code",
+      "norm_label": "output.db_app_password",
+      "source_file": "infra/outputs.tf",
+      "source_location": "L16"
+    },
+    {
+      "id": "terraform_infra_eb0de251ac21fb67_aws_security_group_db",
+      "label": "aws_security_group.db",
+      "_origin": "ast",
+      "_terraform_directory": "infra",
+      "attributes": {
+        "name": "\"${var.project_name}-db-sg\"",
+        "description": "PostgreSQL from the API instance only",
+        "vpc_id": "aws_vpc.main.id",
+        "tags": {
+          "Name": "\"${var.project_name}-db-sg\""
+        }
+      },
+      "community": 6,
+      "community_name": "var.project_name",
+      "file_type": "code",
+      "norm_label": "aws_security_group.db",
+      "source_file": "infra/security.tf",
+      "source_location": "L70"
+    },
+    {
+      "id": "terraform_infra_eb0de251ac21fb67_output_alb_dns_name",
+      "label": "output.alb_dns_name",
+      "_origin": "ast",
+      "_terraform_directory": "infra",
+      "attributes": {
+        "description": "Public DNS name of the application load balancer.",
+        "value": "aws_lb.main.dns_name"
+      },
+      "community": 6,
+      "community_name": "var.project_name",
+      "file_type": "code",
+      "norm_label": "output.alb_dns_name",
+      "source_file": "infra/outputs.tf",
+      "source_location": "L6"
+    },
+    {
+      "id": "terraform_infra_eb0de251ac21fb67_aws_security_group_alb",
+      "label": "aws_security_group.alb",
+      "_origin": "ast",
+      "_terraform_directory": "infra",
+      "attributes": {
+        "name": "\"${var.project_name}-alb-sg\"",
+        "description": "Public HTTP access to the application load balancer",
+        "vpc_id": "aws_vpc.main.id",
+        "tags": {
+          "Name": "\"${var.project_name}-alb-sg\""
+        }
+      },
+      "community": 6,
+      "community_name": "var.project_name",
+      "file_type": "code",
+      "norm_label": "aws_security_group.alb",
+      "source_file": "infra/security.tf",
+      "source_location": "L1"
+    },
+    {
+      "id": "terraform_infra_eb0de251ac21fb67_output_site_url",
+      "label": "output.site_url",
+      "_origin": "ast",
+      "_terraform_directory": "infra",
+      "attributes": {
+        "description": "Public URL of the application.",
+        "value": "\"http://${aws_lb.main.dns_name}\""
+      },
+      "community": 6,
+      "community_name": "var.project_name",
+      "file_type": "code",
+      "norm_label": "output.site_url",
+      "source_file": "infra/outputs.tf",
+      "source_location": "L1"
+    },
+    {
+      "id": "terraform_infra_eb0de251ac21fb67_output_rds_endpoint",
+      "label": "output.rds_endpoint",
+      "_origin": "ast",
+      "_terraform_directory": "infra",
+      "attributes": {
+        "description": "RDS endpoint (private; reachable from the API instance only).",
+        "value": "aws_db_instance.main.endpoint"
+      },
+      "community": 6,
+      "community_name": "var.project_name",
+      "file_type": "code",
+      "norm_label": "output.rds_endpoint",
+      "source_file": "infra/outputs.tf",
+      "source_location": "L11"
+    },
+    {
+      "id": "terraform_infra_eb0de251ac21fb67_aws_security_group_web",
+      "label": "aws_security_group.web",
+      "_origin": "ast",
+      "_terraform_directory": "infra",
+      "attributes": {
+        "name": "\"${var.project_name}-web-sg\"",
+        "description": "Web server: HTTP from ALB",
+        "vpc_id": "aws_vpc.main.id",
+        "tags": {
+          "Name": "\"${var.project_name}-web-sg\""
+        }
+      },
+      "community": 6,
+      "community_name": "var.project_name",
+      "file_type": "code",
+      "norm_label": "aws_security_group.web",
+      "source_file": "infra/security.tf",
+      "source_location": "L24"
+    },
+    {
+      "id": "terraform_infra_eb0de251ac21fb67_aws_lb_main",
+      "label": "aws_lb.main",
+      "_origin": "ast",
+      "_terraform_directory": "infra",
+      "attributes": {
+        "name": "\"${var.project_name}-alb\"",
+        "internal": false,
+        "load_balancer_type": "application",
+        "security_groups": [
+          "aws_security_group.alb.id"
+        ],
+        "subnets": "aws_subnet.public[*].id",
+        "tags": {
+          "Name": "\"${var.project_name}-alb\""
+        }
+      },
+      "community": 6,
+      "community_name": "var.project_name",
+      "file_type": "code",
+      "norm_label": "aws_lb.main",
+      "source_file": "infra/alb.tf",
+      "source_location": "L1"
+    },
+    {
+      "id": "terraform_infra_eb0de251ac21fb67_random_password_db_admin",
+      "label": "random_password.db_admin",
+      "_origin": "ast",
+      "_terraform_directory": "infra",
+      "attributes": {
+        "length": 24,
+        "special": false
+      },
+      "community": 6,
+      "community_name": "var.project_name",
+      "file_type": "code",
+      "norm_label": "random_password.db_admin",
+      "source_file": "infra/rds.tf",
+      "source_location": "L2"
+    },
+    {
+      "id": "terraform_infra_eb0de251ac21fb67_random_password_db_app",
+      "label": "random_password.db_app",
+      "_origin": "ast",
+      "_terraform_directory": "infra",
+      "attributes": {
+        "length": 24,
+        "special": false
+      },
+      "community": 6,
+      "community_name": "var.project_name",
+      "file_type": "code",
+      "norm_label": "random_password.db_app",
+      "source_file": "infra/rds.tf",
+      "source_location": "L7"
+    },
+    {
+      "id": "terraform_infra_eb0de251ac21fb67_aws_lb_listener_http",
+      "label": "aws_lb_listener.http",
+      "_origin": "ast",
+      "_terraform_directory": "infra",
+      "attributes": {
+        "load_balancer_arn": "aws_lb.main.arn",
+        "port": 80,
+        "protocol": "HTTP"
+      },
+      "community": 6,
+      "community_name": "var.project_name",
+      "file_type": "code",
+      "norm_label": "aws_lb_listener.http",
+      "source_file": "infra/alb.tf",
+      "source_location": "L38"
+    },
+    {
+      "id": "terraform_infra_eb0de251ac21fb67_data_aws_ami_ubuntu",
+      "label": "data.aws_ami.ubuntu",
+      "_origin": "ast",
+      "_terraform_directory": "infra",
+      "attributes": {
+        "most_recent": true,
+        "owners": [
+          "099720109477"
+        ]
+      },
+      "community": 6,
+      "community_name": "var.project_name",
+      "file_type": "code",
+      "norm_label": "data.aws_ami.ubuntu",
+      "source_file": "infra/ec2_api.tf",
+      "source_location": "L1"
+    },
+    {
+      "id": "terraform_infra_eb0de251ac21fb67_aws_db_subnet_group_main",
+      "label": "aws_db_subnet_group.main",
+      "_origin": "ast",
+      "_terraform_directory": "infra",
+      "attributes": {
+        "name": "\"${var.project_name}-db-subnets\"",
+        "subnet_ids": "aws_subnet.private[*].id",
+        "tags": {
+          "Name": "\"${var.project_name}-db-subnets\""
+        }
+      },
+      "community": 6,
+      "community_name": "var.project_name",
+      "file_type": "code",
+      "norm_label": "aws_db_subnet_group.main",
+      "source_file": "infra/rds.tf",
+      "source_location": "L18"
+    },
+    {
+      "id": "terraform_infra_eb0de251ac21fb67_aws_lb_target_group_web",
+      "label": "aws_lb_target_group.web",
+      "_origin": "ast",
+      "_terraform_directory": "infra",
+      "attributes": {
+        "name": "\"${var.project_name}-web-tg\"",
+        "port": 80,
+        "protocol": "HTTP",
+        "target_type": "instance",
+        "vpc_id": "aws_vpc.main.id",
+        "tags": {
+          "Name": "\"${var.project_name}-web-tg\""
+        }
+      },
+      "community": 6,
+      "community_name": "var.project_name",
+      "file_type": "code",
+      "norm_label": "aws_lb_target_group.web",
+      "source_file": "infra/alb.tf",
+      "source_location": "L11"
+    },
+    {
+      "id": "terraform_infra_eb0de251ac21fb67_aws_lb_target_group_attachment_web",
+      "label": "aws_lb_target_group_attachment.web",
+      "_origin": "ast",
+      "_terraform_directory": "infra",
+      "attributes": {
+        "target_group_arn": "aws_lb_target_group.web.arn",
+        "target_id": "aws_instance.web.id",
+        "port": 80
+      },
+      "community": 6,
+      "community_name": "var.project_name",
+      "file_type": "code",
+      "norm_label": "aws_lb_target_group_attachment.web",
+      "source_file": "infra/alb.tf",
+      "source_location": "L32"
+    },
+    {
+      "id": "terraform_infra_eb0de251ac21fb67_provider_aws",
+      "label": "provider.aws",
+      "_origin": "ast",
+      "_terraform_directory": "infra",
+      "attributes": {
+        "region": "var.aws_region"
+      },
+      "community": 6,
+      "community_name": "var.project_name",
+      "file_type": "code",
+      "norm_label": "provider.aws",
+      "source_file": "infra/versions.tf",
+      "source_location": "L16"
+    },
+    {
+      "id": "terraform_infra_eb0de251ac21fb67_data_aws_availability_zones_available",
+      "label": "data.aws_availability_zones.available",
+      "_origin": "ast",
+      "_terraform_directory": "infra",
+      "attributes": {
+        "state": "available"
+      },
+      "community": 6,
+      "community_name": "var.project_name",
+      "file_type": "code",
+      "norm_label": "data.aws_availability_zones.available",
+      "source_file": "infra/network.tf",
+      "source_location": "L1"
+    },
+    {
+      "id": "terraform_infra_eb0de251ac21fb67_aws_internet_gateway_main",
+      "label": "aws_internet_gateway.main",
+      "_origin": "ast",
+      "_terraform_directory": "infra",
+      "attributes": {
+        "vpc_id": "aws_vpc.main.id",
+        "tags": {
+          "Name": "\"${var.project_name}-igw\""
+        }
+      },
+      "community": 6,
+      "community_name": "var.project_name",
+      "file_type": "code",
+      "norm_label": "aws_internet_gateway.main",
+      "source_file": "infra/network.tf",
+      "source_location": "L17"
+    },
+    {
+      "id": "terraform_infra_eb0de251ac21fb67_aws_route_table_public",
+      "label": "aws_route_table.public",
+      "_origin": "ast",
+      "_terraform_directory": "infra",
+      "attributes": {
+        "vpc_id": "aws_vpc.main.id",
+        "tags": {
+          "Name": "\"${var.project_name}-public-rt\""
+        }
+      },
+      "community": 6,
+      "community_name": "var.project_name",
+      "file_type": "code",
+      "norm_label": "aws_route_table.public",
+      "source_file": "infra/network.tf",
+      "source_location": "L44"
+    },
+    {
+      "id": "infra_terraform_lock",
+      "label": ".terraform.lock.hcl",
+      "_origin": "ast",
+      "_terraform_directory": "infra",
+      "community": 23,
+      "community_name": ".terraform.lock.hcl",
+      "file_type": "code",
+      "norm_label": ".terraform.lock.hcl",
+      "source_file": "infra/.terraform.lock.hcl",
+      "source_location": null,
+      "type": "terraform_file"
+    },
+    {
+      "id": "infra_alb",
+      "label": "alb.tf",
+      "_origin": "ast",
+      "_terraform_directory": "infra",
+      "community": 6,
+      "community_name": "var.project_name",
+      "file_type": "code",
+      "norm_label": "alb.tf",
+      "source_file": "infra/alb.tf",
+      "source_location": null,
+      "type": "terraform_file"
+    },
+    {
+      "id": "infra_ec2_api",
+      "label": "ec2_api.tf",
+      "_origin": "ast",
+      "_terraform_directory": "infra",
+      "community": 6,
+      "community_name": "var.project_name",
+      "file_type": "code",
+      "norm_label": "ec2_api.tf",
+      "source_file": "infra/ec2_api.tf",
+      "source_location": null,
+      "type": "terraform_file"
+    },
+    {
+      "id": "infra_ec2_web",
+      "label": "ec2_web.tf",
+      "_origin": "ast",
+      "_terraform_directory": "infra",
+      "community": 6,
+      "community_name": "var.project_name",
+      "file_type": "code",
+      "norm_label": "ec2_web.tf",
+      "source_file": "infra/ec2_web.tf",
+      "source_location": null,
+      "type": "terraform_file"
+    },
+    {
+      "id": "infra_network",
+      "label": "network.tf",
+      "_origin": "ast",
+      "_terraform_directory": "infra",
+      "community": 6,
+      "community_name": "var.project_name",
+      "file_type": "code",
+      "norm_label": "network.tf",
+      "source_file": "infra/network.tf",
+      "source_location": null,
+      "type": "terraform_file"
+    },
+    {
+      "id": "infra_outputs",
+      "label": "outputs.tf",
+      "_origin": "ast",
+      "_terraform_directory": "infra",
+      "community": 6,
+      "community_name": "var.project_name",
+      "file_type": "code",
+      "norm_label": "outputs.tf",
+      "source_file": "infra/outputs.tf",
+      "source_location": null,
+      "type": "terraform_file"
+    },
+    {
+      "id": "infra_rds",
+      "label": "rds.tf",
+      "_origin": "ast",
+      "_terraform_directory": "infra",
+      "community": 6,
+      "community_name": "var.project_name",
+      "file_type": "code",
+      "norm_label": "rds.tf",
+      "source_file": "infra/rds.tf",
+      "source_location": null,
+      "type": "terraform_file"
+    },
+    {
+      "id": "infra_security",
+      "label": "security.tf",
+      "_origin": "ast",
+      "_terraform_directory": "infra",
+      "community": 6,
+      "community_name": "var.project_name",
+      "file_type": "code",
+      "norm_label": "security.tf",
+      "source_file": "infra/security.tf",
+      "source_location": null,
+      "type": "terraform_file"
+    },
+    {
+      "id": "infra_variables",
+      "label": "variables.tf",
+      "_origin": "ast",
+      "_terraform_directory": "infra",
+      "community": 6,
+      "community_name": "var.project_name",
+      "file_type": "code",
+      "norm_label": "variables.tf",
+      "source_file": "infra/variables.tf",
+      "source_location": null,
+      "type": "terraform_file"
+    },
+    {
+      "id": "infra_versions",
+      "label": "versions.tf",
+      "_origin": "ast",
+      "_terraform_directory": "infra",
+      "community": 6,
+      "community_name": "var.project_name",
+      "file_type": "code",
+      "norm_label": "versions.tf",
+      "source_file": "infra/versions.tf",
+      "source_location": null,
+      "type": "terraform_file"
+    },
+    {
+      "id": "terraform_infra_eb0de251ac21fb67_directory",
+      "label": "Terraform module: infra",
+      "_origin": "ast",
+      "_terraform_directory": "infra",
+      "community": 6,
+      "community_name": "var.project_name",
+      "file_type": "code",
+      "language": "terraform",
+      "norm_label": "terraform module: infra",
+      "source_file": "infra/alb.tf",
+      "source_location": null,
+      "type": "module"
+    },
+    {
+      "id": "terraform_infra_eb0de251ac21fb67_local_azs",
+      "label": "local.azs",
+      "_origin": "ast",
+      "_terraform_directory": "infra",
+      "community": 6,
+      "community_name": "var.project_name",
+      "file_type": "code",
+      "norm_label": "local.azs",
+      "source_file": "infra/network.tf",
+      "source_location": "L6"
+    },
+    {
+      "id": "terraform_infra_eb0de251ac21fb67_local_db_admin_user",
+      "label": "local.db_admin_user",
+      "_origin": "ast",
+      "_terraform_directory": "infra",
+      "community": 6,
+      "community_name": "var.project_name",
+      "file_type": "code",
+      "norm_label": "local.db_admin_user",
+      "source_file": "infra/rds.tf",
+      "source_location": "L14"
+    },
+    {
+      "id": "terraform_infra_eb0de251ac21fb67_local_db_app_user",
+      "label": "local.db_app_user",
+      "_origin": "ast",
+      "_terraform_directory": "infra",
+      "community": 6,
+      "community_name": "var.project_name",
+      "file_type": "code",
+      "norm_label": "local.db_app_user",
+      "source_file": "infra/rds.tf",
+      "source_location": "L15"
+    },
+    {
+      "id": "terraform_infra_eb0de251ac21fb67_local_db_name",
+      "label": "local.db_name",
+      "_origin": "ast",
+      "_terraform_directory": "infra",
+      "community": 6,
+      "community_name": "var.project_name",
+      "file_type": "code",
+      "norm_label": "local.db_name",
+      "source_file": "infra/rds.tf",
+      "source_location": "L13"
     },
     {
       "id": "backend_src_main_app_anime",
@@ -860,6 +1782,28 @@
       "source_location": "L1"
     },
     {
+      "id": "frontend_src_assets_loadingspinner",
+      "label": "LoadingSpinner.vue",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "Main.vue",
+      "file_type": "code",
+      "norm_label": "loadingspinner.vue",
+      "source_file": "frontend/src/assets/LoadingSpinner.vue",
+      "source_location": "L1"
+    },
+    {
+      "id": "frontend_src_assets_loadingspinner_props",
+      "label": "props",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "Main.vue",
+      "file_type": "code",
+      "norm_label": "props",
+      "source_file": "frontend/src/assets/LoadingSpinner.vue",
+      "source_location": "L2"
+    },
+    {
       "id": "frontend_src_assets_warningicon",
       "label": "WarningIcon.vue",
       "_origin": "ast",
@@ -924,6 +1868,28 @@
       "norm_label": "errormsg.vue",
       "source_file": "frontend/src/views/components/ErrorMsg.vue",
       "source_location": "L1"
+    },
+    {
+      "id": "frontend_src_views_components_fullblockloadingspinner",
+      "label": "FullBlockLoadingSpinner.vue",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "Main.vue",
+      "file_type": "code",
+      "norm_label": "fullblockloadingspinner.vue",
+      "source_file": "frontend/src/views/components/FullBlockLoadingSpinner.vue",
+      "source_location": "L1"
+    },
+    {
+      "id": "frontend_src_views_components_fullblockloadingspinner_props",
+      "label": "props",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "Main.vue",
+      "file_type": "code",
+      "norm_label": "props",
+      "source_file": "frontend/src/views/components/FullBlockLoadingSpinner.vue",
+      "source_location": "L4"
     },
     {
       "id": "frontend_src_views_components_modalgeneric",
@@ -1473,26 +2439,114 @@
       "source_location": "L1"
     },
     {
-      "id": "frontend_src_assets_loadingspinner",
-      "label": "LoadingSpinner.vue",
+      "id": "frontend_src_app",
+      "label": "App.vue",
       "_origin": "ast",
       "community": 2,
       "community_name": "DetailPage.vue",
       "file_type": "code",
-      "norm_label": "loadingspinner.vue",
-      "source_file": "frontend/src/assets/LoadingSpinner.vue",
+      "norm_label": "app.vue",
+      "source_file": "frontend/src/App.vue",
       "source_location": "L1"
     },
     {
-      "id": "frontend_src_assets_loadingspinner_props",
-      "label": "props",
+      "id": "frontend_src_assets_logo",
+      "label": "Logo.vue",
       "_origin": "ast",
       "community": 2,
       "community_name": "DetailPage.vue",
       "file_type": "code",
-      "norm_label": "props",
-      "source_file": "frontend/src/assets/LoadingSpinner.vue",
-      "source_location": "L2"
+      "norm_label": "logo.vue",
+      "source_file": "frontend/src/assets/Logo.vue",
+      "source_location": "L1"
+    },
+    {
+      "id": "frontend_src_helpers_apistuff",
+      "label": "apiStuff.js",
+      "_origin": "ast",
+      "community": 2,
+      "community_name": "DetailPage.vue",
+      "file_type": "code",
+      "norm_label": "apistuff.js",
+      "source_file": "frontend/src/helpers/apiStuff.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "frontend_src_helpers_apistuff_apilinks",
+      "label": "apiLinks",
+      "_origin": "ast",
+      "community": 2,
+      "community_name": "DetailPage.vue",
+      "file_type": "code",
+      "norm_label": "apilinks",
+      "source_file": "frontend/src/helpers/apiStuff.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "frontend_src_helpers_apistuff_apiqueries",
+      "label": "apiQueries",
+      "_origin": "ast",
+      "community": 2,
+      "community_name": "DetailPage.vue",
+      "file_type": "code",
+      "norm_label": "apiqueries",
+      "source_file": "frontend/src/helpers/apiStuff.js",
+      "source_location": "L6"
+    },
+    {
+      "id": "frontend_src_helpers_watchstatuslabels",
+      "label": "watchStatusLabels.js",
+      "_origin": "ast",
+      "community": 2,
+      "community_name": "DetailPage.vue",
+      "file_type": "code",
+      "norm_label": "watchstatuslabels.js",
+      "source_file": "frontend/src/helpers/watchStatusLabels.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "frontend_src_helpers_watchstatuslabels_watchstatuslabels",
+      "label": "watchStatusLabels",
+      "_origin": "ast",
+      "community": 2,
+      "community_name": "DetailPage.vue",
+      "file_type": "code",
+      "norm_label": "watchstatuslabels",
+      "source_file": "frontend/src/helpers/watchStatusLabels.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "frontend_src_main",
+      "label": "main.js",
+      "_origin": "ast",
+      "community": 2,
+      "community_name": "DetailPage.vue",
+      "file_type": "code",
+      "norm_label": "main.js",
+      "source_file": "frontend/src/main.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "frontend_src_router_index",
+      "label": "index.js",
+      "_origin": "ast",
+      "community": 2,
+      "community_name": "DetailPage.vue",
+      "file_type": "code",
+      "norm_label": "index.js",
+      "source_file": "frontend/src/router/index.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "frontend_src_router_index_router",
+      "label": "router",
+      "_origin": "ast",
+      "community": 2,
+      "community_name": "DetailPage.vue",
+      "file_type": "code",
+      "norm_label": "router",
+      "source_file": "frontend/src/router/index.js",
+      "source_location": "L5"
     },
     {
       "id": "frontend_src_views_components_episodesandstatusformsection",
@@ -1528,26 +2582,15 @@
       "source_location": "L5"
     },
     {
-      "id": "frontend_src_views_components_fullblockloadingspinner",
-      "label": "FullBlockLoadingSpinner.vue",
+      "id": "frontend_src_views_components_mainnav",
+      "label": "MainNav.vue",
       "_origin": "ast",
       "community": 2,
       "community_name": "DetailPage.vue",
       "file_type": "code",
-      "norm_label": "fullblockloadingspinner.vue",
-      "source_file": "frontend/src/views/components/FullBlockLoadingSpinner.vue",
+      "norm_label": "mainnav.vue",
+      "source_file": "frontend/src/views/components/MainNav.vue",
       "source_location": "L1"
-    },
-    {
-      "id": "frontend_src_views_components_fullblockloadingspinner_props",
-      "label": "props",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "DetailPage.vue",
-      "file_type": "code",
-      "norm_label": "props",
-      "source_file": "frontend/src/views/components/FullBlockLoadingSpinner.vue",
-      "source_location": "L4"
     },
     {
       "id": "frontend_src_views_components_miniprogressbar",
@@ -2131,7 +3174,7 @@
       "label": "README.md",
       "_origin": "ast",
       "community": 4,
-      "community_name": "Anitracker (Three-VM Internet Movie/Anime Database)",
+      "community_name": "Local Deployment (Vagrant)",
       "file_type": "document",
       "node_kind": "page",
       "norm_label": "readme.md",
@@ -2139,167 +3182,23 @@
       "source_location": "L1"
     },
     {
-      "id": "readme_10_troubleshooting",
-      "label": "10) Troubleshooting",
+      "id": "readme_ai_reuse_attribution_note",
+      "label": "AI/reuse attribution note",
       "_origin": "ast",
       "community": 4,
-      "community_name": "Anitracker (Three-VM Internet Movie/Anime Database)",
+      "community_name": "Local Deployment (Vagrant)",
       "file_type": "document",
       "node_kind": "heading",
-      "norm_label": "10) troubleshooting",
+      "norm_label": "ai/reuse attribution note",
       "source_file": "README.md",
-      "source_location": "L246"
-    },
-    {
-      "id": "readme_11_assessment_evidence_pointers",
-      "label": "11) Assessment evidence pointers",
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "Anitracker (Three-VM Internet Movie/Anime Database)",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "11) assessment evidence pointers",
-      "source_file": "README.md",
-      "source_location": "L292"
-    },
-    {
-      "id": "readme_12_api_behavior_notes",
-      "label": "12) API behavior notes",
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "Anitracker (Three-VM Internet Movie/Anime Database)",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "12) api behavior notes",
-      "source_file": "README.md",
-      "source_location": "L387"
-    },
-    {
-      "id": "readme_13_ai_reuse_attribution_note",
-      "label": "13) AI/reuse attribution note",
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "Anitracker (Three-VM Internet Movie/Anime Database)",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "13) ai/reuse attribution note",
-      "source_file": "README.md",
-      "source_location": "L394"
-    },
-    {
-      "id": "readme_1_architecture_3_vm_requirement",
-      "label": "1) Architecture (3 VM requirement)",
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "Anitracker (Three-VM Internet Movie/Anime Database)",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "1) architecture (3 vm requirement)",
-      "source_file": "README.md",
-      "source_location": "L26"
-    },
-    {
-      "id": "readme_2_tools_and_purpose",
-      "label": "2) Tools and purpose",
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "Anitracker (Three-VM Internet Movie/Anime Database)",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "2) tools and purpose",
-      "source_file": "README.md",
-      "source_location": "L62"
-    },
-    {
-      "id": "readme_3_supported_host_environment",
-      "label": "3) Supported host environment",
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "Anitracker (Three-VM Internet Movie/Anime Database)",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "3) supported host environment",
-      "source_file": "README.md",
-      "source_location": "L74"
-    },
-    {
-      "id": "readme_4_one_command_deployment",
-      "label": "4) One-command deployment",
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "Anitracker (Three-VM Internet Movie/Anime Database)",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "4) one-command deployment",
-      "source_file": "README.md",
-      "source_location": "L96"
-    },
-    {
-      "id": "readme_5_verification_reproducible_evidence",
-      "label": "5) Verification (reproducible evidence)",
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "Anitracker (Three-VM Internet Movie/Anime Database)",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "5) verification (reproducible evidence)",
-      "source_file": "README.md",
-      "source_location": "L116"
-    },
-    {
-      "id": "readme_6_removal_cleanup",
-      "label": "6) Removal / cleanup",
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "Anitracker (Three-VM Internet Movie/Anime Database)",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "6) removal / cleanup",
-      "source_file": "README.md",
-      "source_location": "L147"
-    },
-    {
-      "id": "readme_7_demonstration_data",
-      "label": "7) Demonstration data",
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "Anitracker (Three-VM Internet Movie/Anime Database)",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "7) demonstration data",
-      "source_file": "README.md",
-      "source_location": "L165"
-    },
-    {
-      "id": "readme_8_developer_modification_and_redeployment_workflow",
-      "label": "8) Developer modification and redeployment workflow",
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "Anitracker (Three-VM Internet Movie/Anime Database)",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "8) developer modification and redeployment workflow",
-      "source_file": "README.md",
-      "source_location": "L179"
-    },
-    {
-      "id": "readme_9_repository_structure",
-      "label": "9) Repository structure",
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "Anitracker (Three-VM Internet Movie/Anime Database)",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "9) repository structure",
-      "source_file": "README.md",
-      "source_location": "L230"
+      "source_location": "L401"
     },
     {
       "id": "readme_anitracker_three_vm_internet_movie_anime_database",
       "label": "Anitracker (Three-VM Internet Movie/Anime Database)",
       "_origin": "ast",
       "community": 4,
-      "community_name": "Anitracker (Three-VM Internet Movie/Anime Database)",
+      "community_name": "Local Deployment (Vagrant)",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "anitracker (three-vm internet movie/anime database)",
@@ -2307,143 +3206,143 @@
       "source_location": "L1"
     },
     {
-      "id": "readme_architecture",
-      "label": "Architecture",
+      "id": "readme_api_behavior_notes",
+      "label": "API behavior notes",
       "_origin": "ast",
       "community": 4,
-      "community_name": "Anitracker (Three-VM Internet Movie/Anime Database)",
+      "community_name": "Local Deployment (Vagrant)",
       "file_type": "document",
       "node_kind": "heading",
-      "norm_label": "architecture",
+      "norm_label": "api behavior notes",
       "source_file": "README.md",
-      "source_location": "L305"
-    },
-    {
-      "id": "readme_aws_credentials_learner_lab",
-      "label": "AWS credentials (Learner Lab)",
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "Anitracker (Three-VM Internet Movie/Anime Database)",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "aws credentials (learner lab)",
-      "source_file": "README.md",
-      "source_location": "L329"
-    },
-    {
-      "id": "readme_aws_deployment_terraform",
-      "label": "AWS deployment (Terraform)",
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "Anitracker (Three-VM Internet Movie/Anime Database)",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "aws deployment (terraform)",
-      "source_file": "README.md",
-      "source_location": "L303"
+      "source_location": "L396"
     },
     {
       "id": "readme_backend_change_java_api_or_db_access_logic",
       "label": "Backend change (Java/API or DB access logic)",
       "_origin": "ast",
       "community": 4,
-      "community_name": "Anitracker (Three-VM Internet Movie/Anime Database)",
+      "community_name": "Local Deployment (Vagrant)",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "backend change (java/api or db access logic)",
       "source_file": "README.md",
-      "source_location": "L183"
+      "source_location": "L351"
     },
     {
-      "id": "readme_deploy",
+      "id": "readme_common_problems_312",
+      "label": "Common problems",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "Local Deployment (Vagrant)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "common problems",
+      "source_file": "README.md",
+      "source_location": "L312"
+    },
+    {
+      "id": "readme_demonstration_data",
+      "label": "Demonstration data",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "Local Deployment (Vagrant)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "demonstration data",
+      "source_file": "README.md",
+      "source_location": "L338"
+    },
+    {
+      "id": "readme_deploy_269",
       "label": "Deploy",
       "_origin": "ast",
       "community": 4,
-      "community_name": "Anitracker (Three-VM Internet Movie/Anime Database)",
+      "community_name": "Local Deployment (Vagrant)",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "deploy",
       "source_file": "README.md",
-      "source_location": "L339"
+      "source_location": "L269"
     },
     {
-      "id": "readme_destroy",
+      "id": "readme_destroy_301",
       "label": "Destroy",
       "_origin": "ast",
       "community": 4,
-      "community_name": "Anitracker (Three-VM Internet Movie/Anime Database)",
+      "community_name": "Local Deployment (Vagrant)",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "destroy",
       "source_file": "README.md",
-      "source_location": "L377"
+      "source_location": "L301"
+    },
+    {
+      "id": "readme_developer_modification_and_redeployment_workflow_in_vagrant",
+      "label": "Developer modification and redeployment workflow in Vagrant",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "Local Deployment (Vagrant)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "developer modification and redeployment workflow in vagrant",
+      "source_file": "README.md",
+      "source_location": "L348"
     },
     {
       "id": "readme_frontend_change_vue_ui",
       "label": "Frontend change (Vue UI)",
       "_origin": "ast",
       "community": 4,
-      "community_name": "Anitracker (Three-VM Internet Movie/Anime Database)",
+      "community_name": "Local Deployment (Vagrant)",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "frontend change (vue ui)",
       "source_file": "README.md",
-      "source_location": "L199"
+      "source_location": "L367"
     },
     {
-      "id": "readme_host_os",
-      "label": "Host OS",
+      "id": "readme_local_deployment_vagrant",
+      "label": "Local Deployment (Vagrant)",
       "_origin": "ast",
       "community": 4,
-      "community_name": "Anitracker (Three-VM Internet Movie/Anime Database)",
+      "community_name": "Local Deployment (Vagrant)",
       "file_type": "document",
       "node_kind": "heading",
-      "norm_label": "host os",
+      "norm_label": "local deployment (vagrant)",
       "source_file": "README.md",
-      "source_location": "L76"
-    },
-    {
-      "id": "readme_known_host_constraints",
-      "label": "Known host constraints",
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "Anitracker (Three-VM Internet Movie/Anime Database)",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "known host constraints",
-      "source_file": "README.md",
-      "source_location": "L89"
+      "source_location": "L217"
     },
     {
       "id": "readme_network_and_ports",
       "label": "Network and ports",
       "_origin": "ast",
       "community": 4,
-      "community_name": "Anitracker (Three-VM Internet Movie/Anime Database)",
+      "community_name": "Local Deployment (Vagrant)",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "network and ports",
       "source_file": "README.md",
-      "source_location": "L49"
+      "source_location": "L239"
     },
     {
-      "id": "readme_prerequisites_host",
+      "id": "readme_prerequisites_host_260",
       "label": "Prerequisites (host)",
       "_origin": "ast",
       "community": 4,
-      "community_name": "Anitracker (Three-VM Internet Movie/Anime Database)",
+      "community_name": "Local Deployment (Vagrant)",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "prerequisites (host)",
       "source_file": "README.md",
-      "source_location": "L324"
+      "source_location": "L260"
     },
     {
       "id": "readme_quick_start",
       "label": "Quick start",
       "_origin": "ast",
       "community": 4,
-      "community_name": "Anitracker (Three-VM Internet Movie/Anime Database)",
+      "community_name": "Local Deployment (Vagrant)",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "quick start",
@@ -2451,112 +3350,76 @@
       "source_location": "L5"
     },
     {
-      "id": "readme_redeploy_after_changes",
-      "label": "Redeploy after changes",
+      "id": "readme_repository_structure",
+      "label": "Repository structure",
       "_origin": "ast",
       "community": 4,
-      "community_name": "Anitracker (Three-VM Internet Movie/Anime Database)",
+      "community_name": "Local Deployment (Vagrant)",
       "file_type": "document",
       "node_kind": "heading",
-      "norm_label": "redeploy after changes",
+      "norm_label": "repository structure",
       "source_file": "README.md",
-      "source_location": "L369"
+      "source_location": "L30"
     },
     {
       "id": "readme_request_flow_representative_user_action",
       "label": "Request flow (representative user action)",
       "_origin": "ast",
       "community": 4,
-      "community_name": "Anitracker (Three-VM Internet Movie/Anime Database)",
+      "community_name": "Local Deployment (Vagrant)",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "request flow (representative user action)",
       "source_file": "README.md",
-      "source_location": "L36"
-    },
-    {
-      "id": "readme_required_tools",
-      "label": "Required tools",
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "Anitracker (Three-VM Internet Movie/Anime Database)",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "required tools",
-      "source_file": "README.md",
-      "source_location": "L81"
+      "source_location": "L226"
     },
     {
       "id": "readme_schema_seed_change",
       "label": "Schema/seed change",
       "_origin": "ast",
       "community": 4,
-      "community_name": "Anitracker (Three-VM Internet Movie/Anime Database)",
+      "community_name": "Local Deployment (Vagrant)",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "schema/seed change",
       "source_file": "README.md",
-      "source_location": "L215"
+      "source_location": "L383"
     },
     {
-      "id": "readme_service_level_checks",
-      "label": "Service-level checks",
+      "id": "readme_tools_and_purpose",
+      "label": "Tools and purpose",
       "_origin": "ast",
       "community": 4,
-      "community_name": "Anitracker (Three-VM Internet Movie/Anime Database)",
+      "community_name": "Local Deployment (Vagrant)",
       "file_type": "document",
       "node_kind": "heading",
-      "norm_label": "service-level checks",
+      "norm_label": "tools and purpose",
       "source_file": "README.md",
-      "source_location": "L274"
+      "source_location": "L252"
     },
     {
-      "id": "readme_vagrant_shared_folder_missing",
-      "label": "`/vagrant` shared folder missing",
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "Anitracker (Three-VM Internet Movie/Anime Database)",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "`/vagrant` shared folder missing",
-      "source_file": "README.md",
-      "source_location": "L266"
-    },
-    {
-      "id": "readme_verify",
+      "id": "readme_verify_279",
       "label": "Verify",
       "_origin": "ast",
       "community": 4,
-      "community_name": "Anitracker (Three-VM Internet Movie/Anime Database)",
+      "community_name": "Local Deployment (Vagrant)",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "verify",
       "source_file": "README.md",
-      "source_location": "L350"
-    },
-    {
-      "id": "readme_vm_boot_provision_failures",
-      "label": "VM boot/provision failures",
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "Anitracker (Three-VM Internet Movie/Anime Database)",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "vm boot/provision failures",
-      "source_file": "README.md",
-      "source_location": "L248"
+      "source_location": "L279"
     },
     {
       "id": "readme_vm_responsibilities",
       "label": "VM responsibilities",
       "_origin": "ast",
       "community": 4,
-      "community_name": "Anitracker (Three-VM Internet Movie/Anime Database)",
+      "community_name": "Local Deployment (Vagrant)",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "vm responsibilities",
       "source_file": "README.md",
-      "source_location": "L28"
+      "source_location": "L218"
     },
     {
       "id": "backend_src_main_app_watchstatus",
@@ -2634,127 +3497,6 @@
       "norm_label": "override",
       "source_file": "",
       "source_location": ""
-    },
-    {
-      "id": "frontend_src_app",
-      "label": "App.vue",
-      "_origin": "ast",
-      "community": 6,
-      "community_name": "App.vue",
-      "file_type": "code",
-      "norm_label": "app.vue",
-      "source_file": "frontend/src/App.vue",
-      "source_location": "L1"
-    },
-    {
-      "id": "frontend_src_assets_logo",
-      "label": "Logo.vue",
-      "_origin": "ast",
-      "community": 6,
-      "community_name": "App.vue",
-      "file_type": "code",
-      "norm_label": "logo.vue",
-      "source_file": "frontend/src/assets/Logo.vue",
-      "source_location": "L1"
-    },
-    {
-      "id": "frontend_src_helpers_apistuff",
-      "label": "apiStuff.js",
-      "_origin": "ast",
-      "community": 6,
-      "community_name": "App.vue",
-      "file_type": "code",
-      "norm_label": "apistuff.js",
-      "source_file": "frontend/src/helpers/apiStuff.js",
-      "source_location": "L1"
-    },
-    {
-      "id": "frontend_src_helpers_apistuff_apilinks",
-      "label": "apiLinks",
-      "_origin": "ast",
-      "community": 6,
-      "community_name": "App.vue",
-      "file_type": "code",
-      "norm_label": "apilinks",
-      "source_file": "frontend/src/helpers/apiStuff.js",
-      "source_location": "L1"
-    },
-    {
-      "id": "frontend_src_helpers_apistuff_apiqueries",
-      "label": "apiQueries",
-      "_origin": "ast",
-      "community": 6,
-      "community_name": "App.vue",
-      "file_type": "code",
-      "norm_label": "apiqueries",
-      "source_file": "frontend/src/helpers/apiStuff.js",
-      "source_location": "L6"
-    },
-    {
-      "id": "frontend_src_helpers_watchstatuslabels",
-      "label": "watchStatusLabels.js",
-      "_origin": "ast",
-      "community": 6,
-      "community_name": "App.vue",
-      "file_type": "code",
-      "norm_label": "watchstatuslabels.js",
-      "source_file": "frontend/src/helpers/watchStatusLabels.js",
-      "source_location": "L1"
-    },
-    {
-      "id": "frontend_src_helpers_watchstatuslabels_watchstatuslabels",
-      "label": "watchStatusLabels",
-      "_origin": "ast",
-      "community": 6,
-      "community_name": "App.vue",
-      "file_type": "code",
-      "norm_label": "watchstatuslabels",
-      "source_file": "frontend/src/helpers/watchStatusLabels.js",
-      "source_location": "L1"
-    },
-    {
-      "id": "frontend_src_main",
-      "label": "main.js",
-      "_origin": "ast",
-      "community": 6,
-      "community_name": "App.vue",
-      "file_type": "code",
-      "norm_label": "main.js",
-      "source_file": "frontend/src/main.js",
-      "source_location": "L1"
-    },
-    {
-      "id": "frontend_src_router_index",
-      "label": "index.js",
-      "_origin": "ast",
-      "community": 6,
-      "community_name": "App.vue",
-      "file_type": "code",
-      "norm_label": "index.js",
-      "source_file": "frontend/src/router/index.js",
-      "source_location": "L1"
-    },
-    {
-      "id": "frontend_src_router_index_router",
-      "label": "router",
-      "_origin": "ast",
-      "community": 6,
-      "community_name": "App.vue",
-      "file_type": "code",
-      "norm_label": "router",
-      "source_file": "frontend/src/router/index.js",
-      "source_location": "L5"
-    },
-    {
-      "id": "frontend_src_views_components_mainnav",
-      "label": "MainNav.vue",
-      "_origin": "ast",
-      "community": 6,
-      "community_name": "App.vue",
-      "file_type": "code",
-      "norm_label": "mainnav.vue",
-      "source_file": "frontend/src/views/components/MainNav.vue",
-      "source_location": "L1"
     },
     {
       "id": "frontend_src_views_components_search_searchbargeneric",
@@ -2845,100 +3587,172 @@
       "source_location": "L7"
     },
     {
-      "id": "frontend_readme",
-      "label": "frontend/README.md",
+      "id": "readme_architecture",
+      "label": "Architecture",
       "_origin": "ast",
       "community": 9,
-      "community_name": "mala-imdb",
-      "file_type": "document",
-      "node_kind": "page",
-      "norm_label": "frontend/readme.md",
-      "source_file": "frontend/README.md",
-      "source_location": "L1"
-    },
-    {
-      "id": "frontend_readme_compile_and_hot_reload_for_development",
-      "label": "Compile and Hot-Reload for Development",
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "mala-imdb",
+      "community_name": "AWS deployment (Terraform)",
       "file_type": "document",
       "node_kind": "heading",
-      "norm_label": "compile and hot-reload for development",
-      "source_file": "frontend/README.md",
-      "source_location": "L28"
+      "norm_label": "architecture",
+      "source_file": "README.md",
+      "source_location": "L67"
     },
     {
-      "id": "frontend_readme_compile_and_minify_for_production",
-      "label": "Compile and Minify for Production",
+      "id": "readme_aws_credentials_learner_lab",
+      "label": "AWS credentials (Learner Lab)",
       "_origin": "ast",
       "community": 9,
-      "community_name": "mala-imdb",
+      "community_name": "AWS deployment (Terraform)",
       "file_type": "document",
       "node_kind": "heading",
-      "norm_label": "compile and minify for production",
-      "source_file": "frontend/README.md",
-      "source_location": "L34"
+      "norm_label": "aws credentials (learner lab)",
+      "source_file": "README.md",
+      "source_location": "L58"
     },
     {
-      "id": "frontend_readme_customize_configuration",
-      "label": "Customize configuration",
+      "id": "readme_aws_deployment_terraform",
+      "label": "AWS deployment (Terraform)",
       "_origin": "ast",
       "community": 9,
-      "community_name": "mala-imdb",
+      "community_name": "AWS deployment (Terraform)",
       "file_type": "document",
       "node_kind": "heading",
-      "norm_label": "customize configuration",
-      "source_file": "frontend/README.md",
-      "source_location": "L18"
+      "norm_label": "aws deployment (terraform)",
+      "source_file": "README.md",
+      "source_location": "L45"
     },
     {
-      "id": "frontend_readme_mala_imdb",
-      "label": "mala-imdb",
+      "id": "readme_common_problems",
+      "label": "Common problems",
       "_origin": "ast",
       "community": 9,
-      "community_name": "mala-imdb",
+      "community_name": "AWS deployment (Terraform)",
       "file_type": "document",
       "node_kind": "heading",
-      "norm_label": "mala-imdb",
-      "source_file": "frontend/README.md",
-      "source_location": "L1"
+      "norm_label": "common problems",
+      "source_file": "README.md",
+      "source_location": "L173"
     },
     {
-      "id": "frontend_readme_project_setup",
-      "label": "Project Setup",
+      "id": "readme_configuration",
+      "label": "Configuration",
       "_origin": "ast",
       "community": 9,
-      "community_name": "mala-imdb",
+      "community_name": "AWS deployment (Terraform)",
       "file_type": "document",
       "node_kind": "heading",
-      "norm_label": "project setup",
-      "source_file": "frontend/README.md",
-      "source_location": "L22"
+      "norm_label": "configuration",
+      "source_file": "README.md",
+      "source_location": "L109"
     },
     {
-      "id": "frontend_readme_recommended_browser_setup",
-      "label": "Recommended Browser Setup",
+      "id": "readme_debugging_a_deployment",
+      "label": "Debugging a deployment",
       "_origin": "ast",
       "community": 9,
-      "community_name": "mala-imdb",
+      "community_name": "AWS deployment (Terraform)",
       "file_type": "document",
       "node_kind": "heading",
-      "norm_label": "recommended browser setup",
-      "source_file": "frontend/README.md",
-      "source_location": "L9"
+      "norm_label": "debugging a deployment",
+      "source_file": "README.md",
+      "source_location": "L162"
     },
     {
-      "id": "frontend_readme_recommended_ide_setup",
-      "label": "Recommended IDE Setup",
+      "id": "readme_deploy",
+      "label": "Deploy",
       "_origin": "ast",
       "community": 9,
-      "community_name": "mala-imdb",
+      "community_name": "AWS deployment (Terraform)",
       "file_type": "document",
       "node_kind": "heading",
-      "norm_label": "recommended ide setup",
-      "source_file": "frontend/README.md",
-      "source_location": "L5"
+      "norm_label": "deploy",
+      "source_file": "README.md",
+      "source_location": "L123"
+    },
+    {
+      "id": "readme_destroy",
+      "label": "Destroy",
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "AWS deployment (Terraform)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "destroy",
+      "source_file": "README.md",
+      "source_location": "L198"
+    },
+    {
+      "id": "readme_how_does_it_work_on_a_general_level",
+      "label": "How does it work on a general level",
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "AWS deployment (Terraform)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "how does it work on a general level",
+      "source_file": "README.md",
+      "source_location": "L84"
+    },
+    {
+      "id": "readme_network",
+      "label": "Network",
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "AWS deployment (Terraform)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "network",
+      "source_file": "README.md",
+      "source_location": "L106"
+    },
+    {
+      "id": "readme_prerequisites_host",
+      "label": "Prerequisites (host)",
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "AWS deployment (Terraform)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "prerequisites (host)",
+      "source_file": "README.md",
+      "source_location": "L46"
+    },
+    {
+      "id": "readme_redeploy_after_changes",
+      "label": "Redeploy after changes",
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "AWS deployment (Terraform)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "redeploy after changes",
+      "source_file": "README.md",
+      "source_location": "L181"
+    },
+    {
+      "id": "readme_security_groups",
+      "label": "Security groups",
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "AWS deployment (Terraform)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "security groups",
+      "source_file": "README.md",
+      "source_location": "L92"
+    },
+    {
+      "id": "readme_verify",
+      "label": "Verify",
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "AWS deployment (Terraform)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "verify",
+      "source_file": "README.md",
+      "source_location": "L149"
     },
     {
       "id": "bind",
@@ -3037,23 +3851,11 @@
       "type": "external"
     },
     {
-      "id": "ref_node_url",
-      "label": "ref_node_url",
-      "_origin": "semantic",
-      "community": 3,
-      "community_name": "frontend/package.json",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "ref_node_url",
-      "source_file": "",
-      "type": "external"
-    },
-    {
       "id": "frontend_src_assets_styles",
       "label": "frontend_src_assets_styles",
       "_origin": "semantic",
-      "community": 6,
-      "community_name": "App.vue",
+      "community": 2,
+      "community_name": "DetailPage.vue",
       "external": true,
       "file_type": "concept",
       "norm_label": "frontend_src_assets_styles",
@@ -3064,11 +3866,23 @@
       "id": "ref_vue_router",
       "label": "ref_vue_router",
       "_origin": "semantic",
-      "community": 6,
-      "community_name": "App.vue",
+      "community": 2,
+      "community_name": "DetailPage.vue",
       "external": true,
       "file_type": "concept",
       "norm_label": "ref_vue_router",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "ref_node_url",
+      "label": "ref_node_url",
+      "_origin": "semantic",
+      "community": 3,
+      "community_name": "frontend/package.json",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "ref_node_url",
       "source_file": "",
       "type": "external"
     }
@@ -4653,83 +5467,6 @@
       "weight": 1.0
     },
     {
-      "source": "frontend_readme",
-      "target": "frontend_readme_mala_imdb",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "frontend/README.md",
-      "source_location": "L1",
-      "weight": 1.0
-    },
-    {
-      "source": "frontend_readme_mala_imdb",
-      "target": "frontend_readme_customize_configuration",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "frontend/README.md",
-      "source_location": "L18",
-      "weight": 1.0
-    },
-    {
-      "source": "frontend_readme_mala_imdb",
-      "target": "frontend_readme_project_setup",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "frontend/README.md",
-      "source_location": "L22",
-      "weight": 1.0
-    },
-    {
-      "source": "frontend_readme_mala_imdb",
-      "target": "frontend_readme_recommended_ide_setup",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "frontend/README.md",
-      "source_location": "L5",
-      "weight": 1.0
-    },
-    {
-      "source": "frontend_readme_mala_imdb",
-      "target": "frontend_readme_recommended_browser_setup",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "frontend/README.md",
-      "source_location": "L9",
-      "weight": 1.0
-    },
-    {
-      "source": "frontend_readme_project_setup",
-      "target": "frontend_readme_compile_and_hot_reload_for_development",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "frontend/README.md",
-      "source_location": "L28",
-      "weight": 1.0
-    },
-    {
-      "source": "frontend_readme_project_setup",
-      "target": "frontend_readme_compile_and_minify_for_production",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "frontend/README.md",
-      "source_location": "L34",
-      "weight": 1.0
-    },
-    {
       "source": "frontend_src_assets_loadingspinner",
       "target": "frontend_src_assets_loadingspinner_props",
       "relation": "contains",
@@ -5379,6 +6116,83 @@
       "weight": 1.0
     },
     {
+      "source": "infra_alb",
+      "target": "terraform_infra_eb0de251ac21fb67_aws_lb_main",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/alb.tf",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "infra_alb",
+      "target": "terraform_infra_eb0de251ac21fb67_aws_lb_target_group_web",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/alb.tf",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "infra_alb",
+      "target": "terraform_infra_eb0de251ac21fb67_aws_lb_target_group_attachment_web",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/alb.tf",
+      "source_location": "L32",
+      "weight": 1.0
+    },
+    {
+      "source": "infra_alb",
+      "target": "terraform_infra_eb0de251ac21fb67_aws_lb_listener_http",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/alb.tf",
+      "source_location": "L38",
+      "weight": 1.0
+    },
+    {
+      "source": "infra_ec2_api",
+      "target": "terraform_infra_eb0de251ac21fb67_data_aws_ami_ubuntu",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/ec2_api.tf",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "infra_ec2_api",
+      "target": "terraform_infra_eb0de251ac21fb67_aws_instance_api",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/ec2_api.tf",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "infra_ec2_web",
+      "target": "terraform_infra_eb0de251ac21fb67_aws_instance_web",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/ec2_web.tf",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
       "source": "infra_functions_spa_rewrite",
       "target": "infra_functions_spa_rewrite_handler",
       "relation": "contains",
@@ -5398,6 +6212,380 @@
       "confidence_score": 1.0,
       "source_file": "infra/functions/strip_api_prefix.js",
       "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "infra_network",
+      "target": "terraform_infra_eb0de251ac21fb67_data_aws_availability_zones_available",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/network.tf",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "infra_network",
+      "target": "terraform_infra_eb0de251ac21fb67_aws_internet_gateway_main",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/network.tf",
+      "source_location": "L17",
+      "weight": 1.0
+    },
+    {
+      "source": "infra_network",
+      "target": "terraform_infra_eb0de251ac21fb67_aws_subnet_public",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/network.tf",
+      "source_location": "L24",
+      "weight": 1.0
+    },
+    {
+      "source": "infra_network",
+      "target": "terraform_infra_eb0de251ac21fb67_aws_subnet_private",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/network.tf",
+      "source_location": "L35",
+      "weight": 1.0
+    },
+    {
+      "source": "infra_network",
+      "target": "terraform_infra_eb0de251ac21fb67_aws_route_table_public",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/network.tf",
+      "source_location": "L44",
+      "weight": 1.0
+    },
+    {
+      "source": "infra_network",
+      "target": "terraform_infra_eb0de251ac21fb67_aws_route_table_association_public",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/network.tf",
+      "source_location": "L55",
+      "weight": 1.0
+    },
+    {
+      "source": "infra_network",
+      "target": "terraform_infra_eb0de251ac21fb67_local_azs",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/network.tf",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "infra_network",
+      "target": "terraform_infra_eb0de251ac21fb67_aws_vpc_main",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/network.tf",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "infra_outputs",
+      "target": "terraform_infra_eb0de251ac21fb67_output_site_url",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/outputs.tf",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "infra_outputs",
+      "target": "terraform_infra_eb0de251ac21fb67_output_rds_endpoint",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/outputs.tf",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "infra_outputs",
+      "target": "terraform_infra_eb0de251ac21fb67_output_db_app_password",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/outputs.tf",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "infra_outputs",
+      "target": "terraform_infra_eb0de251ac21fb67_output_alb_dns_name",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/outputs.tf",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "infra_rds",
+      "target": "terraform_infra_eb0de251ac21fb67_local_db_name",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/rds.tf",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "infra_rds",
+      "target": "terraform_infra_eb0de251ac21fb67_local_db_admin_user",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/rds.tf",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "infra_rds",
+      "target": "terraform_infra_eb0de251ac21fb67_local_db_app_user",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/rds.tf",
+      "source_location": "L15",
+      "weight": 1.0
+    },
+    {
+      "source": "infra_rds",
+      "target": "terraform_infra_eb0de251ac21fb67_aws_db_subnet_group_main",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/rds.tf",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "infra_rds",
+      "target": "terraform_infra_eb0de251ac21fb67_random_password_db_admin",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/rds.tf",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "infra_rds",
+      "target": "terraform_infra_eb0de251ac21fb67_aws_db_instance_main",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/rds.tf",
+      "source_location": "L25",
+      "weight": 1.0
+    },
+    {
+      "source": "infra_rds",
+      "target": "terraform_infra_eb0de251ac21fb67_random_password_db_app",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/rds.tf",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "infra_security",
+      "target": "terraform_infra_eb0de251ac21fb67_aws_security_group_alb",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/security.tf",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "infra_security",
+      "target": "terraform_infra_eb0de251ac21fb67_aws_security_group_web",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/security.tf",
+      "source_location": "L24",
+      "weight": 1.0
+    },
+    {
+      "source": "infra_security",
+      "target": "terraform_infra_eb0de251ac21fb67_aws_security_group_api",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/security.tf",
+      "source_location": "L47",
+      "weight": 1.0
+    },
+    {
+      "source": "infra_security",
+      "target": "terraform_infra_eb0de251ac21fb67_aws_security_group_db",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/security.tf",
+      "source_location": "L70",
+      "weight": 1.0
+    },
+    {
+      "source": "infra_terraform_lock",
+      "target": "terraform_infra_eb0de251ac21fb67_provider_registry_terraform_io_hashicorp_random",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/.terraform.lock.hcl",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "infra_terraform_lock",
+      "target": "terraform_infra_eb0de251ac21fb67_provider_registry_terraform_io_hashicorp_aws",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/.terraform.lock.hcl",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "infra_variables",
+      "target": "terraform_infra_eb0de251ac21fb67_var_aws_region",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/variables.tf",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "infra_variables",
+      "target": "terraform_infra_eb0de251ac21fb67_var_api_instance_type",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/variables.tf",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "infra_variables",
+      "target": "terraform_infra_eb0de251ac21fb67_var_db_instance_class",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/variables.tf",
+      "source_location": "L19",
+      "weight": 1.0
+    },
+    {
+      "source": "infra_variables",
+      "target": "terraform_infra_eb0de251ac21fb67_var_db_engine_version",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/variables.tf",
+      "source_location": "L25",
+      "weight": 1.0
+    },
+    {
+      "source": "infra_variables",
+      "target": "terraform_infra_eb0de251ac21fb67_var_key_name",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/variables.tf",
+      "source_location": "L31",
+      "weight": 1.0
+    },
+    {
+      "source": "infra_variables",
+      "target": "terraform_infra_eb0de251ac21fb67_var_repository_url",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/variables.tf",
+      "source_location": "L37",
+      "weight": 1.0
+    },
+    {
+      "source": "infra_variables",
+      "target": "terraform_infra_eb0de251ac21fb67_var_repository_ref",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/variables.tf",
+      "source_location": "L43",
+      "weight": 1.0
+    },
+    {
+      "source": "infra_variables",
+      "target": "terraform_infra_eb0de251ac21fb67_var_project_name",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/variables.tf",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "infra_versions",
+      "target": "terraform_infra_eb0de251ac21fb67_provider_aws",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/versions.tf",
+      "source_location": "L16",
       "weight": 1.0
     },
     {
@@ -5434,223 +6622,69 @@
       "weight": 1.0
     },
     {
-      "source": "readme_10_troubleshooting",
-      "target": "readme_vm_boot_provision_failures",
+      "source": "readme_anitracker_three_vm_internet_movie_anime_database",
+      "target": "readme_local_deployment_vagrant",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L248",
-      "weight": 1.0
-    },
-    {
-      "source": "readme_10_troubleshooting",
-      "target": "readme_vagrant_shared_folder_missing",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": "L266",
-      "weight": 1.0
-    },
-    {
-      "source": "readme_10_troubleshooting",
-      "target": "readme_service_level_checks",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": "L274",
-      "weight": 1.0
-    },
-    {
-      "source": "readme_1_architecture_3_vm_requirement",
-      "target": "readme_vm_responsibilities",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": "L28",
-      "weight": 1.0
-    },
-    {
-      "source": "readme_1_architecture_3_vm_requirement",
-      "target": "readme_request_flow_representative_user_action",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": "L36",
-      "weight": 1.0
-    },
-    {
-      "source": "readme_1_architecture_3_vm_requirement",
-      "target": "readme_network_and_ports",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": "L49",
-      "weight": 1.0
-    },
-    {
-      "source": "readme_3_supported_host_environment",
-      "target": "readme_host_os",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": "L76",
-      "weight": 1.0
-    },
-    {
-      "source": "readme_3_supported_host_environment",
-      "target": "readme_required_tools",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": "L81",
-      "weight": 1.0
-    },
-    {
-      "source": "readme_3_supported_host_environment",
-      "target": "readme_known_host_constraints",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": "L89",
-      "weight": 1.0
-    },
-    {
-      "source": "readme_8_developer_modification_and_redeployment_workflow",
-      "target": "readme_backend_change_java_api_or_db_access_logic",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": "L183",
-      "weight": 1.0
-    },
-    {
-      "source": "readme_8_developer_modification_and_redeployment_workflow",
-      "target": "readme_frontend_change_vue_ui",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": "L199",
-      "weight": 1.0
-    },
-    {
-      "source": "readme_8_developer_modification_and_redeployment_workflow",
-      "target": "readme_schema_seed_change",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": "L215",
+      "source_location": "L217",
       "weight": 1.0
     },
     {
       "source": "readme_anitracker_three_vm_internet_movie_anime_database",
-      "target": "readme_5_verification_reproducible_evidence",
+      "target": "readme_repository_structure",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L116",
+      "source_location": "L30",
       "weight": 1.0
     },
     {
       "source": "readme_anitracker_three_vm_internet_movie_anime_database",
-      "target": "readme_6_removal_cleanup",
+      "target": "readme_demonstration_data",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L147",
+      "source_location": "L338",
       "weight": 1.0
     },
     {
       "source": "readme_anitracker_three_vm_internet_movie_anime_database",
-      "target": "readme_7_demonstration_data",
+      "target": "readme_developer_modification_and_redeployment_workflow_in_vagrant",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L165",
+      "source_location": "L348",
       "weight": 1.0
     },
     {
       "source": "readme_anitracker_three_vm_internet_movie_anime_database",
-      "target": "readme_8_developer_modification_and_redeployment_workflow",
+      "target": "readme_api_behavior_notes",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L179",
+      "source_location": "L396",
       "weight": 1.0
     },
     {
       "source": "readme_anitracker_three_vm_internet_movie_anime_database",
-      "target": "readme_9_repository_structure",
+      "target": "readme_ai_reuse_attribution_note",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L230",
-      "weight": 1.0
-    },
-    {
-      "source": "readme_anitracker_three_vm_internet_movie_anime_database",
-      "target": "readme_10_troubleshooting",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": "L246",
-      "weight": 1.0
-    },
-    {
-      "source": "readme_anitracker_three_vm_internet_movie_anime_database",
-      "target": "readme_1_architecture_3_vm_requirement",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": "L26",
-      "weight": 1.0
-    },
-    {
-      "source": "readme_anitracker_three_vm_internet_movie_anime_database",
-      "target": "readme_11_assessment_evidence_pointers",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": "L292",
+      "source_location": "L401",
       "weight": 1.0
     },
     {
@@ -5661,29 +6695,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L303",
-      "weight": 1.0
-    },
-    {
-      "source": "readme_anitracker_three_vm_internet_movie_anime_database",
-      "target": "readme_12_api_behavior_notes",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": "L387",
-      "weight": 1.0
-    },
-    {
-      "source": "readme_anitracker_three_vm_internet_movie_anime_database",
-      "target": "readme_13_ai_reuse_attribution_note",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": "L394",
+      "source_location": "L45",
       "weight": 1.0
     },
     {
@@ -5698,69 +6710,25 @@
       "weight": 1.0
     },
     {
-      "source": "readme_anitracker_three_vm_internet_movie_anime_database",
-      "target": "readme_2_tools_and_purpose",
+      "source": "readme_aws_deployment_terraform",
+      "target": "readme_network",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L62",
-      "weight": 1.0
-    },
-    {
-      "source": "readme_anitracker_three_vm_internet_movie_anime_database",
-      "target": "readme_3_supported_host_environment",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": "L74",
-      "weight": 1.0
-    },
-    {
-      "source": "readme_anitracker_three_vm_internet_movie_anime_database",
-      "target": "readme_4_one_command_deployment",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": "L96",
+      "source_location": "L106",
       "weight": 1.0
     },
     {
       "source": "readme_aws_deployment_terraform",
-      "target": "readme_architecture",
+      "target": "readme_configuration",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L305",
-      "weight": 1.0
-    },
-    {
-      "source": "readme_aws_deployment_terraform",
-      "target": "readme_prerequisites_host",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": "L324",
-      "weight": 1.0
-    },
-    {
-      "source": "readme_aws_deployment_terraform",
-      "target": "readme_aws_credentials_learner_lab",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": "L329",
+      "source_location": "L109",
       "weight": 1.0
     },
     {
@@ -5771,7 +6739,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L339",
+      "source_location": "L123",
       "weight": 1.0
     },
     {
@@ -5782,7 +6750,29 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L350",
+      "source_location": "L149",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_aws_deployment_terraform",
+      "target": "readme_debugging_a_deployment",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L162",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_aws_deployment_terraform",
+      "target": "readme_common_problems",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L173",
       "weight": 1.0
     },
     {
@@ -5793,7 +6783,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L369",
+      "source_location": "L181",
       "weight": 1.0
     },
     {
@@ -5804,7 +6794,194 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L377",
+      "source_location": "L198",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_aws_deployment_terraform",
+      "target": "readme_prerequisites_host",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L46",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_aws_deployment_terraform",
+      "target": "readme_aws_credentials_learner_lab",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L58",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_aws_deployment_terraform",
+      "target": "readme_architecture",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L67",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_aws_deployment_terraform",
+      "target": "readme_how_does_it_work_on_a_general_level",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L84",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_aws_deployment_terraform",
+      "target": "readme_security_groups",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L92",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_developer_modification_and_redeployment_workflow_in_vagrant",
+      "target": "readme_backend_change_java_api_or_db_access_logic",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L351",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_developer_modification_and_redeployment_workflow_in_vagrant",
+      "target": "readme_frontend_change_vue_ui",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L367",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_developer_modification_and_redeployment_workflow_in_vagrant",
+      "target": "readme_schema_seed_change",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L383",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_local_deployment_vagrant",
+      "target": "readme_vm_responsibilities",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L218",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_local_deployment_vagrant",
+      "target": "readme_request_flow_representative_user_action",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L226",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_local_deployment_vagrant",
+      "target": "readme_network_and_ports",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L239",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_local_deployment_vagrant",
+      "target": "readme_tools_and_purpose",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L252",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_local_deployment_vagrant",
+      "target": "readme_prerequisites_host_260",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L260",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_local_deployment_vagrant",
+      "target": "readme_deploy_269",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L269",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_local_deployment_vagrant",
+      "target": "readme_verify_279",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L279",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_local_deployment_vagrant",
+      "target": "readme_destroy_301",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L301",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_local_deployment_vagrant",
+      "target": "readme_common_problems_312",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L312",
       "weight": 1.0
     },
     {
@@ -5838,6 +7015,105 @@
       "confidence_score": 1.0,
       "source_file": "scripts/destroy.sh",
       "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_directory",
+      "target": "infra_alb",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/alb.tf",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_directory",
+      "target": "infra_ec2_api",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/ec2_api.tf",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_directory",
+      "target": "infra_ec2_web",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/ec2_web.tf",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_directory",
+      "target": "infra_network",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/network.tf",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_directory",
+      "target": "infra_outputs",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/outputs.tf",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_directory",
+      "target": "infra_rds",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/rds.tf",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_directory",
+      "target": "infra_security",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/security.tf",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_directory",
+      "target": "infra_variables",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/variables.tf",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_directory",
+      "target": "infra_versions",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/versions.tf",
+      "source_location": null,
       "weight": 1.0
     },
     {
@@ -6358,6 +7634,820 @@
       "weight": 1.0
     },
     {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_db_instance_main",
+      "target": "terraform_infra_eb0de251ac21fb67_var_project_name",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/rds.tf",
+      "source_location": "L26",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_db_instance_main",
+      "target": "terraform_infra_eb0de251ac21fb67_var_db_engine_version",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/rds.tf",
+      "source_location": "L28",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_db_instance_main",
+      "target": "terraform_infra_eb0de251ac21fb67_var_db_instance_class",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/rds.tf",
+      "source_location": "L29",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_db_instance_main",
+      "target": "terraform_infra_eb0de251ac21fb67_local_db_name",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/rds.tf",
+      "source_location": "L34",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_db_instance_main",
+      "target": "terraform_infra_eb0de251ac21fb67_local_db_admin_user",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/rds.tf",
+      "source_location": "L35",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_db_instance_main",
+      "target": "terraform_infra_eb0de251ac21fb67_random_password_db_admin",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/rds.tf",
+      "source_location": "L36",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_db_instance_main",
+      "target": "terraform_infra_eb0de251ac21fb67_aws_db_subnet_group_main",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/rds.tf",
+      "source_location": "L38",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_db_instance_main",
+      "target": "terraform_infra_eb0de251ac21fb67_aws_security_group_db",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/rds.tf",
+      "source_location": "L39",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_db_subnet_group_main",
+      "target": "terraform_infra_eb0de251ac21fb67_var_project_name",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/rds.tf",
+      "source_location": "L19",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_db_subnet_group_main",
+      "target": "terraform_infra_eb0de251ac21fb67_aws_subnet_private",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/rds.tf",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_instance_api",
+      "target": "terraform_infra_eb0de251ac21fb67_data_aws_ami_ubuntu",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/ec2_api.tf",
+      "source_location": "L17",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_instance_api",
+      "target": "terraform_infra_eb0de251ac21fb67_var_api_instance_type",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/ec2_api.tf",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_instance_api",
+      "target": "terraform_infra_eb0de251ac21fb67_aws_subnet_public",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/ec2_api.tf",
+      "source_location": "L19",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_instance_api",
+      "target": "terraform_infra_eb0de251ac21fb67_aws_security_group_api",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/ec2_api.tf",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_instance_api",
+      "target": "terraform_infra_eb0de251ac21fb67_var_key_name",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/ec2_api.tf",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_instance_api",
+      "target": "terraform_infra_eb0de251ac21fb67_var_repository_url",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/ec2_api.tf",
+      "source_location": "L25",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_instance_api",
+      "target": "terraform_infra_eb0de251ac21fb67_var_repository_ref",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/ec2_api.tf",
+      "source_location": "L26",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_instance_api",
+      "target": "terraform_infra_eb0de251ac21fb67_aws_db_instance_main",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/ec2_api.tf",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_instance_api",
+      "target": "terraform_infra_eb0de251ac21fb67_local_db_name",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/ec2_api.tf",
+      "source_location": "L29",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_instance_api",
+      "target": "terraform_infra_eb0de251ac21fb67_local_db_admin_user",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/ec2_api.tf",
+      "source_location": "L30",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_instance_api",
+      "target": "terraform_infra_eb0de251ac21fb67_random_password_db_admin",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/ec2_api.tf",
+      "source_location": "L31",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_instance_api",
+      "target": "terraform_infra_eb0de251ac21fb67_local_db_app_user",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/ec2_api.tf",
+      "source_location": "L32",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_instance_api",
+      "target": "terraform_infra_eb0de251ac21fb67_random_password_db_app",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/ec2_api.tf",
+      "source_location": "L33",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_instance_api",
+      "target": "terraform_infra_eb0de251ac21fb67_var_project_name",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/ec2_api.tf",
+      "source_location": "L42",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_instance_web",
+      "target": "terraform_infra_eb0de251ac21fb67_var_repository_ref",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/ec2_web.tf",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_instance_web",
+      "target": "terraform_infra_eb0de251ac21fb67_aws_instance_api",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/ec2_web.tf",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_instance_web",
+      "target": "terraform_infra_eb0de251ac21fb67_data_aws_ami_ubuntu",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/ec2_web.tf",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_instance_web",
+      "target": "terraform_infra_eb0de251ac21fb67_var_project_name",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/ec2_web.tf",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_instance_web",
+      "target": "terraform_infra_eb0de251ac21fb67_var_api_instance_type",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/ec2_web.tf",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_instance_web",
+      "target": "terraform_infra_eb0de251ac21fb67_aws_subnet_public",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/ec2_web.tf",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_instance_web",
+      "target": "terraform_infra_eb0de251ac21fb67_aws_security_group_web",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/ec2_web.tf",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_instance_web",
+      "target": "terraform_infra_eb0de251ac21fb67_var_key_name",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/ec2_web.tf",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_instance_web",
+      "target": "terraform_infra_eb0de251ac21fb67_var_repository_url",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/ec2_web.tf",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_internet_gateway_main",
+      "target": "terraform_infra_eb0de251ac21fb67_aws_vpc_main",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/network.tf",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_internet_gateway_main",
+      "target": "terraform_infra_eb0de251ac21fb67_var_project_name",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/network.tf",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_lb_listener_http",
+      "target": "terraform_infra_eb0de251ac21fb67_aws_lb_main",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/alb.tf",
+      "source_location": "L39",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_lb_listener_http",
+      "target": "terraform_infra_eb0de251ac21fb67_aws_lb_target_group_web",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/alb.tf",
+      "source_location": "L45",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_lb_main",
+      "target": "terraform_infra_eb0de251ac21fb67_var_project_name",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/alb.tf",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_lb_main",
+      "target": "terraform_infra_eb0de251ac21fb67_aws_security_group_alb",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/alb.tf",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_lb_main",
+      "target": "terraform_infra_eb0de251ac21fb67_aws_subnet_public",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/alb.tf",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_lb_target_group_attachment_web",
+      "target": "terraform_infra_eb0de251ac21fb67_aws_lb_target_group_web",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/alb.tf",
+      "source_location": "L33",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_lb_target_group_attachment_web",
+      "target": "terraform_infra_eb0de251ac21fb67_aws_instance_web",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/alb.tf",
+      "source_location": "L34",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_lb_target_group_web",
+      "target": "terraform_infra_eb0de251ac21fb67_var_project_name",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/alb.tf",
+      "source_location": "L12",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_lb_target_group_web",
+      "target": "terraform_infra_eb0de251ac21fb67_aws_vpc_main",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/alb.tf",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_route_table_association_public",
+      "target": "terraform_infra_eb0de251ac21fb67_aws_subnet_public",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/network.tf",
+      "source_location": "L56",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_route_table_association_public",
+      "target": "terraform_infra_eb0de251ac21fb67_aws_route_table_public",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/network.tf",
+      "source_location": "L58",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_route_table_public",
+      "target": "terraform_infra_eb0de251ac21fb67_aws_vpc_main",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/network.tf",
+      "source_location": "L45",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_route_table_public",
+      "target": "terraform_infra_eb0de251ac21fb67_aws_internet_gateway_main",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/network.tf",
+      "source_location": "L49",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_route_table_public",
+      "target": "terraform_infra_eb0de251ac21fb67_var_project_name",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/network.tf",
+      "source_location": "L52",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_security_group_alb",
+      "target": "terraform_infra_eb0de251ac21fb67_var_project_name",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/security.tf",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_security_group_alb",
+      "target": "terraform_infra_eb0de251ac21fb67_aws_vpc_main",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/security.tf",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_security_group_api",
+      "target": "terraform_infra_eb0de251ac21fb67_var_project_name",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/security.tf",
+      "source_location": "L48",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_security_group_api",
+      "target": "terraform_infra_eb0de251ac21fb67_aws_vpc_main",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/security.tf",
+      "source_location": "L50",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_security_group_api",
+      "target": "terraform_infra_eb0de251ac21fb67_aws_security_group_web",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/security.tf",
+      "source_location": "L57",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_security_group_db",
+      "target": "terraform_infra_eb0de251ac21fb67_var_project_name",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/security.tf",
+      "source_location": "L71",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_security_group_db",
+      "target": "terraform_infra_eb0de251ac21fb67_aws_vpc_main",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/security.tf",
+      "source_location": "L73",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_security_group_db",
+      "target": "terraform_infra_eb0de251ac21fb67_aws_security_group_api",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/security.tf",
+      "source_location": "L80",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_security_group_web",
+      "target": "terraform_infra_eb0de251ac21fb67_var_project_name",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/security.tf",
+      "source_location": "L25",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_security_group_web",
+      "target": "terraform_infra_eb0de251ac21fb67_aws_vpc_main",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/security.tf",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_security_group_web",
+      "target": "terraform_infra_eb0de251ac21fb67_aws_security_group_alb",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/security.tf",
+      "source_location": "L34",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_subnet_private",
+      "target": "terraform_infra_eb0de251ac21fb67_local_azs",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/network.tf",
+      "source_location": "L36",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_subnet_private",
+      "target": "terraform_infra_eb0de251ac21fb67_aws_vpc_main",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/network.tf",
+      "source_location": "L37",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_subnet_private",
+      "target": "terraform_infra_eb0de251ac21fb67_var_project_name",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/network.tf",
+      "source_location": "L41",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_subnet_public",
+      "target": "terraform_infra_eb0de251ac21fb67_local_azs",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/network.tf",
+      "source_location": "L25",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_subnet_public",
+      "target": "terraform_infra_eb0de251ac21fb67_aws_vpc_main",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/network.tf",
+      "source_location": "L26",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_subnet_public",
+      "target": "terraform_infra_eb0de251ac21fb67_var_project_name",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/network.tf",
+      "source_location": "L31",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_aws_vpc_main",
+      "target": "terraform_infra_eb0de251ac21fb67_var_project_name",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/network.tf",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_local_azs",
+      "target": "terraform_infra_eb0de251ac21fb67_data_aws_availability_zones_available",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/network.tf",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_output_alb_dns_name",
+      "target": "terraform_infra_eb0de251ac21fb67_aws_lb_main",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/outputs.tf",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_output_db_app_password",
+      "target": "terraform_infra_eb0de251ac21fb67_random_password_db_app",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/outputs.tf",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_output_rds_endpoint",
+      "target": "terraform_infra_eb0de251ac21fb67_aws_db_instance_main",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/outputs.tf",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_output_site_url",
+      "target": "terraform_infra_eb0de251ac21fb67_aws_lb_main",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/outputs.tf",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_provider_aws",
+      "target": "terraform_infra_eb0de251ac21fb67_var_aws_region",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/versions.tf",
+      "source_location": "L17",
+      "weight": 1.0
+    },
+    {
+      "source": "terraform_infra_eb0de251ac21fb67_provider_aws",
+      "target": "terraform_infra_eb0de251ac21fb67_var_project_name",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "infra/versions.tf",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
       "source": "backend_src_main_app_anime_anime_getwatchstatus",
       "target": "backend_src_main_app_watchstatus_watchstatus_getdatabasevalue",
       "relation": "calls",
@@ -6560,8 +8650,20 @@
       "source_file": "frontend/src/views/Main.vue",
       "source_location": "L169",
       "weight": 1.0
+    },
+    {
+      "source": "readme_configuration",
+      "target": "backend_src_main_app_animetrackerapp_animetrackerapp_main",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "context": "main",
+      "source_file": "README.md",
+      "source_location": "L115",
+      "weight": 1.0
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "d0cb46c125ccb3510ef5557a03d5cbb826b5c198"
+  "built_at_commit": "4492b481baa31afd0bbcf117abada3740c0042c8"
 }

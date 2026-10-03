@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Bootstraps the Anitracker API on EC2. Rendered by Terraform (templatefile).
 # Adapted from vagrant/provision/api_provision.sh and vagrant/provision/db_provision.sh.
+# bootstrap revision: ${bootstrap_revision}
 # source: ${repository_url} @ ${repository_ref}
 set -euo pipefail
 exec > >(tee -a /var/log/anitracker-bootstrap.log) 2>&1

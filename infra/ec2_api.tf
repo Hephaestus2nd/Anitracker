@@ -22,6 +22,7 @@ resource "aws_instance" "api" {
 
   # replace() guards against CRLF line endings from a Windows checkout breaking the bash script.
   user_data = replace(templatefile("${path.module}/templates/api_user_data.sh.tftpl", {
+    bootstrap_revision = var.bootstrap_revision
     repository_url   = var.repository_url
     repository_ref   = var.repository_ref
     db_host           = aws_db_instance.main.address
