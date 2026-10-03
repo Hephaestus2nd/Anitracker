@@ -1,34 +1,60 @@
-data "http" "my_ip" {
-  url = "https://checkip.amazonaws.com"
+resource "aws_security_group" "alb" {
+  name        = "${var.project_name}-alb-sg"
+  description = "Public HTTP access to the application load balancer"
+  vpc_id      = aws_vpc.main.id
+
+  ingress {
+    description = "HTTP from the internet"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = { Name = "${var.project_name}-alb-sg" }
 }
 
-data "aws_ec2_managed_prefix_list" "cloudfront" {
-  name = "com.amazonaws.global.cloudfront.origin-facing"
-}
+resource "aws_security_group" "web" {
+  name        = "${var.project_name}-web-sg"
+  description = "Web server: HTTP from ALB"
+  vpc_id      = aws_vpc.main.id
 
-locals {
-  ssh_cidr = var.my_ip_cidr != "" ? var.my_ip_cidr : "${chomp(data.http.my_ip.response_body)}/32"
+  ingress {
+    description     = "HTTP from ALB"
+    from_port       = 80
+    to_port         = 80
+    protocol        = "tcp"
+    security_groups = [aws_security_group.alb.id]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = { Name = "${var.project_name}-web-sg" }
 }
 
 resource "aws_security_group" "api" {
   name        = "${var.project_name}-api-sg"
-  description = "API: 8080 from CloudFront only, SSH from admin IP"
+  description = "API: 8080 from web server"
   vpc_id      = aws_vpc.main.id
 
   ingress {
-    description     = "API traffic from CloudFront edge"
+    description     = "API traffic from web server"
     from_port       = 8080
     to_port         = 8080
     protocol        = "tcp"
-    prefix_list_ids = [data.aws_ec2_managed_prefix_list.cloudfront.id]
-  }
-
-  ingress {
-    description = "SSH from admin"
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = [local.ssh_cidr]
+    security_groups = [aws_security_group.web.id]
   }
 
   egress {

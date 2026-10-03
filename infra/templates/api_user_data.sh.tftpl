@@ -1,16 +1,17 @@
 #!/usr/bin/env bash
 # Bootstraps the Anitracker API on EC2. Rendered by Terraform (templatefile).
 # Adapted from vagrant/provision/api_provision.sh and vagrant/provision/db_provision.sh.
-# artifact hash: ${artifact_hash}
+# source: ${repository_url} @ ${repository_ref}
 set -euo pipefail
 exec > >(tee -a /var/log/anitracker-bootstrap.log) 2>&1
 
 export DEBIAN_FRONTEND=noninteractive
 apt-get update
-apt-get install -y openjdk-17-jre-headless postgresql-client curl unzip awscli
+apt-get install -y openjdk-17-jdk postgresql-client curl git
+systemctl stop nginx 2>/dev/null || true
 
-AWS_REGION="${aws_region}"
-ARTIFACT_BUCKET="${artifact_bucket}"
+REPOSITORY_URL="${repository_url}"
+REPOSITORY_REF="${repository_ref}"
 DB_HOST="${db_host}"
 DB_PORT="${db_port}"
 DB_NAME="${db_name}"
@@ -19,15 +20,17 @@ DB_ADMIN_PASSWORD="${db_admin_password}"
 DB_APP_USER="${db_app_user}"
 DB_APP_PASSWORD="${db_app_password}"
 
-# ---------- Fetch build artifacts ----------
-mkdir -p /opt/anitracker/sql
-aws s3 cp --region "$AWS_REGION" "s3://$ARTIFACT_BUCKET/${api_zip_key}" /tmp/anitracker.zip
-aws s3 cp --region "$AWS_REGION" "s3://$ARTIFACT_BUCKET/${schema_key}" /opt/anitracker/sql/schema.sql
-aws s3 cp --region "$AWS_REGION" "s3://$ARTIFACT_BUCKET/${seed_key}" /opt/anitracker/sql/seed_data.sql
+# ---------- Fetch and build the pinned application source ----------
+rm -rf /opt/anitracker/source /opt/anitracker/app
+git clone --depth 1 --branch "$REPOSITORY_REF" "$REPOSITORY_URL" /opt/anitracker/source
+cd /opt/anitracker/source
+chmod +x gradlew
+./gradlew clean installDist --no-daemon
+cp -r build/install/anitracker /opt/anitracker/app
 
-rm -rf /opt/anitracker/app /tmp/anitracker-dist
-unzip -q /tmp/anitracker.zip -d /tmp/anitracker-dist
-mv /tmp/anitracker-dist/anitracker-* /opt/anitracker/app
+mkdir -p /opt/anitracker/sql
+cp schema.sql /opt/anitracker/sql/schema.sql
+cp seed_data.sql /opt/anitracker/sql/seed_data.sql
 
 # ---------- Database setup (RDS) ----------
 for attempt in $(seq 1 60); do
