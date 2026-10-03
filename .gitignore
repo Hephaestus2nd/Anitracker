@@ -140,3 +140,21 @@ crash.log
 
 # graphify: keep the graph/report, ignore regenerable cache
 graphify-out/cache/
+
+# Local
+*.local
+.claude/
+bin/
+
+# Cypress
+/cypress/videos/
+/cypress/screenshots/
+
+# Vitest
+__screenshots__/
+
+# Vite
+*.timestamp-*-*.mjs
+
+# PEM
+*.pem
