@@ -13,7 +13,10 @@ Anitracker is a small web application for tracking an anime watchlist with persi
 cd scripts
 bash ./deploy.sh                                                         # Linux/macOS/Git Bash
 .\deploy.ps1                                                             # Windows PowerShell
-Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass .\deploy.ps1  # Windows PowerShell (Owheo Labs)
+
+# Windows PowerShell (Owheo Labs)
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass 
+.\deploy.ps1  
 ```
 
 **Local (Vagrant):**
@@ -135,7 +138,10 @@ Run the script from the `scripts/` directory. The scripts switch to the reposito
 ```powershell
 cd scripts
 .\deploy.ps1                                                             # Windows PowerShell
-Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass .\deploy.ps1  # Windows PowerShell (Owheo Labs)
+
+# Windows PowerShell (Owheo Labs)
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass 
+.\deploy.ps1  
 ```
 
 Linux/macOS/Git Bash:
@@ -170,6 +176,27 @@ curl -sI $SITE/anime/52991 | head -1        # 200 (Vue route served as index.htm
 Then open the site URL in a browser, open a detail page, refresh it, and add, edit, and delete an entry.
 
 Other outputs: `alb_dns_name`, `rds_endpoint`, and `db_app_password` (sensitive; use `terraform -chdir=infra output -raw db_app_password`).
+
+### Evidence of compute and managed services (RDS logging)
+RDS has statement logging enabled (parameter group `anitracker-db-params`: `log_statement = all`, `log_connections = 1`) and publishes its PostgreSQL log to CloudWatch. While using the site (view, add, edit, delete an entry), the matching `SELECT`/`INSERT`/`UPDATE`/`DELETE` statements appear in the log after about a minute.
+
+- **Console:** CloudWatch > Log groups > `/aws/rds/instance/anitracker-db/postgresql` (or RDS > Databases > `anitracker-db` > Logs & events).
+- **CLI:**
+  ```bash
+  aws logs tail /aws/rds/instance/anitracker-db/postgresql --follow --since 10m
+
+  # Without CloudWatch:
+  aws rds describe-db-log-files --db-instance-identifier anitracker-db
+  aws rds download-db-log-file-portion --db-instance-identifier anitracker-db --log-file-name <file from above> --output text
+  ```
+- **Compute and managed services used:**
+  ```bash
+  aws ec2 describe-instances --filters "Name=tag:Name,Values=anitracker-*" --query "Reservations[].Instances[].[Tags[?Key=='Name']|[0].Value,InstanceId,InstanceType,State.Name,PrivateIpAddress]" --output table
+
+  aws rds describe-db-instances --db-instance-identifier anitracker-db --query "DBInstances[0].[DBInstanceIdentifier,Engine,DBInstanceClass,DBInstanceStatus,Endpoint.Address,PubliclyAccessible]" --output table
+  
+  aws elbv2 describe-load-balancers --names anitracker-alb --query "LoadBalancers[0].[LoadBalancerName,State.Code,DNSName]" --output table
+  ```
 
 ### Debugging a deployment
 SSH is closed, so use the EC2 console log, which includes the bootstrap script output:
@@ -214,7 +241,10 @@ From the `scripts/` directory:
 ```powershell
 # Windows PowerShell
 .\destroy.ps1                                                                # Regular
-Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass .\destroy.ps1     # Owheo Labs
+
+# Owheo Labs
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass 
+.\destroy.ps1     
 ```
 
 ```bash
