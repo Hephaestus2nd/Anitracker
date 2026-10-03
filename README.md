@@ -5,11 +5,15 @@ Anitracker is a small web application for tracking an anime watchlist with persi
 ## Quick start
 
 **AWS (Terraform)** — see [AWS deployment](#aws-deployment-terraform):
+> [!IMPORTANT]
+>
+> Use the `Windows PowerShell (Owheo Labs)` version if you are running on a Powershell script. Otherwise, common script execution works out of the box.
 
 ```bash
 cd scripts
 bash ./deploy.sh                                                         # Linux/macOS/Git Bash
-Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass ./deploy.ps1  # Windows PowerShell
+.\deploy.ps1                                                             # Windows PowerShell
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass .\deploy.ps1  # Windows PowerShell (Owheo Labs)
 ```
 
 **Local (Vagrant):**
@@ -23,9 +27,42 @@ Then open: `http://localhost:8080`
 
 All Vagrant commands below are run from the `vagrant/` directory.
 
----
+## Repository structure
+
+- `vagrant/Vagrantfile` — defines three-VM topology, private network, and forwarded ports (mounts the repo root as `/vagrant`).
+- `vagrant/provision/` — VM provisioning scripts:
+  - `db_provision.sh`
+  - `api_provision.sh`
+  - `web_provision.sh`
+- `infra/` — Terraform configuration for AWS (VPC, security groups, ALB, web/API EC2, RDS).
+  - `infra/templates/` — EC2 user-data bootstrap scripts (`api_user_data.sh.tftpl`, `web_user_data.sh.tftpl`).
+- `scripts/` — `deploy.sh`/`deploy.ps1` and `destroy.sh`/`destroy.ps1` for AWS.
+- `schema.sql` — database schema.
+- `seed_data.sql` — demonstration dataset.
+- `backend/` — Java/Jooby API.
+- `frontend/` — Vue/Vite web client.
 
 ## AWS deployment (Terraform)
+### Prerequisites (host)
+
+- **Terraform `1.6+` and AWS CLI v2**
+  * Java, Node.js, and Gradle are **not** needed on the host because the instances build the code themselves.
+- **AWS Academy Learner Lab** session in `us-east-1`.
+- **An EC2 key pair named `cosc349-2026` in `us-east-1`.** Terraform attaches it to both instances and fails if it doesn't exist. SSH is still blocked by the security groups. Create it once (it persists across lab sessions):
+  ```bash
+  aws ec2 create-key-pair --key-name cosc349-2026 --query KeyMaterial --output text > cosc349-2026.pem
+  ```
+  Alternatively, set `key_name = "vockey"` in `infra/terraform.tfvars` to use the Learner Lab default key.
+- The application source must be in a **public Git repository** per standard practice, because the instances clone it anonymously.
+
+### AWS credentials (Learner Lab)
+
+1. In the Learner Lab, click **Start Lab** and wait for the indicator to turn green.
+2. Open **AWS Details**, then **AWS CLI: Show**, and copy the block into `~/.aws/credentials` (replace the existing `[default]` section).
+3. Set `region = us-east-1` under `[default]` in `~/.aws/config`.
+4. Check: `aws sts get-caller-identity`.
+
+The credentials expire when the lab session ends (~4 h). Paste them again before running Terraform. The deploy script checks them first and stops with a message if they have expired.
 
 ### Architecture
 
@@ -42,16 +79,20 @@ Browser ──HTTP:80──> Application Load Balancer (public subnets, 2 AZs)
 | `api` | EC2 `anitracker-api` (Ubuntu 22.04, JDK 17, same `anitracker-api` systemd service). |
 | `db` | RDS PostgreSQL `anitracker-db` (`db.t3.micro`, not publicly accessible). |
 
-No application code changes were needed: the backend already reads `DB_URL`/`DB_USER`/`DB_PASSWORD`, and the frontend calls the relative `/api` path, which Nginx proxies exactly as it does in Vagrant.
+Just like Vagrant, the backend already reads `DB_URL`/`DB_USER`/`DB_PASSWORD`, and the frontend calls the relative `/api` path, which Nginx proxies exactly as it does in Vagrant.
 
-**How code gets onto the instances.** Nothing is built or uploaded from your machine. Each EC2 instance runs a user-data bootstrap script (`infra/templates/*_user_data.sh.tftpl`) that `git clone`s `repository_url` at `repository_ref` and builds on the instance:
+### How does it work on a general level
+Nothing is built or uploaded from your machine. Each EC2 instance runs a user-data bootstrap script (`infra/templates/*_user_data.sh.tftpl`) that `git clone`s `repository_url` at `repository_ref` and builds on the instance:
 
 - **API**: installs JDK 17, runs `./gradlew installDist`, waits for RDS, creates/updates `app_user`, applies `schema.sql`, seeds `seed_data.sql` only if `my_anime` is empty, grants privileges, then starts the service and waits for `/health`.
 - **Web**: installs Nginx and Node.js 22, runs `npm ci && npm run build` in `frontend/`, writes the Nginx site config, and waits for Nginx to serve `/`.
 
 This means **only changes pushed to the Git repository are deployed**. Local uncommitted edits are not.
 
-**Security groups** (no SSH ingress anywhere):
+### Security groups
+> [!NOTE]
+>
+> There are no no SSH ingress anywhere.
 
 | Resource | Inbound allowed |
 |---|---|
@@ -60,32 +101,12 @@ This means **only changes pushed to the Git repository are deployed**. Local unc
 | API EC2 | TCP 8080 from the web security group only |
 | RDS | TCP 5432 from the API security group only |
 
-The RDS admin and `app_user` passwords are generated by Terraform (`random_password`) and passed to the API instance through user data. They live only in the Terraform state.
+The RDS admin and `app_user` passwords are generated by Terraform (`random_password`) and passed to the API instance through user data. They live only in the Terraform state. No password is required for Terraform-specific commands.
 
-**Network.** One VPC (`10.0.0.0/16`) with two public subnets (the ALB needs two AZs; both EC2 instances run in the first) and two private subnets for the RDS subnet group. There is no NAT gateway; the EC2 instances reach the internet for packages and `git clone` through their public IPs. S3 and CloudFront are not used. `infra/s3.tf`, `infra/cloudfront.tf`, and `infra/artifacts.tf` are kept only as placeholder comments.
-
-### Prerequisites (host)
-
-- Terraform `1.6+` and AWS CLI v2. Java, Node.js, and Gradle are **not** needed on the host because the instances build the code themselves.
-- An **AWS Academy Learner Lab** session. Everything is deployed in `us-east-1`.
-- An EC2 key pair named `cosc349-2026` in `us-east-1`. Terraform attaches it to both instances and fails if it doesn't exist. SSH is still blocked by the security groups. Create it once (it persists across lab sessions):
-  ```bash
-  aws ec2 create-key-pair --key-name cosc349-2026 --query KeyMaterial --output text > cosc349-2026.pem
-  ```
-  Alternatively, set `key_name = "vockey"` in `infra/terraform.tfvars` to use the Learner Lab default key.
-- The application source must be in a **public** Git repository, because the instances clone it anonymously.
-
-### AWS credentials (Learner Lab)
-
-1. In the Learner Lab, click **Start Lab** and wait for the indicator to turn green.
-2. Open **AWS Details**, then **AWS CLI: Show**, and copy the block into `~/.aws/credentials` (replace the existing `[default]` section).
-3. Set `region = us-east-1` under `[default]` in `~/.aws/config`.
-4. Check: `aws sts get-caller-identity`.
-
-The credentials expire when the lab session ends (~4 h). Paste them again before running Terraform. The deploy script checks them first and stops with a message if they have expired.
+### Network 
+One VPC (`10.0.0.0/16`) with two public subnets (the ALB needs two AZs; both EC2 instances run in the first) and two private subnets for the RDS subnet group. There is no NAT gateway — the EC2 instances reach the internet for packages and `git clone` through their public IPs.
 
 ### Configuration
-
 All variables are optional. Copy `infra/terraform.tfvars.example` to `infra/terraform.tfvars` to override them:
 
 | Variable | Default | Purpose |
@@ -100,17 +121,21 @@ All variables are optional. Copy `infra/terraform.tfvars.example` to `infra/terr
 `terraform.tfvars`, `*.tfstate`, and `*.pem` are git-ignored. Do not commit them, because the state contains the database passwords.
 
 ### Deploy
+> [!NOTE]
+>
+> * `Set-ExecutionPolicy` prefix is needed on the lab computers, since it blocks unsigned scripts by default.
+> * `-Scope Process` only affects the current window.
+> * Calling `bash` directly works even if the file has lost its executable bit, e.g. after a Windows checkout.
 
 Run the script from the `scripts/` directory. The scripts switch to the repository root themselves, so they can also be run from anywhere by path.
 
-Windows PowerShell (the `Set-ExecutionPolicy` prefix is needed on the lab computers, which block unsigned scripts by default; `-Scope Process` only affects the current window):
-
 ```powershell
 cd scripts
-Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass ./deploy.ps1
+.\deploy.ps1                                                             # Windows PowerShell
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass .\deploy.ps1  # Windows PowerShell (Owheo Labs)
 ```
 
-Linux/macOS/Git Bash (calling `bash` directly works even if the file has lost its executable bit, e.g. after a Windows checkout):
+Linux/macOS/Git Bash:
 
 ```bash
 cd scripts
@@ -122,7 +147,6 @@ The script checks the AWS credentials, runs `terraform init` and `terraform appl
 `terraform apply` returns after about 10 minutes, mostly spent creating RDS. **The site is not ready yet at that point.** The instances are still installing packages and building, and the ALB keeps returning `502`/`503` until the web instance passes its health check. Allow another ~5–10 minutes.
 
 ### Verify
-
 ```bash
 SITE=$(terraform -chdir=infra output -raw site_url)
 curl -s $SITE/api/health                    # {"status":"ok","database":"connected",...}
@@ -136,7 +160,6 @@ Then open the site URL in a browser, open a detail page, refresh it, and add, ed
 Other outputs: `alb_dns_name`, `rds_endpoint`, and `db_app_password` (sensitive; use `terraform -chdir=infra output -raw db_app_password`).
 
 ### Debugging a deployment
-
 SSH is closed, so use the EC2 console log, which includes the bootstrap script output:
 
 ```bash
@@ -147,21 +170,15 @@ aws ec2 get-console-output --instance-id $ID --latest --output text | tail -n 80
 
 Use `anitracker-web` for the web instance. You can also use **EC2 > Instance > Actions > Monitor and troubleshoot > Get system log** in the console. On the instances, the logs are `/var/log/anitracker-bootstrap.log` (API) and `/var/log/anitracker-web-bootstrap.log` (web).
 
-Common problems:
+### Common problems
 
 - **ALB returns 502/503 for a long time**: the web bootstrap is still running or failed (for example, `npm ci` failed). Check the web console log. Also check the target health under **EC2 > Target groups > anitracker-web-tg**.
 - **The page loads but `/api/*` returns 502**: the API bootstrap is still building, or it could not reach RDS (it gives up after 5 minutes). Check the API console log.
 - **`InvalidKeyPair.NotFound`**: the `cosc349-2026` key pair doesn't exist in `us-east-1`. See Prerequisites.
 - **`ExpiredToken` / `InvalidClientTokenId`**: the lab session has ended. Paste the credentials again.
 - **Bootstrap script fails with `$'\r': command not found`**: Windows line endings. Terraform already strips `\r\n` from the rendered templates, so this should only happen if that `replace()` is removed.
-- **Leftover S3 bucket from an older deployment** blocks a plan or destroy: remove it from local state once. This does not affect RDS or EC2:
-  ```bash
-  terraform -chdir=infra state list
-  terraform -chdir=infra state rm aws_s3_bucket.artifacts
-  ```
 
 ### Redeploy after changes
-
 Commit and push first, because the instances clone from Git. Then note that Terraform only replaces an instance when its **rendered user data changes**. Pushing new commits to the same branch does **not** change it, so re-running the deploy script alone will not pick up the new code. Force a rebuild instead:
 
 ```bash
@@ -184,7 +201,8 @@ From the `scripts/` directory:
 
 ```powershell
 # Windows PowerShell
-Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass ./destroy.ps1
+.\destroy.ps1                                                                # Regular
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass .\destroy.ps1     # Owheo Labs
 ```
 
 ```bash
@@ -196,8 +214,7 @@ This runs `terraform destroy` and removes everything, including the RDS instance
 
 ---
 
-## 1) Architecture (3 VM requirement)
-
+## Local Deployment (Vagrant)
 ### VM responsibilities
 
 | VM | Hostname | Responsibility |
@@ -227,88 +244,52 @@ Each representative request path therefore uses all three VMs.
 | API (Jooby) | `anime-api:8080` | `http://localhost:8081` |
 | PostgreSQL | `anime-db:5432` | `localhost:5433` |
 
-Private VM network: `192.168.56.0/24`  
-DB VM: `192.168.56.10` · API VM: `192.168.56.11` · Web VM: `192.168.56.12`
+* **Private VM network**: `192.168.56.0/24`  
+* **DB VM**: `192.168.56.10` 
+* **API VM**: `192.168.56.11`
+* **Web VM**: `192.168.56.12`
 
----
-
-## 2) Tools and purpose
-
+### Tools and purpose
 - **Vagrant**: defines and provisions all three VMs from one reproducible configuration.
 - **VirtualBox**: hypervisor used by Vagrant to create/run guest machines.
 - **PostgreSQL**: persistent relational datastore for application records.
 - **Java 17 + Jooby**: backend HTTP API and business logic.
 - **Vue + Vite**: frontend UI build and static assets.
 - **Nginx**: serves frontend files and reverse proxies `/api` traffic to backend.
-- **Terraform + AWS** (VPC, Application Load Balancer, two EC2 instances, RDS PostgreSQL): cloud deployment of the same three tiers (see [AWS deployment](#aws-deployment-terraform)).
 
----
-
-## 3) Supported host environment
-
-### Host OS
-
-- Ubuntu 22.04+ (primary tested environment)
-- Windows 10/11 and macOS (supported by tooling; validate locally before submission)
-
-### Required tools
+### Prerequisites (host)
+> [!NOTE]
+>
+> Node.js and Java are installed inside VMs during provisioning. No need to install.
 
 - Vagrant `2.4+`
 - VirtualBox `7.x+`
 - Git
 
-Node.js and Java are installed inside VMs during provisioning; they are not required on the host for standard deployment.
-
-### Known host constraints
-
-- If VirtualBox shows a turtle icon and VM SSH/provisioning stalls on Windows, disable Hyper-V and reboot before retrying.
-- VirtualBox and Guest Additions version mismatches can break `/vagrant` shared folder mounting.
-
----
-
-## 4) One-command deployment
-
-From the `vagrant/` directory:
-
+### Deploy
 ```bash
+cd path/to/vagrant/directory
 vagrant up
 ```
 
-This command:
-
-- creates/provisions `db`, `api`, and `web` VMs;
-- installs required packages in each VM;
-- applies schema + seed data in PostgreSQL;
-- builds and starts backend service;
-- builds frontend and serves it through Nginx.
+This command creates/provisions `db`, `api`, and `web` VMs, then installs required packages in each VM. After that, the script applies schema + seed data in PostgreSQL and builds and starts backend service. Lastly, the script builds the frontend and serves it through Nginx.
 
 First deployment is slower because packages, dependencies, and VM resources are downloaded/built.
 
----
-
-## 5) Verification (reproducible evidence)
-
-Run these commands after deployment:
+### Verify
 
 ```bash
-# 1) VM state
-vagrant status
+vagrant status # VM state                                             
 
-# 2) Database has seeded rows
+# Database has seeded rows
 vagrant ssh db -- 'PGPASSWORD=AppPass123 psql -h localhost -U app_user -d anitracker -c "SELECT mal_id, title, watch_status FROM my_anime ORDER BY mal_id LIMIT 5;"'
 
-# 3) API health from inside API VM (service listens on 8080 in-VM)
-vagrant ssh api -- 'curl -s http://localhost:8080/health'
-
-# 4) Proxied request through Web VM to API VM
-vagrant ssh web -- 'curl -s http://localhost/api/anime | head -c 300; echo'
-
-# 5) Web UI reachable from host
-curl -I http://localhost:8080
+vagrant ssh api -- 'curl -s http://localhost:8080/health'  # API health from inside API VM (service listens on 8080 in-VM)
+vagrant ssh web -- 'curl -s http://localhost/api/anime | head -c 300; echo' # Proxied request through Web VM to API VM
+curl -I http://localhost:8080 # Web UI reachable from host
 ```
 
-Expected indicators:
-
+It should be:
 - `vagrant status` shows all three machines as `running`.
 - DB query returns seeded anime rows.
 - Health endpoint returns JSON with `"status":"ok"` and `"database":"connected"`.
@@ -317,10 +298,7 @@ Expected indicators:
 
 ---
 
-## 6) Removal / cleanup
-
-Destroy all created VM resources:
-
+### Destroy
 ```bash
 vagrant destroy -f
 ```
@@ -328,29 +306,49 @@ vagrant destroy -f
 Optional post-check:
 
 ```bash
-vagrant status
+vagrant status      # Expected: machines reported as `not created`.
 ```
 
-Expected: machines reported as `not created`.
+### Debugging a deployment
 
----
 
-## 7) Demonstration data
+### Common problems
+- If VirtualBox shows a turtle icon and VM SSH/provisioning stalls on Windows, disable Hyper-V and reboot before retrying.
+- VirtualBox and Guest Additions version mismatches can break `/vagrant` shared folder mounting. Reload VMs using `vagrant reload` and then verify VirtualBox and Guest Additions compatibility. 
+- VM boot/provision failures means:
+  - Check VM state: `vagrant status`
+  - Check VirtualBox registration/running VMs:
+    ```bash
+    VBoxManage list vms
+    VBoxManage list runningvms
+    ```
+  * Retry provisioning for a specific VM: `vagrant provision name_of_provision`
+- Service-level checks:
+  - API VM:
+    ```bash
+    vagrant ssh api -- 'systemctl status anitracker-api.service --no-pager'
+    vagrant ssh api -- 'journalctl -u anitracker-api.service -n 50 --no-pager'
+    ```
+  - Web VM:
+    ```bash
+    vagrant ssh web -- 'nginx -t'
+    ```
+  - DB reachability:
+    ```bash
+    vagrant ssh db -- 'pg_isready -h 127.0.0.1 -p 5432 -d anitracker'
+    ```
 
-- Seeded catalog data is preloaded so useful output is visible immediately after deployment.
+## Demonstration data
+- Seeded catalog data is preloaded, so useful output is visible immediately after deployment.
 - Repository schema file: `schema.sql`
 - Repository seed file: `seed_data.sql`
 - Inside the DB VM, those files are mounted and applied from `/vagrant/schema.sql` and `/vagrant/seed_data.sql`.
 
 Why this is sufficient:
-
 - The web page can render a non-empty catalog without manual entry.
 - API and DB verification commands show persisted rows immediately.
 
----
-
-## 8) Developer modification and redeployment workflow
-
+## Developer modification and redeployment workflow in Vagrant
 Developers edit files in their local Git clone, then reprovision/rebuild only the impacted VM(s).
 
 ### Backend change (Java/API or DB access logic)
@@ -398,89 +396,11 @@ vagrant provision db
 
 Inside the DB VM, the provisioning scripts apply the files from `/vagrant/schema.sql` and `/vagrant/seed_data.sql`.
 
----
-
-## 9) Repository structure
-
-- `vagrant/Vagrantfile` — defines three-VM topology, private network, and forwarded ports (mounts the repo root as `/vagrant`).
-- `vagrant/provision/` — VM provisioning scripts:
-  - `db_provision.sh`
-  - `api_provision.sh`
-  - `web_provision.sh`
-- `infra/` — Terraform configuration for AWS (VPC, security groups, ALB, web/API EC2, RDS).
-  - `infra/templates/` — EC2 user-data bootstrap scripts (`api_user_data.sh.tftpl`, `web_user_data.sh.tftpl`).
-- `scripts/` — `deploy.sh`/`deploy.ps1` and `destroy.sh`/`destroy.ps1` for AWS.
-- `schema.sql` — database schema.
-- `seed_data.sql` — demonstration dataset.
-- `backend/` — Java/Jooby API.
-- `frontend/` — Vue/Vite web client.
-
----
-
-## 10) Troubleshooting
-
-### VM boot/provision failures
-
-- Check VM state:
-  ```bash
-  vagrant status
-  ```
-- Check VirtualBox registration/running VMs:
-  ```bash
-  VBoxManage list vms
-  VBoxManage list runningvms
-  ```
-- Retry provisioning for a specific VM:
-  ```bash
-  vagrant provision db
-  vagrant provision api
-  vagrant provision web
-  ```
-
-### `/vagrant` shared folder missing
-
-- Reload VMs:
-  ```bash
-  vagrant reload
-  ```
-- Verify VirtualBox and Guest Additions compatibility.
-
-### Service-level checks
-
-- API VM:
-  ```bash
-  vagrant ssh api -- 'systemctl status anitracker-api.service --no-pager'
-  vagrant ssh api -- 'journalctl -u anitracker-api.service -n 50 --no-pager'
-  ```
-- Web VM:
-  ```bash
-  vagrant ssh web -- 'nginx -t'
-  ```
-- DB reachability:
-  ```bash
-  vagrant ssh db -- 'pg_isready -h 127.0.0.1 -p 5432 -d anitracker'
-  ```
-
----
-
-## 11) Assessment evidence pointers
-
-- **Deployment command**: `vagrant up` (Quick start / One-command deployment).
-- **Verification commands**: section “Verification (reproducible evidence)”.
-- **Destroy command**: section “Removal / cleanup” (`vagrant destroy -f`).
-- **Seeded data files**: `schema.sql`, `seed_data.sql`.
-- **Architecture/provisioning files**: `vagrant/Vagrantfile`, `vagrant/provision/*.sh`.
-- **AWS**: `infra/*.tf`, `infra/templates/*.tftpl`, `scripts/deploy.sh`, `scripts/destroy.sh` (see [AWS deployment](#aws-deployment-terraform)).
-
----
-
-## 12) API behavior notes
+## API behavior notes
 
 - Current backend endpoints include `/health`, `/anime`, and `/anime/{malId}`.
 - The README does not assume active runtime AniList enrichment or a `502` path for that integration, because that behavior is currently not enabled in the backend implementation.
 
----
-
-## 13) AI/reuse attribution note
-AI has been used to check and rework read me.
+## AI/reuse attribution note
+AI has been used to check and rework README, as well as debugging AWS/Terraform and Vagrant quirks.
 Repository implementation is based on project-authored code and standard open-source tooling/libraries referenced in source files and build configs.
