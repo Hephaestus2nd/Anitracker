@@ -22,6 +22,26 @@ resource "aws_db_subnet_group" "main" {
   tags = { Name = "${var.project_name}-db-subnets" }
 }
 
+# Log RDS read/write the app makes
+resource "aws_db_parameter_group" "main" {
+  name   = "${var.project_name}-db-params"
+  family = "postgres${var.db_engine_version}"
+
+  parameter {
+    name         = "log_statement"
+    value        = "all"
+    apply_method = "immediate"
+  }
+
+  parameter {
+    name         = "log_connections"
+    value        = "1"
+    apply_method = "immediate"
+  }
+
+  tags = { Name = "${var.project_name}-db-params" }
+}
+
 resource "aws_db_instance" "main" {
   identifier     = "${var.project_name}-db"
   engine         = "postgres"
@@ -39,6 +59,10 @@ resource "aws_db_instance" "main" {
   vpc_security_group_ids = [aws_security_group.db.id]
   publicly_accessible    = false
   multi_az               = false
+  parameter_group_name   = aws_db_parameter_group.main.name
+
+  # Publishes the PostgreSQL log to CloudWatch: /aws/rds/instance/<project>-db/postgresql
+  enabled_cloudwatch_logs_exports = ["postgresql"]
 
   backup_retention_period = 0
   skip_final_snapshot     = true
