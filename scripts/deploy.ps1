@@ -1,6 +1,6 @@
 # Provisions AWS infrastructure with Terraform; EC2 builds the pinned repository during bootstrap.
 $ErrorActionPreference = 'Stop'
-cd (Split-Path -Parent $PSScriptRoot)
+$infraDir = Join-Path (Split-Path -Parent $PSScriptRoot) 'infra'
 
 function Invoke-Checked {
     param([scriptblock]$Command)
@@ -15,10 +15,10 @@ if ($LASTEXITCODE -ne 0) {
 }
 
 Write-Host '==> Applying Terraform'
-Invoke-Checked { terraform -chdir=infra init -input=false }
-Invoke-Checked { terraform -chdir=infra apply -auto-approve -input=false }
+Invoke-Checked { terraform "-chdir=$infraDir" init -input=false }
+Invoke-Checked { terraform "-chdir=$infraDir" apply -auto-approve -input=false }
 
-$siteUrl = terraform -chdir=infra output -raw site_url
+$siteUrl = terraform "-chdir=$infraDir" output -raw site_url
 Write-Host ''
 Write-Host "Deployed: $siteUrl"
 Write-Host 'Note: the ALB and EC2 bootstrap can take several minutes to become fully available.'

@@ -1,8 +1,8 @@
 # Destroys all AWS resources created by scripts/deploy.ps1.
 $ErrorActionPreference = 'Stop'
-cd (Split-Path -Parent $PSScriptRoot)
+$infraDir = Join-Path (Split-Path -Parent $PSScriptRoot) 'infra'
 
-terraform -chdir=infra init -input=false
+terraform "-chdir=$infraDir" init -input=false
 if ($LASTEXITCODE -ne 0) { throw 'terraform init failed' }
-terraform -chdir=infra destroy -auto-approve -input=false
+terraform "-chdir=$infraDir" destroy -auto-approve -input=false
 if ($LASTEXITCODE -ne 0) { throw 'terraform destroy failed' }

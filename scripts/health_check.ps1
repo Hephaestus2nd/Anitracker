@@ -3,7 +3,7 @@
 param([switch]$Wait)
 
 $ErrorActionPreference = 'Stop'
-cd (Split-Path -Parent $PSScriptRoot)
+$infraDir = Join-Path (Split-Path -Parent $PSScriptRoot) 'infra'
 
 $project = if ($env:PROJECT_NAME) { $env:PROJECT_NAME } else { 'anitracker' }
 $timeout = if ($Wait) { 300 } else { 0 }
@@ -13,7 +13,7 @@ if ($LASTEXITCODE -ne 0) {
     throw 'AWS credentials missing or expired. Paste fresh Learner Lab credentials (AWS Details > AWS CLI) into ~/.aws/credentials.'
 }
 
-$siteUrl = terraform -chdir=infra output -raw site_url
+$siteUrl = terraform "-chdir=$infraDir" output -raw site_url
 if ($LASTEXITCODE -ne 0) { throw 'Could not read site_url. Has the infrastructure been deployed?' }
 
 $script:failed = $false
