@@ -309,9 +309,6 @@ Optional post-check:
 vagrant status      # Expected: machines reported as `not created`.
 ```
 
-### Debugging a deployment
-
-
 ### Common problems
 - If VirtualBox shows a turtle icon and VM SSH/provisioning stalls on Windows, disable Hyper-V and reboot before retrying.
 - VirtualBox and Guest Additions version mismatches can break `/vagrant` shared folder mounting. Reload VMs using `vagrant reload` and then verify VirtualBox and Guest Additions compatibility. 
