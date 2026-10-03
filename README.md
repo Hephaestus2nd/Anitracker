@@ -46,30 +46,6 @@ All Vagrant commands below are run from the `vagrant/` directory.
 - `frontend/` — Vue/Vite web client.
 
 ## AWS deployment (Terraform)
-
-The current deployment clones the public repository from EC2 user-data. If an
-EC2 bootstrap fails, increment `bootstrap_revision` in
-`infra/terraform.tfvars` and run the deploy command again. Terraform will then
-replace both EC2 instances and rerun their bootstrap scripts.
-- **Terraform `1.6+` and AWS CLI v2**
-  * Java, Node.js, and Gradle are **not** needed on the host because the instances build the code themselves.
-- **AWS Academy Learner Lab** session in `us-east-1`.
-- **An EC2 key pair named `cosc349-2026` in `us-east-1`.** Terraform attaches it to both instances and fails if it doesn't exist. SSH is still blocked by the security groups. Create it once (it persists across lab sessions):
-  ```bash
-  aws ec2 create-key-pair --key-name cosc349-2026 --query KeyMaterial --output text > cosc349-2026.pem
-  ```
-  Alternatively, set `key_name = "vockey"` in `infra/terraform.tfvars` to use the Learner Lab default key.
-- The application source must be in a **public Git repository** per standard practice, because the instances clone it anonymously.
-
-### AWS credentials (Learner Lab)
-
-1. In the Learner Lab, click **Start Lab** and wait for the indicator to turn green.
-2. Open **AWS Details**, then **AWS CLI: Show**, and copy the block into `~/.aws/credentials` (replace the existing `[default]` section).
-3. Set `region = us-east-1` under `[default]` in `~/.aws/config`.
-4. Check: `aws sts get-caller-identity`.
-
-The credentials expire when the lab session ends (~4 h). Paste them again before running Terraform. The deploy script checks them first and stops with a message if they have expired.
-
 ### Architecture
 
 ```text
@@ -125,6 +101,27 @@ All variables are optional. Copy `infra/terraform.tfvars.example` to `infra/terr
 | `key_name` | `cosc349-2026` | Existing EC2 key pair |
 
 `terraform.tfvars`, `*.tfstate`, and `*.pem` are git-ignored. Do not commit them, because the state contains the database passwords.
+
+### Prerequisites
+
+- **Terraform `1.6+` and AWS CLI v2**
+  * Java, Node.js, and Gradle are **not** needed on the host because the instances build the code themselves.
+- **AWS Academy Learner Lab** session in `us-east-1`.
+- **An EC2 key pair named `cosc349-2026` in `us-east-1`.** Terraform attaches it to both instances and fails if it doesn't exist. SSH is still blocked by the security groups. Create it once (it persists across lab sessions):
+  ```bash
+  aws ec2 create-key-pair --key-name cosc349-2026 --query KeyMaterial --output text > cosc349-2026.pem
+  ```
+  Alternatively, set `key_name = "vockey"` in `infra/terraform.tfvars` to use the Learner Lab default key.
+- The application source must be in a **public Git repository** per standard practice, because the instances clone it anonymously.
+
+### AWS credentials (Learner Lab)
+
+1. In the Learner Lab, click **Start Lab** and wait for the indicator to turn green.
+2. Open **AWS Details**, then **AWS CLI: Show**, and copy the block into `~/.aws/credentials` (replace the existing `[default]` section).
+3. Set `region = us-east-1` under `[default]` in `~/.aws/config`.
+4. Check: `aws sts get-caller-identity`.
+
+The credentials expire when the lab session ends (~4 h). Paste them again before running Terraform. The deploy script checks them first and stops with a message if they have expired.
 
 ### Deploy
 > [!NOTE]
@@ -194,7 +191,7 @@ RDS has statement logging enabled (parameter group `anitracker-db-params`: `log_
   aws ec2 describe-instances --filters "Name=tag:Name,Values=anitracker-*" --query "Reservations[].Instances[].[Tags[?Key=='Name']|[0].Value,InstanceId,InstanceType,State.Name,PrivateIpAddress]" --output table
 
   aws rds describe-db-instances --db-instance-identifier anitracker-db --query "DBInstances[0].[DBInstanceIdentifier,Engine,DBInstanceClass,DBInstanceStatus,Endpoint.Address,PubliclyAccessible]" --output table
-  
+
   aws elbv2 describe-load-balancers --names anitracker-alb --query "LoadBalancers[0].[LoadBalancerName,State.Code,DNSName]" --output table
   ```
 
@@ -211,6 +208,7 @@ Use `anitracker-web` for the web instance. You can also use **EC2 > Instance > A
 
 ### Common problems
 
+- **If an EC2 bootstrap fails**: increment `bootstrap_revision` in `infra/terraform.tfvars` and run the deploy command again. Terraform will then replace both EC2 instances and rerun their bootstrap scripts. This is because the current deployment clones the public repository from EC2 user-data.
 - **ALB returns 502/503 for a long time**: the web bootstrap is still running or failed (for example, `npm ci` failed). Check the web console log. Also check the target health under **EC2 > Target groups > anitracker-web-tg**.
 - **The page loads but `/api/*` returns 502**: the API bootstrap is still building, or it could not reach RDS (it gives up after 5 minutes). Check the API console log.
 - **`InvalidKeyPair.NotFound`**: the `cosc349-2026` key pair doesn't exist in `us-east-1`. See Prerequisites.
