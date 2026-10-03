@@ -177,7 +177,7 @@ Other outputs: `alb_dns_name`, `rds_endpoint`, and `db_app_password` (sensitive;
 ### Evidence of compute and managed services (RDS logging)
 RDS has statement logging enabled (parameter group `anitracker-db-params`: `log_statement = all`, `log_connections = 1`) and publishes its PostgreSQL log to CloudWatch. While using the site (view, add, edit, delete an entry), the matching `SELECT`/`INSERT`/`UPDATE`/`DELETE` statements appear in the log after about a minute.
 
-- **Console:** CloudWatch > Log groups > `/aws/rds/instance/anitracker-db/postgresql` (or RDS > Databases > `anitracker-db` > Logs & events).
+- **Console:** CloudWatch > Log Management > `/aws/rds/instance/anitracker-db/postgresql` (or RDS > Databases > `anitracker-db` > Logs & events).
 - **CLI:**
   ```bash
   aws logs tail /aws/rds/instance/anitracker-db/postgresql --follow --since 10m
