@@ -43,8 +43,11 @@ All Vagrant commands below are run from the `vagrant/` directory.
 - `frontend/` — Vue/Vite web client.
 
 ## AWS deployment (Terraform)
-### Prerequisites (host)
 
+The current deployment clones the public repository from EC2 user-data. If an
+EC2 bootstrap fails, increment `bootstrap_revision` in
+`infra/terraform.tfvars` and run the deploy command again. Terraform will then
+replace both EC2 instances and rerun their bootstrap scripts.
 - **Terraform `1.6+` and AWS CLI v2**
   * Java, Node.js, and Gradle are **not** needed on the host because the instances build the code themselves.
 - **AWS Academy Learner Lab** session in `us-east-1`.
