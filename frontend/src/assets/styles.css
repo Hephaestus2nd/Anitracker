@@ -3,7 +3,8 @@
     --color-primary: #6F13BF;
     --color-secondary: #410179;
     --color-secondary-light: #833FBF;
-    --bg: #121212;
+    --bg: #1C082B;
+    --main-bg: #121212;
     --light-font-color: #F5F3FF; /* Soft white */
     --muted-light-font-color: #AD77DC;
 
@@ -27,7 +28,7 @@
 
 body {
     margin: 0;
-    background: var(--bg);
+    background: var(--main-bg);
     color: var(--light-font-color);
     font-size: 16px;
     line-height: 1.5;
