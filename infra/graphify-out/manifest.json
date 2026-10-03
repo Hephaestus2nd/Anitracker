@@ -1,0 +1,74 @@
+{
+  ".terraform.lock.hcl": {
+    "mtime": 1790917436.971443,
+    "seen": 1790918175.1674147,
+    "ast_hash": "75e74da67a52828d10eae0aa9e2ceb64",
+    "semantic_hash": "75e74da67a52828d10eae0aa9e2ceb64"
+  },
+  "cloudfront.tf": {
+    "mtime": 1790917436.976383,
+    "seen": 1790918175.1674147,
+    "ast_hash": "e6a80fe28254d6bdcfd829a148d79fe5",
+    "semantic_hash": "e6a80fe28254d6bdcfd829a148d79fe5"
+  },
+  "ec2_api.tf": {
+    "mtime": 1790917436.981208,
+    "seen": 1790918175.1674147,
+    "ast_hash": "f842d4ecae53dcc8bb1f7d0a33f7c078",
+    "semantic_hash": "f842d4ecae53dcc8bb1f7d0a33f7c078"
+  },
+  "functions/spa_rewrite.js": {
+    "mtime": 1790917436.988997,
+    "seen": 1790918175.1674147,
+    "ast_hash": "284a03beed10a3f71aa4d4788bae0e9b",
+    "semantic_hash": "284a03beed10a3f71aa4d4788bae0e9b"
+  },
+  "functions/strip_api_prefix.js": {
+    "mtime": 1790917436.997171,
+    "seen": 1790918175.1674147,
+    "ast_hash": "820b4fc3aa7065d91649c66f4fc20655",
+    "semantic_hash": "820b4fc3aa7065d91649c66f4fc20655"
+  },
+  "network.tf": {
+    "mtime": 1790917437.001746,
+    "seen": 1790918175.1674147,
+    "ast_hash": "3585becb9e7d72f9e295a38ba984e4ed",
+    "semantic_hash": "3585becb9e7d72f9e295a38ba984e4ed"
+  },
+  "outputs.tf": {
+    "mtime": 1790917437.00669,
+    "seen": 1790918175.1674147,
+    "ast_hash": "15b4ec23c451130ccd8061ffa1b255cb",
+    "semantic_hash": "15b4ec23c451130ccd8061ffa1b255cb"
+  },
+  "rds.tf": {
+    "mtime": 1790917437.011636,
+    "seen": 1790918175.1674147,
+    "ast_hash": "3058cd0c7627d3960a8f057fbc821e58",
+    "semantic_hash": "3058cd0c7627d3960a8f057fbc821e58"
+  },
+  "s3.tf": {
+    "mtime": 1790917437.016033,
+    "seen": 1790918175.1674147,
+    "ast_hash": "d20e37b1397407df86a2f05f1bb102f5",
+    "semantic_hash": "d20e37b1397407df86a2f05f1bb102f5"
+  },
+  "security.tf": {
+    "mtime": 1790917437.020964,
+    "seen": 1790918175.1674147,
+    "ast_hash": "d51e0e1fc297d1ab2fa3cc2cdba416b7",
+    "semantic_hash": "d51e0e1fc297d1ab2fa3cc2cdba416b7"
+  },
+  "variables.tf": {
+    "mtime": 1790917437.053036,
+    "seen": 1790918175.1674147,
+    "ast_hash": "336d28d3fc3e4f86cc0c773e5f30fdea",
+    "semantic_hash": "336d28d3fc3e4f86cc0c773e5f30fdea"
+  },
+  "versions.tf": {
+    "mtime": 1790917437.058165,
+    "seen": 1790918175.1674147,
+    "ast_hash": "25231dfefd13deab2bdf49007f1634ec",
+    "semantic_hash": "25231dfefd13deab2bdf49007f1634ec"
+  }
+}

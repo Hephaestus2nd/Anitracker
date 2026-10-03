@@ -1,0 +1,232 @@
+{
+  "communities": {
+    "0": [
+      "s3",
+      "terraform_cdb4ee2aea69cc6a_aws_s3_bucket_artifacts",
+      "terraform_cdb4ee2aea69cc6a_aws_s3_bucket_frontend",
+      "terraform_cdb4ee2aea69cc6a_aws_s3_bucket_policy_frontend",
+      "terraform_cdb4ee2aea69cc6a_aws_s3_bucket_public_access_block_artifacts",
+      "terraform_cdb4ee2aea69cc6a_aws_s3_bucket_public_access_block_frontend",
+      "terraform_cdb4ee2aea69cc6a_aws_s3_object_api_zip",
+      "terraform_cdb4ee2aea69cc6a_aws_s3_object_frontend",
+      "terraform_cdb4ee2aea69cc6a_aws_s3_object_schema",
+      "terraform_cdb4ee2aea69cc6a_aws_s3_object_seed",
+      "terraform_cdb4ee2aea69cc6a_data_aws_iam_policy_document_frontend",
+      "terraform_cdb4ee2aea69cc6a_local_api_zip_key",
+      "terraform_cdb4ee2aea69cc6a_local_api_zip_path",
+      "terraform_cdb4ee2aea69cc6a_local_content_types",
+      "terraform_cdb4ee2aea69cc6a_local_frontend_dist",
+      "terraform_cdb4ee2aea69cc6a_local_repo_root",
+      "terraform_cdb4ee2aea69cc6a_local_schema_key",
+      "terraform_cdb4ee2aea69cc6a_local_seed_key",
+      "terraform_cdb4ee2aea69cc6a_random_id_bucket_suffix"
+    ],
+    "1": [
+      "cloudfront",
+      "outputs",
+      "terraform_cdb4ee2aea69cc6a_aws_cloudfront_distribution_main",
+      "terraform_cdb4ee2aea69cc6a_aws_cloudfront_function_spa_rewrite",
+      "terraform_cdb4ee2aea69cc6a_aws_cloudfront_function_strip_api_prefix",
+      "terraform_cdb4ee2aea69cc6a_aws_cloudfront_origin_access_control_frontend",
+      "terraform_cdb4ee2aea69cc6a_aws_eip_api",
+      "terraform_cdb4ee2aea69cc6a_data_aws_cloudfront_cache_policy_disabled",
+      "terraform_cdb4ee2aea69cc6a_data_aws_cloudfront_cache_policy_optimized",
+      "terraform_cdb4ee2aea69cc6a_data_aws_cloudfront_origin_request_policy_all_viewer_except_host",
+      "terraform_cdb4ee2aea69cc6a_local_api_origin_id",
+      "terraform_cdb4ee2aea69cc6a_local_frontend_origin_id",
+      "terraform_cdb4ee2aea69cc6a_output_api_public_dns",
+      "terraform_cdb4ee2aea69cc6a_output_cloudfront_distribution_id",
+      "terraform_cdb4ee2aea69cc6a_output_db_app_password",
+      "terraform_cdb4ee2aea69cc6a_output_rds_endpoint",
+      "terraform_cdb4ee2aea69cc6a_output_site_url",
+      "terraform_cdb4ee2aea69cc6a_output_ssh_command"
+    ],
+    "2": [
+      "network",
+      "terraform_cdb4ee2aea69cc6a_aws_internet_gateway_main",
+      "terraform_cdb4ee2aea69cc6a_aws_route_table_association_public",
+      "terraform_cdb4ee2aea69cc6a_aws_route_table_public",
+      "terraform_cdb4ee2aea69cc6a_aws_subnet_private",
+      "terraform_cdb4ee2aea69cc6a_aws_subnet_public",
+      "terraform_cdb4ee2aea69cc6a_aws_vpc_main",
+      "terraform_cdb4ee2aea69cc6a_data_aws_availability_zones_available",
+      "terraform_cdb4ee2aea69cc6a_local_azs",
+      "terraform_cdb4ee2aea69cc6a_var_project_name"
+    ],
+    "3": [
+      "rds",
+      "terraform_cdb4ee2aea69cc6a_aws_db_instance_main",
+      "terraform_cdb4ee2aea69cc6a_aws_db_subnet_group_main",
+      "terraform_cdb4ee2aea69cc6a_local_db_admin_user",
+      "terraform_cdb4ee2aea69cc6a_local_db_app_user",
+      "terraform_cdb4ee2aea69cc6a_local_db_name",
+      "terraform_cdb4ee2aea69cc6a_random_password_db_admin",
+      "terraform_cdb4ee2aea69cc6a_random_password_db_app",
+      "terraform_cdb4ee2aea69cc6a_var_db_instance_class"
+    ],
+    "4": [
+      "ec2_api",
+      "terraform_cdb4ee2aea69cc6a_aws_instance_api",
+      "terraform_cdb4ee2aea69cc6a_data_aws_ami_ubuntu",
+      "terraform_cdb4ee2aea69cc6a_directory",
+      "terraform_cdb4ee2aea69cc6a_provider_aws",
+      "terraform_cdb4ee2aea69cc6a_var_aws_region",
+      "versions"
+    ],
+    "5": [
+      "security",
+      "terraform_cdb4ee2aea69cc6a_aws_security_group_api",
+      "terraform_cdb4ee2aea69cc6a_aws_security_group_db",
+      "terraform_cdb4ee2aea69cc6a_data_aws_ec2_managed_prefix_list_cloudfront",
+      "terraform_cdb4ee2aea69cc6a_data_http_my_ip",
+      "terraform_cdb4ee2aea69cc6a_local_ssh_cidr"
+    ],
+    "6": [
+      "terraform_cdb4ee2aea69cc6a_var_api_instance_type",
+      "terraform_cdb4ee2aea69cc6a_var_db_engine_version",
+      "terraform_cdb4ee2aea69cc6a_var_instance_profile",
+      "terraform_cdb4ee2aea69cc6a_var_key_name",
+      "terraform_cdb4ee2aea69cc6a_var_my_ip_cidr",
+      "variables"
+    ],
+    "7": [
+      "terraform_cdb4ee2aea69cc6a_provider_registry_terraform_io_hashicorp_aws",
+      "terraform_cdb4ee2aea69cc6a_provider_registry_terraform_io_hashicorp_http",
+      "terraform_cdb4ee2aea69cc6a_provider_registry_terraform_io_hashicorp_random",
+      "terraform_lock"
+    ],
+    "8": [
+      "functions_spa_rewrite",
+      "functions_spa_rewrite_handler"
+    ],
+    "9": [
+      "functions_strip_api_prefix",
+      "functions_strip_api_prefix_handler"
+    ]
+  },
+  "cohesion": {
+    "0": 0.23391812865497075,
+    "1": 0.1830065359477124,
+    "2": 0.5111111111111111,
+    "3": 0.3333333333333333,
+    "4": 0.38095238095238093,
+    "5": 0.6,
+    "6": 0.3333333333333333,
+    "7": 0.5,
+    "8": 1.0,
+    "9": 1.0
+  },
+  "gods": [
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_aws_instance_api",
+      "label": "aws_instance.api",
+      "degree": 23
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_var_project_name",
+      "label": "var.project_name",
+      "degree": 19
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_aws_cloudfront_distribution_main",
+      "label": "aws_cloudfront_distribution.main",
+      "degree": 15
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_aws_db_instance_main",
+      "label": "aws_db_instance.main",
+      "degree": 11
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_directory",
+      "label": "Terraform module: .",
+      "degree": 9
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_aws_vpc_main",
+      "label": "aws_vpc.main",
+      "degree": 8
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_aws_s3_bucket_artifacts",
+      "label": "aws_s3_bucket.artifacts",
+      "degree": 8
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_aws_s3_bucket_frontend",
+      "label": "aws_s3_bucket.frontend",
+      "degree": 8
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_aws_security_group_api",
+      "label": "aws_security_group.api",
+      "degree": 7
+    },
+    {
+      "id": "terraform_cdb4ee2aea69cc6a_aws_eip_api",
+      "label": "aws_eip.api",
+      "degree": 6
+    }
+  ],
+  "surprises": [
+    {
+      "source": "aws_instance.api",
+      "target": "local.db_app_user",
+      "source_files": [
+        "ec2_api.tf",
+        "rds.tf"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "references",
+      "why": "connects across different repos/directories; bridges separate communities; peripheral node `local.db_app_user` unexpectedly reaches hub `aws_instance.api`"
+    },
+    {
+      "source": "aws_instance.api",
+      "target": "var.api_instance_type",
+      "source_files": [
+        "ec2_api.tf",
+        "variables.tf"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "references",
+      "why": "connects across different repos/directories; bridges separate communities; peripheral node `var.api_instance_type` unexpectedly reaches hub `aws_instance.api`"
+    },
+    {
+      "source": "aws_instance.api",
+      "target": "var.instance_profile",
+      "source_files": [
+        "ec2_api.tf",
+        "variables.tf"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "references",
+      "why": "connects across different repos/directories; bridges separate communities; peripheral node `var.instance_profile` unexpectedly reaches hub `aws_instance.api`"
+    },
+    {
+      "source": "aws_instance.api",
+      "target": "var.key_name",
+      "source_files": [
+        "ec2_api.tf",
+        "variables.tf"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "references",
+      "why": "connects across different repos/directories; bridges separate communities; peripheral node `var.key_name` unexpectedly reaches hub `aws_instance.api`"
+    },
+    {
+      "source": "output.rds_endpoint",
+      "target": "aws_db_instance.main",
+      "source_files": [
+        "outputs.tf",
+        "rds.tf"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "references",
+      "why": "connects across different repos/directories; bridges separate communities; peripheral node `output.rds_endpoint` unexpectedly reaches hub `aws_db_instance.main`"
+    }
+  ],
+  "tokens": {
+    "input": 0,
+    "output": 0
+  }
+}

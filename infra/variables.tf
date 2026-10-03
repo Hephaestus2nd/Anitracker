@@ -10,12 +10,6 @@ variable "project_name" {
   default     = "anitracker"
 }
 
-variable "my_ip_cidr" {
-  description = "CIDR allowed to SSH into the API instance. Leave empty to auto-detect this machine's public IP."
-  type        = string
-  default     = ""
-}
-
 variable "api_instance_type" {
   description = "EC2 instance type for the API server."
   type        = string
@@ -35,13 +29,19 @@ variable "db_engine_version" {
 }
 
 variable "key_name" {
-  description = "Existing EC2 key pair for SSH (Learner Lab provides 'vockey')."
+  description = "Existing EC2 key pair associated with instances for emergency administration."
   type        = string
-  default     = "vockey"
+  default     = "cosc349-2026"
 }
 
-variable "instance_profile" {
-  description = "Existing IAM instance profile (Learner Lab cannot create IAM roles, so use 'LabInstanceProfile')."
+variable "repository_url" {
+  description = "Public Git repository cloned by both EC2 instances during bootstrap."
   type        = string
-  default     = "LabInstanceProfile"
+  default     = "https://github.com/Hephaestus2nd/Anitracker.git"
+}
+
+variable "repository_ref" {
+  description = "Git branch or commit checked out by the EC2 bootstrap scripts."
+  type        = string
+  default     = "main"
 }

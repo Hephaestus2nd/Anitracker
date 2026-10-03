@@ -16,6 +16,10 @@ application {
     mainClass = 'app.AnimeTrackerApp'
 }
 
+tasks.named('distZip') {
+    archiveBaseName = 'anitracker'
+}
+
 sourceSets {
     main {
         java {
