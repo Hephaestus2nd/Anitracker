@@ -36,7 +36,7 @@ All Vagrant commands below are run from the `vagrant/` directory.
   - `web_provision.sh`
 - `infra/` — Terraform configuration for AWS (VPC, security groups, ALB, web/API EC2, RDS).
   - `infra/templates/` — EC2 user-data bootstrap scripts (`api_user_data.sh.tftpl`, `web_user_data.sh.tftpl`).
-- `scripts/` — `deploy.sh`/`deploy.ps1` and `destroy.sh`/`destroy.ps1` for AWS.
+- `scripts/` — `deploy.sh`/`deploy.ps1`, `destroy.sh`/`destroy.ps1` and `health_check.sh`/`health_check.ps1` for AWS.
 - `schema.sql` — database schema.
 - `seed_data.sql` — demonstration dataset.
 - `backend/` — Java/Jooby API.
@@ -150,6 +150,15 @@ The script checks the AWS credentials, runs `terraform init` and `terraform appl
 `terraform apply` returns after about 10 minutes, mostly spent creating RDS. **The site is not ready yet at that point.** The instances are still installing packages and building, and the ALB keeps returning `502`/`503` until the web instance passes its health check. Allow another ~5–10 minutes.
 
 ### Verify
+Automated health check: `scripts/health_check.sh` (or `health_check.ps1`) checks that the ALB is `active`, the target group is `healthy`, both EC2 instances pass their status checks, RDS is `available`, and that `/`, `/api/anime` and `/api/health` respond through the ALB. It prints PASS/FAIL per check and exits non-zero on any failure. Pass `--wait` (`-Wait` in PowerShell) to retry for up to 5 minutes while the instances bootstrap.
+
+```bash
+cd scripts
+bash ./health_check.sh --wait      # Linux/macOS/Git Bash
+.\health_check.ps1 -Wait           # Windows PowerShell
+```
+
+Or check manually:
 ```bash
 SITE=$(terraform -chdir=infra output -raw site_url)
 curl -s $SITE/api/health                    # {"status":"ok","database":"connected",...}
