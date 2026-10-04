@@ -78,14 +78,14 @@ api_health_ok() {
 }
 
 echo "Health check for $PROJECT ($SITE_URL)"
-check "ALB $PROJECT-alb is active" alb_active
-check "Target group $PROJECT-web-tg targets are healthy" targets_healthy
-check "Web EC2 instance is running with status checks ok" instance_ok web
-check "API EC2 instance is running with status checks ok" instance_ok api
-check "RDS $PROJECT-db is available" rds_available
-check "GET / returns 200 via ALB" http_ok /
-check "GET /api/anime returns 200 via ALB" http_ok /api/anime
-check "GET /api/health reports database connected" api_health_ok
+check "ALB $PROJECT-alb is active?" alb_active
+check "Target group $PROJECT-web-tg targets are healthy?" targets_healthy
+check "Web EC2 instance is running with status checks ok?" instance_ok web
+check "API EC2 instance is running with status checks ok?" instance_ok api
+check "RDS $PROJECT-db is available?" rds_available
+check "GET / returns 200 via ALB?" http_ok /
+check "GET /api/anime returns 200 via ALB?" http_ok /api/anime
+check "GET /api/health reports database connected?" api_health_ok
 
 echo
 if [ "$failed" -eq 0 ]; then

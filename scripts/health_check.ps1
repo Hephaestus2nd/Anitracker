@@ -53,18 +53,18 @@ function Test-Http {
 
 Write-Host "Health check for $project ($siteUrl)"
 
-Test-Check "ALB $project-alb is active" {
+Test-Check "ALB $project-alb is active?" {
     (aws elbv2 describe-load-balancers --names "$project-alb" --query 'LoadBalancers[0].State.Code' --output text) -eq 'active'
 }
 
-Test-Check "Target group $project-web-tg targets are healthy" {
+Test-Check "Target group $project-web-tg targets are healthy?" {
     $arn = aws elbv2 describe-target-groups --names "$project-web-tg" --query 'TargetGroups[0].TargetGroupArn' --output text
     $states = @(aws elbv2 describe-target-health --target-group-arn $arn --query 'TargetHealthDescriptions[].TargetHealth.State' --output text) -split '\s+' | Where-Object { $_ }
     $states.Count -gt 0 -and -not ($states | Where-Object { $_ -ne 'healthy' })
 }
 
 foreach ($role in 'web', 'api') {
-    Test-Check "$($role.ToUpper()) EC2 instance is running with status checks ok" {
+    Test-Check "$($role.ToUpper()) EC2 instance is running with status checks ok?" {
         # describe-instance-status has no tag filters, so resolve the instance ID first.
         $id = aws ec2 describe-instances --filters "Name=tag:Name,Values=$project-$role" 'Name=instance-state-name,Values=running' --query 'Reservations[0].Instances[0].InstanceId' --output text
         $status = aws ec2 describe-instance-status --instance-ids $id --query 'InstanceStatuses[0].[InstanceStatus.Status,SystemStatus.Status]' --output text
@@ -72,15 +72,15 @@ foreach ($role in 'web', 'api') {
     }.GetNewClosure()
 }
 
-Test-Check "RDS $project-db is available" {
+Test-Check "RDS $project-db is available?" {
     (aws rds describe-db-instances --db-instance-identifier "$project-db" --query 'DBInstances[0].DBInstanceStatus' --output text) -eq 'available'
 }
 
-Test-Check 'GET / returns 200 via ALB' { Test-Http '/' }
-Test-Check 'GET /api/anime returns 200 via ALB' { Test-Http '/api/anime' }
+Test-Check 'GET / returns 200 via ALB?' { Test-Http '/' }
+Test-Check 'GET /api/anime returns 200 via ALB?' { Test-Http '/api/anime' }
 
 # /api/health runs SELECT 1 against RDS inside the API, so it proves ALB -> web -> API -> RDS.
-Test-Check 'GET /api/health reports database connected' {
+Test-Check 'GET /api/health reports database connected?' {
     (Invoke-WebRequest -Uri "$siteUrl/api/health" -UseBasicParsing -TimeoutSec 10).Content -match '"ok"'
 }
 
