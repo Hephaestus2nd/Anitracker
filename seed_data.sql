@@ -19,10 +19,8 @@ INSERT INTO my_anime (mal_id, title, total_episodes, episodes_watched, watch_sta
 (38000, 'Demon Slayer: Kimetsu no Yaiba', 26, 6, 'Watching', 'https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx101922-WBsBl0ClmgYL.jpg', 'https://s4.anilist.co/file/anilistcdn/media/anime/banner/101922-33MtJGsUSxga.jpg', 'A young demon slayer travels to save his sister and avenge his family.'),
 (38524, 'Attack on Titan Season 3 Part 2', 10, 0, 'Plan to Watch', 'https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx104578-k61nx3LPjvgd.jpg', 'https://s4.anilist.co/file/anilistcdn/media/anime/banner/104578-z7SadpYEuAsy.jpg', 'The Survey Corps reaches the basement and faces the secrets beyond the walls.'),
 (44511, 'Chainsaw Man', 12, 0, 'Plan to Watch', 'https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx127230-DdP4vAdssLoz.png', 'https://s4.anilist.co/file/anilistcdn/media/anime/banner/127230-o8IRwCGVr9KW.jpg', 'A debt-ridden devil hunter gains a new life after merging with his loyal chainsaw devil.')
-
-
-
-
+(11981, 'Puella Magi Madoka Magica the Movie -Rebellion-', 1, 1, 'Completed', 'https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/b11981-koz1IoISs3eU.jpg', 'https://s4.anilist.co/file/anilistcdn/media/anime/banner/11981-kfpR0i6kwMLM.jpg', 'Were all the magical girls truly saved from despair? Now, the great "Law of Cycles" leads the magical girls to their new fate. Madoka Kaname, a girl who once led an ordinary life, sacrificed her very existence to set every magical girl free from their cruel destiny. Homura Akemi, another magical girl who was unable to keep her promise with Madoka, continues to fight in the world in which Madoka left her behind.'),
+(210482, 'STEEL BALL RUN JoJo''s Bizarre Adventure 2nd - 3rd STAGE', NULL, 0, 'Plan to Watch', 'https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx210482-P1VNKbqdJ6Zj.jpg', 'https://s4.anilist.co/file/anilistcdn/media/anime/banner/210482-pYAD0IbzNbgS.jpg', 'In the 2nd STAGE, a desert crossing spanning roughly 750 miles- the land that Johnny Joestar and Gyro Zeppeli must challenge, is home to the area that is feared as the "Devil''s Palm." In 1875, a threat lurking in said desert wiped out a cavalry of 26 people, eliciting fear from the local native people. As ominous incidents begin to unfold, they are forced to realize that this race is far more than a mere competition. The two press forward, where countless hidden motives collide..')
 
 ON CONFLICT (mal_id) DO UPDATE SET
 	title = EXCLUDED.title,
@@ -32,17 +30,3 @@ ON CONFLICT (mal_id) DO UPDATE SET
 	cover_image_url = EXCLUDED.cover_image_url,
 	background_image_url = EXCLUDED.background_image_url,
 	synopsis = EXCLUDED.synopsis;
-
-
-
-
-
-
-
-
-
-/* 
-
-To prevent external API rate-limits and 504 Gateway timeouts during automated builds, anime metadata was structured into a static SQL seed file, ensuring robust offline-capable deployment
-Since Jikan happens to be down a lot of the time we don't use it and just have a seed instead.
-*/

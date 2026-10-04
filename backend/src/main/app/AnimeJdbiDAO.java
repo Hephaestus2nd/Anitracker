@@ -10,7 +10,7 @@ import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 @RegisterBeanMapper(Anime.class)
 public interface AnimeJdbiDAO {
 
-    @SqlQuery("SELECT * FROM my_anime ORDER BY mal_id")
+    @SqlQuery("SELECT * FROM my_anime ORDER BY title")
     List<Anime> getAllAnime();
 
     @SqlQuery("SELECT * FROM my_anime WHERE mal_id = :malId")
