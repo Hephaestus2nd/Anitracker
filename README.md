@@ -153,6 +153,10 @@ The script checks the AWS credentials, runs `terraform init` and `terraform appl
 `terraform apply` returns after about 10 minutes, mostly spent creating RDS. **The site is not ready yet at that point.** The instances are still installing packages and building, and the ALB keeps returning `502`/`503` until the web instance passes its health check. Allow another ~5–10 minutes.
 
 ### Verify
+> [!NOTE]
+>
+> In Owheo computers, if the PowerShell script returns an error about insufficient permissions, run `Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass` similar to the [deploy script](#deploy).
+
 Automated health check: `scripts/health_check.sh` (or `health_check.ps1`) checks that the ALB is `active`, the target group is `healthy`, both EC2 instances pass their status checks, RDS is `available`, and that `/`, `/api/anime` and `/api/health` respond through the ALB. It prints PASS/FAIL per check and exits non-zero on any failure. Pass `--wait` (`-Wait` in PowerShell) to retry for up to 5 minutes while the instances bootstrap.
 
 ```bash
