@@ -1,3 +1,8 @@
+> [!NOTE]
+>
+> * **Assignment 1 Presentation**: [https://drive.google.com/file/d/1lHTXTO3BxI2mxo6PrhCkwXoA2EBzsiNq/view?usp=sharing](https://drive.google.com/file/d/1lHTXTO3BxI2mxo6PrhCkwXoA2EBzsiNq/view?usp=sharing)
+> * **Assignment 2 Presentation**: [https://drive.google.com/file/d/1IY2i34raarD1mw0Rw7jxcqYUk_x9hU-t/view?usp=sharing](https://drive.google.com/file/d/1IY2i34raarD1mw0Rw7jxcqYUk_x9hU-t/view?usp=sharing)
+
 # Anitracker (Three-VM Internet Movie/Anime Database)
 
 Anitracker is a small web application for tracking an anime watchlist with persistent storage and a browser UI. End users open the web interface, browse seeded entries, and manage records through API-backed actions. The project is designed for reproducible deployment across three virtual machines and can be brought up from a clean clone with one command (see [Quick start](#quick-start)).
