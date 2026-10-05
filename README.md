@@ -443,5 +443,4 @@ Inside the DB VM, the provisioning scripts apply the files from `/vagrant/schema
 - The README does not assume active runtime AniList enrichment or a `502` path for that integration, because that behavior is currently not enabled in the backend implementation.
 
 ## AI/reuse attribution note
-AI has been used to check and rework README, as well as debugging AWS/Terraform and Vagrant quirks.
-Repository implementation is based on project-authored code and standard open-source tooling/libraries referenced in source files and build configs.
+AI has been used to check and rework README, as well as debugging AWS/Terraform and Vagrant quirks. It was also used in researching the equivalent PowerShell/Bash commands and vice versa, as well as helping to debug AWS/Terraform/Owheo lab quirks. Repository implementation is based on project-authored code and standard open-source tooling/libraries referenced in source files and build configs.
